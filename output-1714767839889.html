@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Dispatch</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        </div>
+    </div>
+    </nav>
+    <div class="d-flex flex-row-reverse">
+    <button type="button" class="btn btn-primary mx-1">Forward Scorecard</button>
+    <button type="button" class="btn btn-primary mx-1">View Opportunity</button>
+    <button type="button" class="btn btn-primary mx-1">Schedule Coaching</button>
+    </div>
+    <div class="container">
+    <div class="row">
+        <div class="col">
+        <h1 class="text-center">Call Transcript</h1>
+        <div class="container-fluid text-left">
+                <p><strong>Prospect</strong>: I&#x27;m ready.</p>
+                <p><strong>Company</strong>: Hey Joe, how are you today?</p>
+                <p><strong>Prospect</strong>: Hey, I&#x27;m good. How are you?</p>
+                <p><strong>Company</strong>: Ah, you know, alright.</p>
+                <p><strong>Prospect</strong>: Yeah, yeah, glad to be here.</p>
+                <p><strong>Company</strong>: I, um, a lot of calls going, I&#x27;m a little stressed out, but</p>
+                <p><strong>Company</strong>: it&#x27;s alright, we&#x27;ll get through it. Thanks for joining.</p>
+                <p><strong>Company</strong>: Hey, remind me, why did you take this call again?</p>
+                <p><strong>Prospect</strong>: So we&#x27;ve got a lot of new sellers</p>
+                <p><strong>Company</strong>: [silence]</p>
+                <p><strong>Prospect</strong>: and I just don&#x27;t have the time.</p>
+                <p><strong>Prospect</strong>: And at this point, I&#x27;m just looking to see</p>
+                <p><strong>Prospect</strong>: if there&#x27;s anything that might be able to help me</p>
+                <p><strong>Prospect</strong>: scale this team.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Oh, that&#x27;s interesting.</p>
+                <p><strong>Company</strong>: Um, okay, well let&#x27;s jump into</p>
+                <p><strong>Company</strong>: dispatch. Sounds like you maybe need what we have.</p>
+                <p><strong>Company</strong>: Um, so yeah, dispatch is a</p>
+                <p><strong>Company</strong>: company and, you know, our founder, gosh,</p>
+                <p><strong>Company</strong>: you know, started to realize that early field interactions</p>
+                <p><strong>Company</strong>: are these essentially make or break moments. They&#x27;re super important,</p>
+                <p><strong>Company</strong>: easy to miss, but, you know, it&#x27;s kind of like</p>
+                <p><strong>Company</strong>: this important thing where if you do these well, like, we see</p>
+                <p><strong>Company</strong>: that you can close more. You&#x27;re just gonna, like, believe us, it&#x27;s pretty good, but um,</p>
+                <p><strong>Company</strong>: let me kind of describe what that means. So, you know, we see</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: that early on, you know, marketing is doing everything they can</p>
+                <p><strong>Company</strong>: to get leads, right, to get stuff to people like you</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: to go sell, and you&#x27;re doing everything you can to close</p>
+                <p><strong>Company</strong>: opportunities. And obviously we know this is not some beautiful one-to-one</p>
+                <p><strong>Company</strong>: relationship where every lead turns into a closing. It&#x27;s a small fraction, right?</p>
+                <p><strong>Company</strong>: And, you know, when you think about your time as a</p>
+                <p><strong>Company</strong>: sales leader, you&#x27;re probably thinking, hey, you want to focus</p>
+                <p><strong>Company</strong>: on mid to late stage opportunities, things that are more likely to close,</p>
+                <p><strong>Company</strong>: and that&#x27;s probably a good use of your time, right? Like, why wouldn&#x27;t you spend time there?</p>
+                <p><strong>Company</strong>: But do you really have time for these early conversations?</p>
+                <p><strong>Company</strong>: Like, when they&#x27;re hot, when you want to go and talk to them?</p>
+                <p><strong>Company</strong>: You know, I don&#x27;t know, like, I&#x27;ve heard sales people that don&#x27;t do anything with their day</p>
+                <p><strong>Company</strong>: or sales leaders that are just golfing. So, you know, how can you</p>
+                <p><strong>Company</strong>: extend your time and influence if you&#x27;re not on your computer, right?</p>
+                <p><strong>Prospect</strong>: Yeah, yeah.</p>
+                <p><strong>Company</strong>: I&#x27;m curious, like, are you a big golfer?</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Prospect</strong>: I hate golf.</p>
+                <p><strong>Company</strong>: All right, cool.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: But so, you know, how about these other interactions?</p>
+                <p><strong>Company</strong>: So you helped out with a couple, your sales rep had good fit,</p>
+                <p><strong>Prospect</strong>: Yeah.</p>
+                <p><strong>Company</strong>: and these people moved forward, and really our product is about, hey, let&#x27;s</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: go and extend your influence across your interactions. So,</p>
+                <p><strong>Prospect</strong>: Nice, yeah.</p>
+                <p><strong>Company</strong>: I wonder, like, today, how do you look at what happened in your early meetings?</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: {silence}</p>
+                <p><strong>Prospect</strong>: Yeah, so we have gone.</p>
+                <p><strong>Prospect</strong>: I have a library of calls that I need to watch</p>
+                <p><strong>Prospect</strong>: and I joined when I can, right?</p>
+                <p><strong>Prospect</strong>: I joined the conversations where we&#x27;ve got some new people coming on,</p>
+                <p><strong>Prospect</strong>: anything that&#x27;s a big deal, I make sure that I am there.</p>
+                <p><strong>Prospect</strong>: But that&#x27;s probably the main two ways right now.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Interesting. Any dashboards? You have, like, a sales office person?</p>
+                <p><strong>Prospect</strong>: Yeah, yeah, we&#x27;ve got dashboards.</p>
+                <p><strong>Company</strong>: {silence}</p>
+                <p><strong>Prospect</strong>: You know, I don&#x27;t even really think about them</p>
+                <p><strong>Prospect</strong>: when it comes to first meetings at this point.</p>
+                <p><strong>Prospect</strong>: I&#x27;m focused on conversion, but I&#x27;m really just trying to get this team</p>
+                <p><strong>Prospect</strong>: to perform right now before I even think about conversion.</p>
+                <p><strong>Company</strong>: Do you know what your conversion rate is? Like,</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: these first meetings, like, how often are you getting more, like, legit</p>
+                <p><strong>Company</strong>: opportunities?</p>
+                <p><strong>Prospect</strong>: So we are seeing things go from that NQL to SAL about 30%.</p>
+                <p><strong>Company</strong>: {silence}</p>
+                <p><strong>Prospect</strong>: If we take a first meeting, I&#x27;d say there&#x27;s a 50% chance</p>
+                <p><strong>Prospect</strong>: they&#x27;re going to come back for a second meeting</p>
+                <p><strong>Prospect</strong>: and we&#x27;ll continue the qualification process right now.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: 50%, not bad. Not bad. I would say that&#x27;s pretty good.</p>
+                <p><strong>Company</strong>: You might not need a...</p>
+                <p><strong>Prospect</strong>: Yeah, we&#x27;re getting there.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Perhaps you can use a different company, because this is really good.</p>
+                <p><strong>Prospect</strong>: [LAUGHTER]</p>
+                <p><strong>Company</strong>: So that makes sense. We see that a lot out there,</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: and those are all very good ways to understand what has happened in your</p>
+                <p><strong>Company</strong>: business, but, like you said, those dashboards, they don&#x27;t really</p>
+                <p><strong>Company</strong>: give you a lot of information around the specific interactions of your customers.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: And, like, let&#x27;s be honest, joining line meetings, or listening to Gong</p>
+                <p><strong>Company</strong>: Chorus, that&#x27;s a slog. Tough to do. Takes a ton of time.</p>
+                <p><strong>Company</strong>: And, like we said earlier in that slide, you&#x27;re probably spending time</p>
+                <p><strong>Company</strong>: on the most important meetings, and not</p>
+                <p><strong>Company</strong>: these early ones, which is really where our focus is. And essentially, we&#x27;re trying to have you</p>
+                <p><strong>Company</strong>: be on every call without being on every call. We want you to extend your</p>
+                <p><strong>Company</strong>: capability, multiply yourself, and your impact across the organization.</p>
+                <p><strong>Company</strong>: So that&#x27;s all about... That&#x27;s all what dispatch does. And essentially, we</p>
+                <p><strong>Company</strong>: produce this immediate notification to any meetings that need your attention.</p>
+                <p><strong>Company</strong>: So you can choose where you put your time and energy, and your team can make the most</p>
+                <p><strong>Company</strong>: out of every interaction. And initially, this might be knowing what&#x27;s happening on the ground,</p>
+                <p><strong>Company</strong>: and then over time, it&#x27;s just being aware of these anomalies that</p>
+                <p><strong>Company</strong>: really impact your business. So</p>
+                <p><strong>Company</strong>: if we take dispatch and put it into place, you start</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: at this place where you&#x27;re constantly trying to decide where to spend your time,</p>
+                <p><strong>Company</strong>: negotiate between your schedule and the priority meetings. You have to</p>
+                <p><strong>Company</strong>: make this decision. Like, what call do I join? Do I sit in this meeting and take</p>
+                <p><strong>Company</strong>: notes? Am I multitasking? Are you trying to actually get a structured</p>
+                <p><strong>Company</strong>: output from this meeting to know what went good and what bad, what went well, or what</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: didn&#x27;t? And then you gotta follow up with your</p>
+                <p><strong>Company</strong>: direct reports. There&#x27;s just so much going on.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: And our goal is for you to be less retrospective and more</p>
+                <p><strong>Company</strong>: impactful. The moment a meeting happens that you&#x27;re not on,</p>
+                <p><strong>Company</strong>: because it&#x27;s an early meeting, it&#x27;s one that you&#x27;re not so sure is worth spending the time on,</p>
+                <p><strong>Company</strong>: you&#x27;ll get a notification. You&#x27;ll immediately understand what happened in</p>
+                <p><strong>Company</strong>: that meeting and get some suggested actions. Maybe you need to intervene.</p>
+                <p><strong>Company</strong>: Maybe it wasn&#x27;t a big deal. And we just make it really easy for you to share that feedback</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: with your team. And we think that if we remove</p>
+                <p><strong>Company</strong>: all of this noise, your calendar goes from</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: this essentially impossible</p>
+                <p><strong>Company</strong>: transaction where you can&#x27;t be everywhere at once to now where you&#x27;re</p>
+                <p><strong>Company</strong>: spending time meeting with your team, spending time on</p>
+                <p><strong>Company</strong>: strategy, thinking about how to improve the business as opposed to</p>
+                <p><strong>Company</strong>: constantly just being on meetings because you feel like you have to.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Prospect</strong>: Yeah.</p>
+                <p><strong>Company</strong>: So, Joe, I&#x27;m curious, do you have this problem? Do you</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: feel the pull of your schedule and trying to be everywhere at the same time?</p>
+                <p><strong>Company</strong>: Oh, you can go.</p>
+                <p><strong>Prospect</strong>: Even on this call right now, I&#x27;m getting destroyed on Slack, right?</p>
+                <p><strong>Prospect</strong>: People are asking questions.</p>
+                <p><strong>Prospect</strong>: Yeah.</p>
+                <p><strong>Prospect</strong>: [LAUGHTER]</p>
+                <p><strong>Company</strong>: Understood. Understood. Well, let me go through a quick demo here.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Actually, I asked you earlier if we could record</p>
+                <p><strong>Company</strong>: this call.</p>
+        </div>
+        </div>
+        <div class="col">
+        <h1 class="text-center">Scoring</h1>
+        <div class="accordion" id="groupAccordion">
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-759f1b6f-2f92-4b6e-bf68-89e5d20e51aa">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-759f1b6f-2f92-4b6e-bf68-89e5d20e51aa" aria-expanded="true" aria-controls="groupCollapse-759f1b6f-2f92-4b6e-bf68-89e5d20e51aa">
+                <div class="col"><strong>Preparation and Introduction</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-759f1b6f-2f92-4b6e-bf68-89e5d20e51aa" class="accordion-collapse collapse" aria-labelledby="groupHeading-759f1b6f-2f92-4b6e-bf68-89e5d20e51aa" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-85e34b49-8ca2-41aa-8f43-d6f4302cca2c">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-85e34b49-8ca2-41aa-8f43-d6f4302cca2c" aria-expanded="true" aria-controls="groupQuestionCollapse-85e34b49-8ca2-41aa-8f43-d6f4302cca2c">
+                        <div class="col">Meeting Prep </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-85e34b49-8ca2-41aa-8f43-d6f4302cca2c" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-85e34b49-8ca2-41aa-8f43-d6f4302cca2c" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-4e18d950-dfb9-419a-b8bc-ffda55b2ca82">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-4e18d950-dfb9-419a-b8bc-ffda55b2ca82" aria-expanded="true" aria-controls="groupQuestionCollapse-4e18d950-dfb9-419a-b8bc-ffda55b2ca82">
+                        <div class="col">Team Introduction </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-4e18d950-dfb9-419a-b8bc-ffda55b2ca82" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-4e18d950-dfb9-419a-b8bc-ffda55b2ca82" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-bfa95f1c-fc38-42da-951f-8cdaf6bece60">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-bfa95f1c-fc38-42da-951f-8cdaf6bece60" aria-expanded="true" aria-controls="groupQuestionCollapse-bfa95f1c-fc38-42da-951f-8cdaf6bece60">
+                        <div class="col">Prospect Introduction </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-bfa95f1c-fc38-42da-951f-8cdaf6bece60" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-bfa95f1c-fc38-42da-951f-8cdaf6bece60" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-a7a96635-0ce6-44b6-9ffe-ee5c8b9311f4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-a7a96635-0ce6-44b6-9ffe-ee5c8b9311f4" aria-expanded="true" aria-controls="groupQuestionCollapse-a7a96635-0ce6-44b6-9ffe-ee5c8b9311f4">
+                        <div class="col">Initial Appreciation </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-a7a96635-0ce6-44b6-9ffe-ee5c8b9311f4" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-a7a96635-0ce6-44b6-9ffe-ee5c8b9311f4" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item ">
+            <h2 class="accordion-header" id="groupHeading-889284bb-bf70-4f8f-b395-03a0c1b7a2b2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-889284bb-bf70-4f8f-b395-03a0c1b7a2b2" aria-expanded="true" aria-controls="groupCollapse-889284bb-bf70-4f8f-b395-03a0c1b7a2b2">
+                <div class="col"><strong>Understanding of the Market and Product</strong></div> 
+                <div class="col text-end p-3">🟢</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-889284bb-bf70-4f8f-b395-03a0c1b7a2b2" class="accordion-collapse collapse" aria-labelledby="groupHeading-889284bb-bf70-4f8f-b395-03a0c1b7a2b2" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-3bcd7b0c-6d43-407d-92d3-68a973593e1c">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-3bcd7b0c-6d43-407d-92d3-68a973593e1c" aria-expanded="true" aria-controls="groupQuestionCollapse-3bcd7b0c-6d43-407d-92d3-68a973593e1c">
+                        <div class="col">Market Explanation </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-3bcd7b0c-6d43-407d-92d3-68a973593e1c" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-3bcd7b0c-6d43-407d-92d3-68a973593e1c" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-57c2cc1e-e080-4055-8e31-3af5f4d8d79f">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-57c2cc1e-e080-4055-8e31-3af5f4d8d79f" aria-expanded="true" aria-controls="groupQuestionCollapse-57c2cc1e-e080-4055-8e31-3af5f4d8d79f">
+                        <div class="col">Knowledge Inquiry </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-57c2cc1e-e080-4055-8e31-3af5f4d8d79f" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-57c2cc1e-e080-4055-8e31-3af5f4d8d79f" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-6e57715e-aa7c-40b6-b350-6341ffff290a">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-6e57715e-aa7c-40b6-b350-6341ffff290a" aria-expanded="true" aria-controls="groupCollapse-6e57715e-aa7c-40b6-b350-6341ffff290a">
+                <div class="col"><strong>Discovery and Needs Assessment</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-6e57715e-aa7c-40b6-b350-6341ffff290a" class="accordion-collapse collapse" aria-labelledby="groupHeading-6e57715e-aa7c-40b6-b350-6341ffff290a" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-a84dd91e-a9fc-495a-b131-9f9141ebc0b8">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-a84dd91e-a9fc-495a-b131-9f9141ebc0b8" aria-expanded="true" aria-controls="groupQuestionCollapse-a84dd91e-a9fc-495a-b131-9f9141ebc0b8">
+                        <div class="col">Discovery Questions </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-a84dd91e-a9fc-495a-b131-9f9141ebc0b8" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-a84dd91e-a9fc-495a-b131-9f9141ebc0b8" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-d17e0b9c-d34f-4241-aff7-19dd48d5a5d6">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-d17e0b9c-d34f-4241-aff7-19dd48d5a5d6" aria-expanded="true" aria-controls="groupQuestionCollapse-d17e0b9c-d34f-4241-aff7-19dd48d5a5d6">
+                        <div class="col">Value Linking </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-d17e0b9c-d34f-4241-aff7-19dd48d5a5d6" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-d17e0b9c-d34f-4241-aff7-19dd48d5a5d6" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item ">
+            <h2 class="accordion-header" id="groupHeading-727c3c23-7eec-4b72-9033-f0f15c6f0a7e">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-727c3c23-7eec-4b72-9033-f0f15c6f0a7e" aria-expanded="true" aria-controls="groupCollapse-727c3c23-7eec-4b72-9033-f0f15c6f0a7e">
+                <div class="col"><strong>Demonstration of Value</strong></div> 
+                <div class="col text-end p-3">🟢</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-727c3c23-7eec-4b72-9033-f0f15c6f0a7e" class="accordion-collapse collapse" aria-labelledby="groupHeading-727c3c23-7eec-4b72-9033-f0f15c6f0a7e" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-bf09e247-9e67-4ab5-9ff0-ac1a32a1324e">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-bf09e247-9e67-4ab5-9ff0-ac1a32a1324e" aria-expanded="true" aria-controls="groupQuestionCollapse-bf09e247-9e67-4ab5-9ff0-ac1a32a1324e">
+                        <div class="col">Product Demo </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-bf09e247-9e67-4ab5-9ff0-ac1a32a1324e" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-bf09e247-9e67-4ab5-9ff0-ac1a32a1324e" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-5808cd17-1c10-4ca4-9e61-9552c9d784dd">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-5808cd17-1c10-4ca4-9e61-9552c9d784dd" aria-expanded="true" aria-controls="groupQuestionCollapse-5808cd17-1c10-4ca4-9e61-9552c9d784dd">
+                        <div class="col">Unique Value </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-5808cd17-1c10-4ca4-9e61-9552c9d784dd" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-5808cd17-1c10-4ca4-9e61-9552c9d784dd" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item ">
+            <h2 class="accordion-header" id="groupHeading-d6388e70-0a27-4c41-9534-e72897a21711">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-d6388e70-0a27-4c41-9534-e72897a21711" aria-expanded="true" aria-controls="groupCollapse-d6388e70-0a27-4c41-9534-e72897a21711">
+                <div class="col"><strong>Handling Objections</strong></div> 
+                <div class="col text-end p-3">🟢</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-d6388e70-0a27-4c41-9534-e72897a21711" class="accordion-collapse collapse" aria-labelledby="groupHeading-d6388e70-0a27-4c41-9534-e72897a21711" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-5dad5534-ee0f-4862-93b0-abc6fc7c6f6b">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-5dad5534-ee0f-4862-93b0-abc6fc7c6f6b" aria-expanded="true" aria-controls="groupQuestionCollapse-5dad5534-ee0f-4862-93b0-abc6fc7c6f6b">
+                        <div class="col">Objections Anticipated </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-5dad5534-ee0f-4862-93b0-abc6fc7c6f6b" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-5dad5534-ee0f-4862-93b0-abc6fc7c6f6b" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-349f95ce-963b-41d2-ad0e-504a9f9d5d8e">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-349f95ce-963b-41d2-ad0e-504a9f9d5d8e" aria-expanded="true" aria-controls="groupQuestionCollapse-349f95ce-963b-41d2-ad0e-504a9f9d5d8e">
+                        <div class="col">Solutions Steering </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-349f95ce-963b-41d2-ad0e-504a9f9d5d8e" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-349f95ce-963b-41d2-ad0e-504a9f9d5d8e" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-7e02801e-7058-48f1-b0c6-ff0f3a6821f7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-7e02801e-7058-48f1-b0c6-ff0f3a6821f7" aria-expanded="true" aria-controls="groupCollapse-7e02801e-7058-48f1-b0c6-ff0f3a6821f7">
+                <div class="col"><strong>Closing and Next Steps</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-7e02801e-7058-48f1-b0c6-ff0f3a6821f7" class="accordion-collapse collapse" aria-labelledby="groupHeading-7e02801e-7058-48f1-b0c6-ff0f3a6821f7" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-b6b448e0-f2be-49fb-b8ee-b7c2b5aed8d7">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-b6b448e0-f2be-49fb-b8ee-b7c2b5aed8d7" aria-expanded="true" aria-controls="groupQuestionCollapse-b6b448e0-f2be-49fb-b8ee-b7c2b5aed8d7">
+                        <div class="col">Key Summary </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-b6b448e0-f2be-49fb-b8ee-b7c2b5aed8d7" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-b6b448e0-f2be-49fb-b8ee-b7c2b5aed8d7" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-8a1d67b3-7fea-427a-896c-984227a1a2dd">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-8a1d67b3-7fea-427a-896c-984227a1a2dd" aria-expanded="true" aria-controls="groupQuestionCollapse-8a1d67b3-7fea-427a-896c-984227a1a2dd">
+                        <div class="col">Next Meeting </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-8a1d67b3-7fea-427a-896c-984227a1a2dd" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-8a1d67b3-7fea-427a-896c-984227a1a2dd" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-b4cf35bc-1601-432f-8fb4-08d0c4bec22d">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-b4cf35bc-1601-432f-8fb4-08d0c4bec22d" aria-expanded="true" aria-controls="groupQuestionCollapse-b4cf35bc-1601-432f-8fb4-08d0c4bec22d">
+                        <div class="col">Actionable Steps </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-b4cf35bc-1601-432f-8fb4-08d0c4bec22d" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-b4cf35bc-1601-432f-8fb4-08d0c4bec22d" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p></p>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+  </body>
+</html>
