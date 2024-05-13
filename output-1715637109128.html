@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        Bryant - AirBNB
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Dispatch</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li> -->
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        </div>
+    </div>
+    </nav>
+    <div class="d-flex flex-row-reverse">
+    <button type="button" class="btn btn-primary mx-1">Forward Scorecard</button>
+    <button type="button" class="btn btn-primary mx-1">View Opportunity</button>
+    <button type="button" class="btn btn-primary mx-1">Schedule Coaching</button>
+    </div>
+    <div class="container">
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="col">
+        <h1 class="text-center">Call Transcript</h1>
+        <div class="container-fluid text-left">
+                <p><strong>Prospect</strong>: I&#x27;m ready.</p>
+                <p><strong>Company</strong>: Hey Joe, how are you today?</p>
+                <p><strong>Prospect</strong>: Hey, I&#x27;m good. How are you?</p>
+                <p><strong>Company</strong>: Ah, you know, alright.</p>
+                <p><strong>Prospect</strong>: Yeah, yeah, glad to be here.</p>
+                <p><strong>Company</strong>: I, um, a lot of calls going, I&#x27;m a little stressed out, but</p>
+                <p><strong>Company</strong>: it&#x27;s alright, we&#x27;ll get through it. Thanks for joining.</p>
+                <p><strong>Company</strong>: Hey, remind me, why did you take this call again?</p>
+                <p><strong>Prospect</strong>: So we&#x27;ve got a lot of new sellers</p>
+                <p><strong>Company</strong>: [silence]</p>
+                <p><strong>Prospect</strong>: and I just don&#x27;t have the time.</p>
+                <p><strong>Prospect</strong>: And at this point, I&#x27;m just looking to see</p>
+                <p><strong>Prospect</strong>: if there&#x27;s anything that might be able to help me</p>
+                <p><strong>Prospect</strong>: scale this team.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Oh, that&#x27;s interesting.</p>
+                <p><strong>Company</strong>: Um, okay, well let&#x27;s jump into</p>
+                <p><strong>Company</strong>: dispatch. Sounds like you maybe need what we have.</p>
+                <p><strong>Company</strong>: Um, so yeah, dispatch is a</p>
+                <p><strong>Company</strong>: company and, you know, our founder, gosh,</p>
+                <p><strong>Company</strong>: you know, started to realize that early field interactions</p>
+                <p><strong>Company</strong>: are these essentially make or break moments. They&#x27;re super important,</p>
+                <p><strong>Company</strong>: easy to miss, but, you know, it&#x27;s kind of like</p>
+                <p><strong>Company</strong>: this important thing where if you do these well, like, we see</p>
+                <p><strong>Company</strong>: that you can close more. You&#x27;re just gonna, like, believe us, it&#x27;s pretty good, but um,</p>
+                <p><strong>Company</strong>: let me kind of describe what that means. So, you know, we see</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: that early on, you know, marketing is doing everything they can</p>
+                <p><strong>Company</strong>: to get leads, right, to get stuff to people like you</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: to go sell, and you&#x27;re doing everything you can to close</p>
+                <p><strong>Company</strong>: opportunities. And obviously we know this is not some beautiful one-to-one</p>
+                <p><strong>Company</strong>: relationship where every lead turns into a closing. It&#x27;s a small fraction, right?</p>
+                <p><strong>Company</strong>: And, you know, when you think about your time as a</p>
+                <p><strong>Company</strong>: sales leader, you&#x27;re probably thinking, hey, you want to focus</p>
+                <p><strong>Company</strong>: on mid to late stage opportunities, things that are more likely to close,</p>
+                <p><strong>Company</strong>: and that&#x27;s probably a good use of your time, right? Like, why wouldn&#x27;t you spend time there?</p>
+                <p><strong>Company</strong>: But do you really have time for these early conversations?</p>
+                <p><strong>Company</strong>: Like, when they&#x27;re hot, when you want to go and talk to them?</p>
+                <p><strong>Company</strong>: You know, I don&#x27;t know, like, I&#x27;ve heard sales people that don&#x27;t do anything with their day</p>
+                <p><strong>Company</strong>: or sales leaders that are just golfing. So, you know, how can you</p>
+                <p><strong>Company</strong>: extend your time and influence if you&#x27;re not on your computer, right?</p>
+                <p><strong>Prospect</strong>: Yeah, yeah.</p>
+                <p><strong>Company</strong>: I&#x27;m curious, like, are you a big golfer?</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Prospect</strong>: I hate golf.</p>
+                <p><strong>Company</strong>: All right, cool.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: But so, you know, how about these other interactions?</p>
+                <p><strong>Company</strong>: So you helped out with a couple, your sales rep had good fit,</p>
+                <p><strong>Prospect</strong>: Yeah.</p>
+                <p><strong>Company</strong>: and these people moved forward, and really our product is about, hey, let&#x27;s</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: go and extend your influence across your interactions. So,</p>
+                <p><strong>Prospect</strong>: Nice, yeah.</p>
+                <p><strong>Company</strong>: I wonder, like, today, how do you look at what happened in your early meetings?</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: {silence}</p>
+                <p><strong>Prospect</strong>: Yeah, so we have gone.</p>
+                <p><strong>Prospect</strong>: I have a library of calls that I need to watch</p>
+                <p><strong>Prospect</strong>: and I joined when I can, right?</p>
+                <p><strong>Prospect</strong>: I joined the conversations where we&#x27;ve got some new people coming on,</p>
+                <p><strong>Prospect</strong>: anything that&#x27;s a big deal, I make sure that I am there.</p>
+                <p><strong>Prospect</strong>: But that&#x27;s probably the main two ways right now.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Interesting. Any dashboards? You have, like, a sales office person?</p>
+                <p><strong>Prospect</strong>: Yeah, yeah, we&#x27;ve got dashboards.</p>
+                <p><strong>Company</strong>: {silence}</p>
+                <p><strong>Prospect</strong>: You know, I don&#x27;t even really think about them</p>
+                <p><strong>Prospect</strong>: when it comes to first meetings at this point.</p>
+                <p><strong>Prospect</strong>: I&#x27;m focused on conversion, but I&#x27;m really just trying to get this team</p>
+                <p><strong>Prospect</strong>: to perform right now before I even think about conversion.</p>
+                <p><strong>Company</strong>: Do you know what your conversion rate is? Like,</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: these first meetings, like, how often are you getting more, like, legit</p>
+                <p><strong>Company</strong>: opportunities?</p>
+                <p><strong>Prospect</strong>: So we are seeing things go from that NQL to SAL about 30%.</p>
+                <p><strong>Company</strong>: {silence}</p>
+                <p><strong>Prospect</strong>: If we take a first meeting, I&#x27;d say there&#x27;s a 50% chance</p>
+                <p><strong>Prospect</strong>: they&#x27;re going to come back for a second meeting</p>
+                <p><strong>Prospect</strong>: and we&#x27;ll continue the qualification process right now.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: 50%, not bad. Not bad. I would say that&#x27;s pretty good.</p>
+                <p><strong>Company</strong>: You might not need a...</p>
+                <p><strong>Prospect</strong>: Yeah, we&#x27;re getting there.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Perhaps you can use a different company, because this is really good.</p>
+                <p><strong>Prospect</strong>: [LAUGHTER]</p>
+                <p><strong>Company</strong>: So that makes sense. We see that a lot out there,</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: and those are all very good ways to understand what has happened in your</p>
+                <p><strong>Company</strong>: business, but, like you said, those dashboards, they don&#x27;t really</p>
+                <p><strong>Company</strong>: give you a lot of information around the specific interactions of your customers.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: And, like, let&#x27;s be honest, joining line meetings, or listening to Gong</p>
+                <p><strong>Company</strong>: Chorus, that&#x27;s a slog. Tough to do. Takes a ton of time.</p>
+                <p><strong>Company</strong>: And, like we said earlier in that slide, you&#x27;re probably spending time</p>
+                <p><strong>Company</strong>: on the most important meetings, and not</p>
+                <p><strong>Company</strong>: these early ones, which is really where our focus is. And essentially, we&#x27;re trying to have you</p>
+                <p><strong>Company</strong>: be on every call without being on every call. We want you to extend your</p>
+                <p><strong>Company</strong>: capability, multiply yourself, and your impact across the organization.</p>
+                <p><strong>Company</strong>: So that&#x27;s all about... That&#x27;s all what dispatch does. And essentially, we</p>
+                <p><strong>Company</strong>: produce this immediate notification to any meetings that need your attention.</p>
+                <p><strong>Company</strong>: So you can choose where you put your time and energy, and your team can make the most</p>
+                <p><strong>Company</strong>: out of every interaction. And initially, this might be knowing what&#x27;s happening on the ground,</p>
+                <p><strong>Company</strong>: and then over time, it&#x27;s just being aware of these anomalies that</p>
+                <p><strong>Company</strong>: really impact your business. So</p>
+                <p><strong>Company</strong>: if we take dispatch and put it into place, you start</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: at this place where you&#x27;re constantly trying to decide where to spend your time,</p>
+                <p><strong>Company</strong>: negotiate between your schedule and the priority meetings. You have to</p>
+                <p><strong>Company</strong>: make this decision. Like, what call do I join? Do I sit in this meeting and take</p>
+                <p><strong>Company</strong>: notes? Am I multitasking? Are you trying to actually get a structured</p>
+                <p><strong>Company</strong>: output from this meeting to know what went good and what bad, what went well, or what</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: didn&#x27;t? And then you gotta follow up with your</p>
+                <p><strong>Company</strong>: direct reports. There&#x27;s just so much going on.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: And our goal is for you to be less retrospective and more</p>
+                <p><strong>Company</strong>: impactful. The moment a meeting happens that you&#x27;re not on,</p>
+                <p><strong>Company</strong>: because it&#x27;s an early meeting, it&#x27;s one that you&#x27;re not so sure is worth spending the time on,</p>
+                <p><strong>Company</strong>: you&#x27;ll get a notification. You&#x27;ll immediately understand what happened in</p>
+                <p><strong>Company</strong>: that meeting and get some suggested actions. Maybe you need to intervene.</p>
+                <p><strong>Company</strong>: Maybe it wasn&#x27;t a big deal. And we just make it really easy for you to share that feedback</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: with your team. And we think that if we remove</p>
+                <p><strong>Company</strong>: all of this noise, your calendar goes from</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: this essentially impossible</p>
+                <p><strong>Company</strong>: transaction where you can&#x27;t be everywhere at once to now where you&#x27;re</p>
+                <p><strong>Company</strong>: spending time meeting with your team, spending time on</p>
+                <p><strong>Company</strong>: strategy, thinking about how to improve the business as opposed to</p>
+                <p><strong>Company</strong>: constantly just being on meetings because you feel like you have to.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Prospect</strong>: Yeah.</p>
+                <p><strong>Company</strong>: So, Joe, I&#x27;m curious, do you have this problem? Do you</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: feel the pull of your schedule and trying to be everywhere at the same time?</p>
+                <p><strong>Company</strong>: Oh, you can go.</p>
+                <p><strong>Prospect</strong>: Even on this call right now, I&#x27;m getting destroyed on Slack, right?</p>
+                <p><strong>Prospect</strong>: People are asking questions.</p>
+                <p><strong>Prospect</strong>: Yeah.</p>
+                <p><strong>Prospect</strong>: [LAUGHTER]</p>
+                <p><strong>Company</strong>: Understood. Understood. Well, let me go through a quick demo here.</p>
+                <p><strong>Prospect</strong>: [BLANK_AUDIO]</p>
+                <p><strong>Company</strong>: Actually, I asked you earlier if we could record</p>
+                <p><strong>Company</strong>: this call.</p>
+        </div>
+        </div>
+        <div class="col">
+        <h1 class="text-center">Scoring</h1>
+        <div class="accordion" id="groupAccordion">
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-b772acb6-7d6c-4820-96b2-37987f1a0f9d">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-b772acb6-7d6c-4820-96b2-37987f1a0f9d" aria-expanded="true" aria-controls="groupCollapse-b772acb6-7d6c-4820-96b2-37987f1a0f9d">
+                <div class="col"><strong>Preparation and Introduction</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-b772acb6-7d6c-4820-96b2-37987f1a0f9d" class="accordion-collapse collapse" aria-labelledby="groupHeading-b772acb6-7d6c-4820-96b2-37987f1a0f9d" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-83b9fd41-d8c6-4f3c-8c4a-f1bd9dfc0a28">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-83b9fd41-d8c6-4f3c-8c4a-f1bd9dfc0a28" aria-expanded="true" aria-controls="groupQuestionCollapse-83b9fd41-d8c6-4f3c-8c4a-f1bd9dfc0a28">
+                        <div class="col">Meeting Prep </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-83b9fd41-d8c6-4f3c-8c4a-f1bd9dfc0a28" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-83b9fd41-d8c6-4f3c-8c4a-f1bd9dfc0a28" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson did not ask about the available time or confirm the meeting’s agenda.</p>
+                        Question Coaching:
+                        <p>It&#x27;s essential to start the meeting by confirming the available time and agenda to ensure that both parties are aligned and have clear expectations for the meeting.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-6a3051b5-5b41-4f55-b1f6-6c8ce7070cf0">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-6a3051b5-5b41-4f55-b1f6-6c8ce7070cf0" aria-expanded="true" aria-controls="groupQuestionCollapse-6a3051b5-5b41-4f55-b1f6-6c8ce7070cf0">
+                        <div class="col">Team Introduction </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-6a3051b5-5b41-4f55-b1f6-6c8ce7070cf0" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-6a3051b5-5b41-4f55-b1f6-6c8ce7070cf0" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The transcript does not indicate that the salesperson introduced themselves or their team.</p>
+                        Question Coaching:
+                        <p>Introducing yourself and your team members helps build rapport and sets a professional tone for the meeting.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-6871f2d3-8d5f-4c18-95fb-1ed86086d236">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-6871f2d3-8d5f-4c18-95fb-1ed86086d236" aria-expanded="true" aria-controls="groupQuestionCollapse-6871f2d3-8d5f-4c18-95fb-1ed86086d236">
+                        <div class="col">Prospect Introduction </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-6871f2d3-8d5f-4c18-95fb-1ed86086d236" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-6871f2d3-8d5f-4c18-95fb-1ed86086d236" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>There is no evidence that the salesperson facilitated introductions from the prospect&#x27;s side.</p>
+                        Question Coaching:
+                        <p>Facilitate introductions from the prospect’s side to ensure you know who you are speaking with and to build a connection with all attendees.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-84e25abc-9e6c-4d02-8f67-0b3fe0b4dc7b">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-84e25abc-9e6c-4d02-8f67-0b3fe0b4dc7b" aria-expanded="true" aria-controls="groupQuestionCollapse-84e25abc-9e6c-4d02-8f67-0b3fe0b4dc7b">
+                        <div class="col">Initial Appreciation </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-84e25abc-9e6c-4d02-8f67-0b3fe0b4dc7b" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-84e25abc-9e6c-4d02-8f67-0b3fe0b4dc7b" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson did express thanks for the prospect joining the call.</p>
+                        Question Coaching:
+                        <p></p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">"Company: it&#x27;s alright, we&#x27;ll get through it. Thanks for joining.
+"</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-19e1dd87-f7d6-498a-bd11-201ba7cb9b25">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-19e1dd87-f7d6-498a-bd11-201ba7cb9b25" aria-expanded="true" aria-controls="groupCollapse-19e1dd87-f7d6-498a-bd11-201ba7cb9b25">
+                <div class="col"><strong>Understanding of the Market and Product</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-19e1dd87-f7d6-498a-bd11-201ba7cb9b25" class="accordion-collapse collapse" aria-labelledby="groupHeading-19e1dd87-f7d6-498a-bd11-201ba7cb9b25" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-47155eef-4a76-4627-b811-79fe87d0be58">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-47155eef-4a76-4627-b811-79fe87d0be58" aria-expanded="true" aria-controls="groupQuestionCollapse-47155eef-4a76-4627-b811-79fe87d0be58">
+                        <div class="col">Market Explanation </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-47155eef-4a76-4627-b811-79fe87d0be58" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-47155eef-4a76-4627-b811-79fe87d0be58" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The transcript lacks a clear explanation of the market landscape and the company’s position.</p>
+                        Question Coaching:
+                        <p>Providing a clear overview of the market and the company’s position helps the prospect understand the value and relevance of your product.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-d471c4d4-41a4-4aba-954e-1f1a18f9b1c4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-d471c4d4-41a4-4aba-954e-1f1a18f9b1c4" aria-expanded="true" aria-controls="groupQuestionCollapse-d471c4d4-41a4-4aba-954e-1f1a18f9b1c4">
+                        <div class="col">Knowledge Inquiry </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-d471c4d4-41a4-4aba-954e-1f1a18f9b1c4" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-d471c4d4-41a4-4aba-954e-1f1a18f9b1c4" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson did not ask the prospect about their existing knowledge of the product.</p>
+                        Question Coaching:
+                        <p>Ask the prospect about their existing knowledge to tailor your explanations and avoid redundant information.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-dd5e291a-02ea-4f66-a5e7-8ecd1fa10ea6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-dd5e291a-02ea-4f66-a5e7-8ecd1fa10ea6" aria-expanded="true" aria-controls="groupCollapse-dd5e291a-02ea-4f66-a5e7-8ecd1fa10ea6">
+                <div class="col"><strong>Discovery and Needs Assessment</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-dd5e291a-02ea-4f66-a5e7-8ecd1fa10ea6" class="accordion-collapse collapse" aria-labelledby="groupHeading-dd5e291a-02ea-4f66-a5e7-8ecd1fa10ea6" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-87b14f4d-55da-42a1-908f-affa216d2e43">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-87b14f4d-55da-42a1-908f-affa216d2e43" aria-expanded="true" aria-controls="groupQuestionCollapse-87b14f4d-55da-42a1-908f-affa216d2e43">
+                        <div class="col">Discovery Questions </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-87b14f4d-55da-42a1-908f-affa216d2e43" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-87b14f4d-55da-42a1-908f-affa216d2e43" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson asked about the prospect&#x27;s reason for the call, which led to uncovering pain points regarding team scaling.</p>
+                        Question Coaching:
+                        <p></p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">"Company: Hey, remind me, why did you take this call again?
+"</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-ac18c905-03d2-4a56-a420-d171a1009e9b">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-ac18c905-03d2-4a56-a420-d171a1009e9b" aria-expanded="true" aria-controls="groupQuestionCollapse-ac18c905-03d2-4a56-a420-d171a1009e9b">
+                        <div class="col">Value Linking </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-ac18c905-03d2-4a56-a420-d171a1009e9b" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-ac18c905-03d2-4a56-a420-d171a1009e9b" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson linked the prospect’s challenges to the product’s value proposition about extending influence.</p>
+                        Question Coaching:
+                        <p></p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">"Company: So you helped out with a couple, your sales rep had good fit,
+and these people moved forward, and really our product is about, hey, let&#x27;s
+go and extend your influence across your interactions.
+"</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-f4d8d9a0-91c5-4975-bb8c-f9003738f030">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-f4d8d9a0-91c5-4975-bb8c-f9003738f030" aria-expanded="true" aria-controls="groupCollapse-f4d8d9a0-91c5-4975-bb8c-f9003738f030">
+                <div class="col"><strong>Demonstration of Value</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-f4d8d9a0-91c5-4975-bb8c-f9003738f030" class="accordion-collapse collapse" aria-labelledby="groupHeading-f4d8d9a0-91c5-4975-bb8c-f9003738f030" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-f58f9a1b-6639-450d-b790-9a923591e2b9">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-f58f9a1b-6639-450d-b790-9a923591e2b9" aria-expanded="true" aria-controls="groupQuestionCollapse-f58f9a1b-6639-450d-b790-9a923591e2b9">
+                        <div class="col">Product Demo </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-f58f9a1b-6639-450d-b790-9a923591e2b9" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-f58f9a1b-6639-450d-b790-9a923591e2b9" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>A product demonstration was mentioned in the conversation.</p>
+                        Question Coaching:
+                        <p></p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">"Company: Understood. Understood. Well, let me go through a quick demo here.
+"</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-0f9e8476-4202-421c-987e-f84fe9999f17">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-0f9e8476-4202-421c-987e-f84fe9999f17" aria-expanded="true" aria-controls="groupQuestionCollapse-0f9e8476-4202-421c-987e-f84fe9999f17">
+                        <div class="col">Unique Value </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-0f9e8476-4202-421c-987e-f84fe9999f17" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-0f9e8476-4202-421c-987e-f84fe9999f17" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson explained the product&#x27;s unique value in terms of notifications and suggested actions for meetings.</p>
+                        Question Coaching:
+                        <p></p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">"Company: And our goal is for you to be less retrospective and more impactful. The moment a meeting happens that you&#x27;re not on,
+Company: because it&#x27;s an early meeting, it&#x27;s one that you&#x27;re not so sure is worth spending the time on,
+Company: you&#x27;ll get a notification. You&#x27;ll immediately understand what happened in that meeting and get some suggested actions.
+"</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-c0cb2e50-9bda-4e64-9f8d-64fdeb9723e5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-c0cb2e50-9bda-4e64-9f8d-64fdeb9723e5" aria-expanded="true" aria-controls="groupCollapse-c0cb2e50-9bda-4e64-9f8d-64fdeb9723e5">
+                <div class="col"><strong>Handling Objections</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-c0cb2e50-9bda-4e64-9f8d-64fdeb9723e5" class="accordion-collapse collapse" aria-labelledby="groupHeading-c0cb2e50-9bda-4e64-9f8d-64fdeb9723e5" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-0c7b548c-7f6d-4f5f-a22a-5a4e275fbab3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-0c7b548c-7f6d-4f5f-a22a-5a4e275fbab3" aria-expanded="true" aria-controls="groupQuestionCollapse-0c7b548c-7f6d-4f5f-a22a-5a4e275fbab3">
+                        <div class="col">Objections Anticipated </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-0c7b548c-7f6d-4f5f-a22a-5a4e275fbab3" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-0c7b548c-7f6d-4f5f-a22a-5a4e275fbab3" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>There is no indication that common objections were anticipated or addressed.</p>
+                        Question Coaching:
+                        <p>Addressing common objections preemptively helps in gaining the prospect’s trust and smoothly guides the conversation.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-63eff78b-8402-497c-98ac-3adecc552c5d">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-63eff78b-8402-497c-98ac-3adecc552c5d" aria-expanded="true" aria-controls="groupQuestionCollapse-63eff78b-8402-497c-98ac-3adecc552c5d">
+                        <div class="col">Solutions Steering </div>
+                        <div class="col text-end p-3">✅</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-63eff78b-8402-497c-98ac-3adecc552c5d" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-63eff78b-8402-497c-98ac-3adecc552c5d" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The salesperson explained how the product provides solutions for managing time and meeting notifications.</p>
+                        Question Coaching:
+                        <p></p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">"Company: So that&#x27;s all about... That&#x27;s all what dispatch does. And essentially, we produce this immediate notification to any meetings that need your attention.
+"</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item border border-3 border-danger rounded-2">
+            <h2 class="accordion-header" id="groupHeading-b8011ec1-7396-4531-b538-6c44d75d2a4b">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse-b8011ec1-7396-4531-b538-6c44d75d2a4b" aria-expanded="true" aria-controls="groupCollapse-b8011ec1-7396-4531-b538-6c44d75d2a4b">
+                <div class="col"><strong>Closing and Next Steps</strong></div> 
+                <div class="col text-end p-3">🔴</div>
+                </button>
+            </h2>
+            <div id="groupCollapse-b8011ec1-7396-4531-b538-6c44d75d2a4b" class="accordion-collapse collapse" aria-labelledby="groupHeading-b8011ec1-7396-4531-b538-6c44d75d2a4b" data-bs-parent="#groupAccordion">
+                <div class="accordion-body">
+                <div class="accordion accordion-flush" id="groupQuestionAccordion">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-8cd0bd89-fb20-4293-9213-e9e7bae350e2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-8cd0bd89-fb20-4293-9213-e9e7bae350e2" aria-expanded="true" aria-controls="groupQuestionCollapse-8cd0bd89-fb20-4293-9213-e9e7bae350e2">
+                        <div class="col">Key Summary </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-8cd0bd89-fb20-4293-9213-e9e7bae350e2" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-8cd0bd89-fb20-4293-9213-e9e7bae350e2" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>The transcript does not show a summary of key points or a reiteration of how the product addresses the prospect’s needs.</p>
+                        Question Coaching:
+                        <p>Summarizing key points reinforces the value propositions discussed and ensures that the prospect leaves with clarity.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-8329dcec-9535-4252-955e-5fc18426db9c">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-8329dcec-9535-4252-955e-5fc18426db9c" aria-expanded="true" aria-controls="groupQuestionCollapse-8329dcec-9535-4252-955e-5fc18426db9c">
+                        <div class="col">Next Meeting </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-8329dcec-9535-4252-955e-5fc18426db9c" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-8329dcec-9535-4252-955e-5fc18426db9c" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>There is no evidence that the salesperson set up a next meeting or discussed attendees and objectives.</p>
+                        Question Coaching:
+                        <p>Establishing a next meeting and setting expectations ensures continuity and keeps the sales process moving forward.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="groupQuestionHeading-e5761ad7-f028-4675-8a26-89f3b4ab748d">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#groupQuestionCollapse-e5761ad7-f028-4675-8a26-89f3b4ab748d" aria-expanded="true" aria-controls="groupQuestionCollapse-e5761ad7-f028-4675-8a26-89f3b4ab748d">
+                        <div class="col">Actionable Steps </div>
+                        <div class="col text-end p-3">❌</div>
+                        </button>
+                    </h2>
+                    <div id="groupQuestionCollapse-e5761ad7-f028-4675-8a26-89f3b4ab748d" class="accordion-collapse collapse" aria-labelledby="groupQuestionHeading-e5761ad7-f028-4675-8a26-89f3b4ab748d" data-bs-parent="#groupQuestionAccordion">
+                        <div class="accordion-body">
+                        <p>There is no indication of an agreed-upon actionable next step or commitment to follow-up.</p>
+                        Question Coaching:
+                        <p>Agreeing on actionable next steps and expressing commitment to follow-up is crucial for maintaining momentum and closing the sale.</p>
+                        Transcript:
+                        <div class="alert alert-dark" role="alert">""</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+  </body>
+</html>
