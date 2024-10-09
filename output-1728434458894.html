@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Column Bootstrap Page with Nested Accordions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <h2>Original</h2>
+                <h2>Active Looking</h2>
+                <div class="accordion" id="accordionLeft">
+                    <!-- This is a section -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-0">
+                                Executive Summary
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-0" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-1">
+                                Evaluation Criteria
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-2">
+                                Business Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-3">
+                                Functional Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-3" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-4">
+                                Non-Functional Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-4" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-5">
+                                Technical Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-5" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-6">
+                                Budget and Timeline
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-6" class="accordion-collapse collapse show" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionLeftQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseLeftQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionLeftQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h2>Original</h2>
+                <h2>Active Looking</h2>
+                <div class="accordion" id="accordionRight">
+                    <!-- This is a section -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-0">
+                                Executive Summary
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-0" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-1">
+                                Evaluation Criteria
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-1" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-2">
+                                Business Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-2" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-3">
+                                Functional Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-3" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-4">
+                                Non-Functional Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-4" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-5">
+                                Technical Requirements
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-5" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-6">
+                                Budget and Timeline
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-6" class="accordion-collapse collapse show" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA">
+                                Questions and Answers
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionRightQA">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ1">
+                                                Question 1
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ1" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 1.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQ2">
+                                                Question 2
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRightQ2" class="accordion-collapse collapse show" data-bs-parent="#accordionRightQA">
+                                            <div class="accordion-body">
+                                                Answer to question 2.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
