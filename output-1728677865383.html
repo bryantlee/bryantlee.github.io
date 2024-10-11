@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Column Bootstrap Page with Nested Accordions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <h2>Original</h2>
+                <h2>Passive Looking</h2>
+                <div class="accordion" id="accordionLeft">
+                    <!-- This is a section -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-0">
+                                Executive Summary
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-0" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Purpose
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li><strong>The purpose of this document is to outline requirements for replacing current meeting recording software.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>Scope
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li><strong>Scope includes replacing existing software with a solution that requires less manual intervention for transcript review.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>Background
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li><strong>The replacement is due to inefficiencies in current manual review process after using chorus.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA-0">
+                                Questions
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA-0" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Are you looking to replace existing software or implement a new solution?-End User
+                                        <ul>
+                                            <li><strong>I am replacing software </strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>How are you currently solving this problem?-End User
+                                        <ul>
+                                            <li><strong>I use chorus today to record my meetings</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What are the main challenges you&#x27;re facing with your current solution?-End User
+                                        <ul>
+                                            <li><strong>Biggest issue is that I have to manually use chatgpt to review transcripts</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>Do you have any direct feedback on the Executive Summary section?-End User
+                                        <ul>
+                                            <li><strong>make sure you talk about how we are getting this software to increase our revenue</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What specific features or improvements are you hoping to gain from the new solution?-End User
+                                        <ul>
+                                            <li><strong>I would like us to have AI reporting, instead of keyword spotting which isnt working for us</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What metrics will determine the success of the new software implementation?-Project Manager
+                                        <ul>
+                                            <li><strong>the most important metric is how fast deals get into contract stage</strong></li>
+                                        </ul>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h2>New</h2>
+                <h2>Passive Looking</h2>
+                <div class="accordion" id="accordionRight">
+                    <!-- This is a section -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-0">
+                                Executive Summary
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-0" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Purpose
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li>The purpose of this document is to outline requirements for replacing current meeting recording software.</li>
+                                            <!-- This is a item -->
+                                            <li><strong>Finalize the selection of a new call recording software that will replace Chorus, with advanced AI capabilities for improved reporting, automated call analysis, and decision-making support.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+
+
+                                    <li>Scope
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li>Scope includes replacing existing software with a solution that requires less manual intervention for transcript review.</li>
+                                            <!-- This is a item -->
+                                            <li><strong>The new software must deliver advanced AI-driven call analysis, integrate with existing CRM systems, scale to handle large call volumes, and provide actionable insights to leadership.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+
+
+                                    <li>Background
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li>The replacement is due to inefficiencies in current manual review process after using chorus.</li>
+                                            <!-- This is a item -->
+                                            <li><strong>Chorus lacks sufficient AI capabilities, leading to manual extraction of insights, and inefficiencies. A new solution is needed to automate the process and improve sales performance tracking.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA-0">
+                                Questions
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA-0" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Are you looking to replace existing software or implement a new solution?-End User
+                                        <ul>
+                                            <li>I am replacing software </li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>How are you currently solving this problem?-End User
+                                        <ul>
+                                            <li>I use chorus today to record my meetings</li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What are the main challenges you&#x27;re facing with your current solution?-End User
+                                        <ul>
+                                            <li>Biggest issue is that I have to manually use chatgpt to review transcripts</li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>Do you have any direct feedback on the Executive Summary section?-End User
+                                        <ul>
+                                            <li>make sure you talk about how we are getting this software to increase our revenue</li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What specific features or improvements are you hoping to gain from the new solution?-End User
+                                        <ul>
+                                            <li>I would like us to have AI reporting, instead of keyword spotting which isnt working for us</li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What metrics will determine the success of the new software implementation?-Project Manager
+                                        <ul>
+                                            <li>the most important metric is how fast deals get into contract stage</li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>Is there any additional feedback for improving the Executive Summary?-End User
+                                        <ul>
+                                            <li><strong></strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What would ensure a successful software transition for your team?-End User
+                                        <ul>
+                                            <li><strong></strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>How do you envision the new software affecting sales performance?-Project Manager
+                                        <ul>
+                                            <li><strong></strong></li>
+                                        </ul>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
