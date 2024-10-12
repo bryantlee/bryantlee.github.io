@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Column Bootstrap Page with Nested Accordions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <h2>Original</h2>
+                <h2>First Thought</h2>
+                <div class="accordion" id="accordionLeft">
+                    <!-- This is a section -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-0">
+                                Executive Summary
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-0" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA-0">
+                                Questions
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA-0" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Are you looking to replace existing software or implement a new solution?-End User
+                                        <ul>
+                                            <li><strong>This is net nee</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>How are you currently solving this problem?-End User
+                                        <ul>
+                                            <li><strong>Currently using genesys and zendesk</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What are the main challenges you&#x27;re facing with your current solution?-End User
+                                        <ul>
+                                            <li><strong>We have two systems and just want one. We dont want multiple interfaces </strong></li>
+                                        </ul>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftTopic-1">
+                                Evaluation Criteria
+                            </button>
+                        </h2>
+                        <div id="collapseLeftTopic-1" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeftQA-1">
+                                Questions
+                            </button>
+                        </h2>
+                        <div id="collapseLeftQA-1" class="accordion-collapse collapse" data-bs-parent="#accordionLeft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h2>New</h2>
+                <h2>First Thought</h2>
+                <div class="accordion" id="accordionRight">
+                    <!-- This is a section -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-0">
+                                Executive Summary
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-0" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Purpose
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li><strong>The purpose of this document is to outline the requirements for selecting and implementing a unified software solution.</strong></li>
+                                            <!-- This is a item -->
+                                            <li><strong>The objective is to streamline operations by consolidating multiple interfaces into a single, efficient system.</strong></li>
+                                            <!-- This is a item -->
+                                            <li><strong>Ensure the new system meets current operational needs and enhances user experience.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+
+
+                                    <li>Scope
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li><strong>The scope includes evaluating, purchasing, and integrating a new software solution that consolidates existing functionalities.</strong></li>
+                                            <!-- This is a item -->
+                                            <li><strong>Main goals are to reduce complexity by having one system and improve interface usability.</strong></li>
+                                            <!-- This is a item -->
+                                            <li><strong>Eliminate redundant processes and improve efficiency by using a unified platform.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+
+
+                                    <li>Background
+                                        <ul>
+                                            <!-- This is a item -->
+                                            <li><strong>The current setup involves using both Genesys and Zendesk, leading to inefficiencies.</strong></li>
+                                            <!-- This is a item -->
+                                            <li><strong>There is a need to replace the existing system with a single, integrated solution.</strong></li>
+                                            <!-- This is a item -->
+                                            <li><strong>The goal is to minimize multiple interactions and focus on a streamlined user interface.</strong></li>
+
+                                        </ul>
+                                    </li>                                    
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA-0">
+                                Questions
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA-0" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+
+                                    <li>Are you looking to replace existing software or implement a new solution?-End User
+                                        <ul>
+                                            <li><strong>This is net nee</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>How are you currently solving this problem?-End User
+                                        <ul>
+                                            <li><strong>Currently using genesys and zendesk</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What are the main challenges you&#x27;re facing with your current solution?-End User
+                                        <ul>
+                                            <li><strong>We have two systems and just want one. We dont want multiple interfaces</strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>Do you have any specific feedback on the Executive Summary section so far?-End User
+                                        <ul>
+                                            <li><strong></strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>What key features or improvements are you seeking in the new system?-Project Manager
+                                        <ul>
+                                            <li><strong></strong></li>
+                                        </ul>
+                                    </li>                                    
+
+                                    <li>How will this new system support your organization&#x27;s strategic goals?-IT
+                                        <ul>
+                                            <li><strong></strong></li>
+                                        </ul>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightTopic-1">
+                                Evaluation Criteria
+                            </button>
+                        </h2>
+                        <div id="collapseRightTopic-1" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRightQA-1">
+                                Questions
+                            </button>
+                        </h2>
+                        <div id="collapseRightQA-1" class="accordion-collapse collapse" data-bs-parent="#accordionRight">
+                            <div class="accordion-body">
+                                <ul>
+                                    <!-- This is a subsection -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
