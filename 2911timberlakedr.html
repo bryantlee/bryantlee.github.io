@@ -46,11 +46,6 @@
         .smooth-scroll {
             scroll-behavior: smooth;
         }
-        .modal-content pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Inter', sans-serif;
-        }
     </style>
 </head>
 <body class="bg-custom-primary text-stone-800 smooth-scroll">
@@ -147,45 +142,23 @@
                             </div>
                             <div>
                                 <p class="text-sm text-custom-accent">Less High-End Repairs</p>
-                                <p class="text-3xl font-bold text-red-600">-$56,300</p>
+                                <p class="text-3xl font-bold text-red-600">-$67,560</p>
                             </div>
                             <div>
                                 <p class="text-sm text-custom-accent">Max Prudent Offer</p>
-                                <p class="text-3xl font-bold text-green-700">$294,400</p>
+                                <p class="text-3xl font-bold text-green-700">$283,140</p>
                             </div>
                         </div>
                     </div>
-                     <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="text-2xl font-bold mb-3">Post-Purchase Planning</h3>
-                        <p class="text-custom-accent mb-4">Effectively managing repairs post-purchase is as crucial as negotiating the price. Use the AI-powered tool below to generate a logical, prioritized repair schedule to guide your first year of ownership.</p>
-                        <button id="generate-plan-btn" class="bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-stone-800 transition-colors">✨ Create Post-Purchase Repair Plan</button>
-                    </div>
-                     <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-xl text-green-800 mt-6">
+                     <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-xl text-green-800">
                         <h3 class="text-2xl font-bold mb-3">Final Recommendation</h3>
-                        <p>This property represents an extreme level of risk and financial commitment. The most prudent path is to <strong>walk away</strong> unless an aggressive renegotiation achieves a purchase price at or below the <strong>$294,000 maximum prudent offer</strong>. Proceeding at a higher price means you are inheriting the seller's liabilities and will almost certainly be over-invested in the property from day one.</p>
+                        <p>This property represents an extreme level of risk and financial commitment. The most prudent path is to <strong>walk away</strong> unless an aggressive renegotiation achieves a purchase price at or below the <strong>$283,000 maximum prudent offer</strong>. Proceeding at a higher price means you are inheriting the seller's liabilities and will almost certainly be over-invested in the property from day one.</p>
                     </div>
                 </div>
             </section>
+
         </main>
     </div>
-
-    <!-- Modal for AI Generated Content -->
-    <div id="ai-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center p-4 border-b">
-                <h3 id="modal-title" class="text-xl font-bold"></h3>
-                <button id="modal-close-btn" class="text-stone-500 hover:text-stone-800">&times;</button>
-            </div>
-            <div id="modal-content-area" class="p-6 overflow-y-auto modal-content">
-                <pre>Generating...</pre>
-            </div>
-            <div class="p-4 border-t flex justify-end gap-2">
-                <button id="modal-copy-btn" class="bg-stone-200 text-stone-800 font-semibold py-2 px-4 rounded-lg hover:bg-stone-300 transition-colors hidden">Copy Text</button>
-                <button id="modal-close-btn-bottom" class="bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-stone-800 transition-colors">Close</button>
-            </div>
-        </div>
-    </div>
-
 
 <script>
     const inspectionData = {
@@ -276,13 +249,6 @@
         const costToggleButtons = document.getElementById('cost-toggle-buttons');
         const totalCostDisplay = document.getElementById('total-cost-display');
         const navigationLinks = document.querySelectorAll('#navigation a');
-        
-        const modal = document.getElementById('ai-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalContentArea = document.getElementById('modal-content-area');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const modalCloseBtnBottom = document.getElementById('modal-close-btn-bottom');
-        const modalCopyBtn = document.getElementById('modal-copy-btn');
 
         function formatCurrency(value) {
             return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
@@ -308,9 +274,6 @@
                                 <p class="text-stone-700">${item.negotiability}</p>
                             </div>
                         </div>
-                        <div class="mt-6 pt-6 border-t border-stone-200">
-                           <button data-item-id="${item.id}" class="generate-email-btn bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-stone-800 transition-colors">✨ Generate Negotiation Email</button>
-                        </div>
                     </div>
                 </section>
             `;
@@ -324,19 +287,48 @@
                 labels: inspectionData.costChart.labels,
                 datasets: [inspectionData.costChart.datasets[0]]
             },
-            options: { /* Chart options... */ }
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ` ${context.dataset.label}: ${formatCurrency(context.raw)}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return formatCurrency(value);
+                            }
+                        }
+                    }
+                }
+            }
         });
         
         costToggleButtons.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 const costType = e.target.dataset.costType;
                 const buttons = costToggleButtons.querySelectorAll('button');
+                
                 buttons.forEach(btn => {
                     btn.classList.remove('bg-stone-700', 'text-white');
                     btn.classList.add('text-stone-600');
                 });
+                
                 e.target.classList.add('bg-stone-700', 'text-white');
                 e.target.classList.remove('text-stone-600');
+
                 if (costType === 'avg') {
                     costChart.data.datasets[0] = inspectionData.costChart.datasets[0];
                     totalCostDisplay.textContent = formatCurrency(inspectionData.totalCosts.avg);
@@ -348,7 +340,7 @@
             }
         });
         
-        const sections = document.querySelectorAll('main section');
+        const sections = document.querySelectorAll('section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -367,110 +359,13 @@
         navigationLinks.forEach(link => {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
-
-        // Gemini and Modal Logic
-        function showModal(title, content = '<pre>Generating...</pre>', showCopy = false) {
-            modalTitle.textContent = title;
-            modalContentArea.innerHTML = content;
-            modalCopyBtn.style.display = showCopy ? 'block' : 'none';
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function hideModal() {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        async function callGemini(prompt) {
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ role: "user", parts: [{ text: prompt }] }]
-            };
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.statusText}`);
-                }
-                const result = await response.json();
-                if (result.candidates && result.candidates.length > 0) {
-                    return result.candidates[0].content.parts[0].text;
-                }
-                throw new Error("No content generated.");
-            } catch (error) {
-                console.error("Gemini API call failed:", error);
-                return "Sorry, there was an error generating the content. Please try again.";
-            }
-        }
-
-        detailsContainer.addEventListener('click', async (e) => {
-            if (e.target.classList.contains('generate-email-btn')) {
-                const button = e.target;
-                const itemId = button.dataset.itemId;
-                const item = inspectionData.details.find(d => d.id === itemId);
-                if (!item) return;
-
-                button.textContent = 'Generating...';
-                button.disabled = true;
-                
-                showModal(`Drafting Email for: ${item.title}`);
-                
-                const prompt = `You are a savvy home buyer in Orlando, Florida. Based on the following home inspection finding for the property at 2911 Timberlake Drive, draft a professional and firm email to my real estate agent, Tony LeBron. The goal is to request a significant seller's credit or a price reduction to cover the repair costs. Do not ask the seller to perform the repairs. Reference the specific issue, its severity (especially if it affects insurability), and the estimated cost. Be polite but clear that this is a major concern that needs to be addressed financially before closing. Here is the data for the email:\n\n${JSON.stringify(item, null, 2)}`;
-                
-                const generatedText = await callGemini(prompt);
-                modalContentArea.innerHTML = `<pre>${generatedText}</pre>`;
-                modalCopyBtn.style.display = 'block';
-
-                button.textContent = '✨ Generate Negotiation Email';
-                button.disabled = false;
-            }
-        });
-        
-        document.getElementById('generate-plan-btn').addEventListener('click', async (e) => {
-            const button = e.target;
-            button.textContent = 'Generating...';
-            button.disabled = true;
-
-            showModal('Post-Purchase Repair Plan');
-
-            const prompt = `You are an experienced general contractor in Florida. Based on the following list of inspection issues for a newly purchased home, create a prioritized repair plan for the new homeowner. Group tasks into "Immediate (First 30 Days)", "Next 90 Days", and "First Year". Explain the reasoning for the prioritization, focusing on safety, preventing further damage (especially water), and insurability first. Provide rough guidance on the order of operations. Here are the issues:\n\n${JSON.stringify(inspectionData.details, null, 2)}`;
-
-            const generatedText = await callGemini(prompt);
-            modalContentArea.innerHTML = `<pre>${generatedText}</pre>`;
-            modalCopyBtn.style.display = 'block';
-
-            button.textContent = '✨ Create Post-Purchase Repair Plan';
-            button.disabled = false;
-        });
-
-        modalCloseBtn.addEventListener('click', hideModal);
-        modalCloseBtnBottom.addEventListener('click', hideModal);
-        modalCopyBtn.addEventListener('click', () => {
-            const contentToCopy = modalContentArea.querySelector('pre').textContent;
-            const textArea = document.createElement('textarea');
-            textArea.value = contentToCopy;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                modalCopyBtn.textContent = 'Copied!';
-                setTimeout(() => { modalCopyBtn.textContent = 'Copy Text'; }, 2000);
-            } catch (err) {
-                console.error('Failed to copy text: ', err);
-            }
-            document.body.removeChild(textArea);
-        });
     });
+
 </script>
 
 </body>
