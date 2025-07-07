@@ -1,624 +1,415 @@
-import React, { useState } from 'react';
-import { Home, AlertTriangle, Wrench, DollarSign, ShieldCheck, ChevronsRight, ArrowLeft, Video, BookOpen, Phone, MapPin, Building, Star, TrendingUp, TrendingDown } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Inspection Dashboard - 220 Melissa Ct</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        .lucide {
+            stroke-width: 2;
+        }
+    </style>
+</head>
+<body>
 
-// --- Data Object based on the provided text ---
-const inspectionData = {
-  propertyOverview: {
-    address: "220 Melissa Ct, Sanford, FL 32773",
-    age: "30 years or older",
-    type: "Single Family Home",
-    foundation: "Slab on Grade, Concrete",
-    wallStructure: "Concrete",
-    siding: "Concrete (Stucco)",
-    inspectionDate: "June 11, 2024",
-    client: "Melanie Zayas - Pena",
-  },
-  propertySummary: {
-    highlights: [
-      "New roof installed in May 2023.",
-      "Central cooling system (condenser and air handler) is only 4 years old.",
-      "Durable slab-on-grade foundation and concrete wall structure."
-    ],
-    lowlights: [
-      "Significant deferred maintenance with 27 distinct deficiencies.",
-      "Multiple immediate electrical safety hazards (reverse polarity, no GFCI).",
-      "50-gallon water heater is 18 years old and at high risk of failure.",
-      "Severely inadequate attic insulation (1-3 inches).",
-      "Original, inefficient single-pane windows.",
-      "Pattern of issues increasing risk of moisture intrusion."
-    ]
-  },
-  systems: [
-    {
-      id: 'roofing',
-      name: "Roofing",
-      description: "Asphalt and fiberglass shingles on a gable-style roof. The roof is approximately one year old.",
-      condition: "High",
-      negotiability: "High",
-      costImpact: "$350 - $1,000",
-      specifications: "Primary covering is asphalt/fiberglass shingles. A permit for a full replacement was issued on May 2, 2023. System includes gutters, downspouts, and a separate patio roof.",
-      issues: [
-        {
-          id: "4.3.1",
-          title: "Missing Downspout",
-          relevance: "A missing downspout concentrates water flow directly against the foundation, leading to soil saturation, increased hydrostatic pressure, and a high risk of major moisture intrusion into the house and foundation, potentially causing structural settlement.",
-          severity: "High",
-          cost: "$100 - $400",
-          negotiationPotential: "High",
-          resources: [
-            { type: "Blog", title: "The Dangers of Improper Drainage", url: "#" },
-            { type: "Video", title: "How to Install a Gutter Downspout", url: "#" }
-          ],
-          contractors: [
-            { name: "GutterWorks Services", phone: "(407) 960-9489", specialty: "Seamless gutter installation and repair." },
-            { name: "Empire Gutters", phone: "N/A", specialty: "Offers free quotes for gutter services." },
-            { name: "Storm Solutions Seamless Gutters", phone: "(407) 832-5183", specialty: "BBB A+ rated gutter cleaning and installation." }
-          ]
-        },
-        {
-          id: "4.7.1",
-          title: "Debris on Patio Roof",
-          relevance: "Accumulated leaf debris impedes drainage, traps moisture against the roofing material, and can accelerate its deterioration, leading to rot and potential leaks.",
-          severity: "Low",
-          cost: "$250 - $600",
-          negotiationPotential: "Low",
-          resources: [
-             { type: "Blog", title: "Why Roof Cleaning is Crucial", url: "#" },
-             { type: "Video", title: "DIY Roof Maintenance Tips", url: "#" }
-          ],
-          contractors: [
-            { name: "Eustis Roofing", phone: "(352) 343-4240", specialty: "Roof cleaning services." },
-            { name: "The Grounds Guys of Sanford, FL", phone: "(407) 993-2672", specialty: "General grounds care and clean-up." }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'exterior',
-      name: "Exterior",
-      description: "Concrete stucco siding with a screened-in porch, concrete driveways, and a fenced yard. Windows are original single-pane.",
-      condition: "Medium",
-      negotiability: "High",
-      costImpact: "$8,500 - $23,000+",
-      specifications: "Stucco siding, screened porch, concrete driveways/walkways, fenced yard, original single-pane windows.",
-      issues: [
-        {
-            id: "5.1.1",
-            title: "Minor Stucco Cracks",
-            relevance: "Cracks in stucco provide a pathway for water to penetrate the wall system, potentially leading to trapped moisture, deterioration of the underlying structure, and mold growth.",
-            severity: "Medium",
-            cost: "$600 - $1,500",
-            negotiationPotential: "Medium",
-            resources: [{ type: "Blog", title: "Stucco Cracks: When to Worry", url: "#" }, { type: "Video", title: "How to Repair Hairline Cracks in Stucco", url: "#" }],
-            contractors: [
-                { name: "Landress Painting and Son LLC", phone: "(407) 620-6517", specialty: "Stucco repair services." },
-                { name: "KDR Stucco Repair", phone: "(386) 320-8458", specialty: "Stucco repair services in the Sanford area." }
-            ]
-        },
-        {
-            id: "5.1.2",
-            title: "Active Pests Observed",
-            relevance: "Any active pest infestation can lead to property damage (e.g., termites, rodents) and pose health risks. Immediate professional evaluation is required.",
-            severity: "High",
-            cost: "$170 (initial) + ongoing plans",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "Signs of a Pest Infestation", url: "#" }],
-            contractors: [
-                { name: "Sanford Pest Control (All American)", phone: "(407) 391-9431", specialty: "Monthly pest control plans." },
-                { name: "Sorko Services", phone: "(407) 878-4492", specialty: "Comprehensive pest and wildlife control." }
-            ]
-        },
-        {
-            id: "5.2.1",
-            title: "Original/Older Windows",
-            relevance: "Original single-pane windows are significantly less energy-efficient, leading to higher utility costs, and offer minimal protection against storms.",
-            severity: "Medium",
-            cost: "$7,500 - $20,000+",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "Benefits of Energy-Efficient Windows", url: "#" }],
-            contractors: [
-                { name: "Florida Window & Door Solutions", phone: "321-203-4336", specialty: "Impact and storm windows." },
-                { name: "Window World of Orlando", phone: "(407) 389-1400", specialty: "National brand with local presence." }
-            ]
-        }
-      ]
-    },
-    {
-      id: 'electrical',
-      name: "Electrical",
-      description: "150-amp General Electric main panel with copper Romex wiring. Multiple safety issues identified.",
-      condition: "High",
-      negotiability: "High",
-      costImpact: "$440 - $1,250",
-      specifications: "150-amp GE main panel, underground service entrance, copper Romex branch wiring.",
-      issues: [
-        {
-            id: "6.4.1",
-            title: "No Power to Outlet(s)",
-            relevance: "Indicates a break in the electrical circuit. A loose wire connection, a potential cause, is a fire hazard.",
-            severity: "High",
-            cost: "$130 - $350",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "Troubleshooting Dead Outlets", url: "#" }],
-            contractors: [
-                { name: "Del-Air Plumbing, Air Conditioning, Electric", phone: "(407) 327-6000", specialty: "Outlet and switch repairs." },
-                { name: "Strada Services", phone: "(833) 539-7800", specialty: "Residential electrical troubleshooting." }
-            ]
-        },
-        {
-            id: "6.5.1",
-            title: "Reverse Polarity / Non-functional GFCI",
-            relevance: "Reverse polarity is a dangerous wiring error creating a persistent shock hazard. A non-functional GFCI fails to protect against electrocution in wet areas.",
-            severity: "High",
-            cost: "$130 - $300",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "Dangers of Reverse Polarity", url: "#" }],
-            contractors: [
-                { name: "Sanford Electric Company", phone: "N/A", specialty: "Family-owned since 1925, full-range electrical repairs." }
-            ]
-        },
-        {
-            id: "13.7.1",
-            title: "Bathroom Outlet Not GFCI Protected",
-            relevance: "Absence of GFCI protection in a bathroom is a direct violation of modern safety codes and poses a severe risk of electrocution.",
-            severity: "High",
-            cost: "$130 - $300",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "Why GFCI is Required in Bathrooms", url: "#" }],
-            contractors: [
-                { name: "Del-Air Plumbing, Air Conditioning, Electric", phone: "(407) 327-6000", specialty: "GFCI/AFCI installation and repairs." }
-            ]
-        }
-      ]
-    },
-    {
-      id: 'plumbing',
-      name: "Plumbing",
-      description: "Public water source with primarily copper lines. The 50-gallon water heater is 18 years old.",
-      condition: "High",
-      negotiability: "High",
-      costImpact: "$1,150 - $3,300",
-      specifications: "Public water, main shut-off at front elevation, visible supply/drain lines are copper. 50-gallon Whirlpool electric water heater (18 years old).",
-      issues: [
-        {
-            id: "8.2.1",
-            title: "Water Heater - End of Life (18 yrs old)",
-            relevance: "The unit is well beyond its 10-12 year lifespan and is at high risk of a catastrophic failure, which could lead to significant water damage.",
-            severity: "High",
-            cost: "$700 - $1,800",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "5 Risks of an Older Hot Water Heater", url: "#" }],
-            contractors: [
-                { name: "Modern Plumbing Industries, Inc. (MPI)", phone: "(407) 327-6000", specialty: "Water heater installation and repair." },
-                { name: "Mr. Rooter Plumbing of Orlando", phone: "(407) 871-3392", specialty: "Water heater services in Sanford." }
-            ]
-        },
-        {
-            id: "13.4.1",
-            title: "Corroded Drain Pipe (Bathroom 1)",
-            relevance: "Corrosion weakens pipe walls, eventually leading to leaks that can cause slow water damage to cabinets, subfloors, and ceilings, promoting rot and mold.",
-            severity: "Medium",
-            cost: "$150 - $500",
-            negotiationPotential: "Medium",
-            resources: [{ type: "Blog", title: "Signs of Pipe Corrosion", url: "#" }],
-            contractors: [
-                { name: "Pope Plumbing Inc.", phone: "(407) 267-6677", specialty: "Local Sanford plumber for residential repairs." }
-            ]
-        },
-        {
-            id: "14.4.1",
-            title: "Improper Flexpipe Drain (Bathroom 2)",
-            relevance: "Accordion-style pipes are not approved by code; their ridges trap debris, leading to frequent and persistent clogs. A sign of non-professional work.",
-            severity: "Medium",
-            cost: "$150 - $500",
-            negotiationPotential: "Medium",
-            resources: [{ type: "Blog", title: "Why You Should Never Use Accordion Pipes", url: "#" }],
-            contractors: [
-                { name: "J Tanner Plumbing Inc", phone: "(407) 328-8202", specialty: "BBB A+ rated plumbing repairs." }
-            ]
-        }
-      ]
-    },
-    {
-      id: 'hvac',
-      name: "HVAC",
-      description: "A relatively new (4-year-old) central A/C system by Goodman. A missing filter was noted.",
-      condition: "Low",
-      negotiability: "Low",
-      costImpact: "$35 - $70",
-      specifications: "Goodman central air conditioning unit. Condenser and air handler are both 4 years old.",
-       issues: [
-        {
-            id: "9.3.1",
-            title: "Missing Air Filter",
-            relevance: "Operating the system without a filter allows dust and particulates to accumulate on sensitive internal components, reducing efficiency and potentially shortening the system's lifespan.",
-            severity: "Low",
-            cost: "$35 - $70",
-            negotiationPotential: "Low",
-            resources: [{ type: "Blog", title: "The Importance of Changing Your Air Filter", url: "#" }, { type: "Video", title: "How to Change an Air Handler Filter", url: "#" }],
-            contractors: [
-                { name: "Facemyer Air Conditioning & Heating", phone: "(407) 706-4613", specialty: "NATE-certified HVAC maintenance." },
-                { name: "Barnes Heating & Air Conditioning", phone: "(407) 323-3517", specialty: "Services all makes and models." }
-            ]
-        }
-      ]
-    },
-    {
-      id: 'appliances',
-      name: "Appliances & Fit/Finish",
-      description: "Mix of appliance brands. Key issues include a rusted disposer and a critical missing safety bracket on the range.",
-      condition: "High",
-      negotiability: "High",
-      costImpact: "$2,000 - $4,800+",
-      specifications: "Titan food waste disposer, GE dishwasher, Frigidaire range, Whirlpool refrigerator. Tile flooring, drywall interiors. Inadequate attic insulation.",
-       issues: [
-        {
-            id: "16.2.1",
-            title: "Inadequate Attic Insulation",
-            relevance: "Only 1-3 inches of insulation is grossly inadequate, leading to significant heat gain, higher energy bills, and increased wear on the HVAC system.",
-            severity: "High",
-            cost: "$1,200 - $2,500+",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "Benefits of Proper Attic Insulation", url: "#" }],
-            contractors: [
-                { name: "Koala Insulation of Orlando Central", phone: "(407) 743-3487", specialty: "Specializes in blown-in insulation." },
-                { name: "All Florida Insulation, LLC", phone: "(407) 260-2525", specialty: "Spray foam and blown-in insulation." }
-            ]
-        },
-        {
-            id: "7.5.1",
-            title: "Garage Door Safety Sensors Not Functioning",
-            relevance: "A mandatory safety feature (UL 325) that prevents the door from crushing a person or object. Non-functional sensors create a significant safety hazard.",
-            severity: "High",
-            cost: "$70 - $190",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "How Garage Door Sensors Work", url: "#" }],
-            contractors: [
-                { name: "Precision Garage Door Sanford", phone: "(407) 473-6090", specialty: "Comprehensive garage door repair services." },
-                { name: "Overhead Door of America", phone: "(407) 854-3723", specialty: "Local experts for garage door service." }
-            ]
-        },
-        {
-            id: "11.4.1",
-            title: "Missing Range Anti-Tip Bracket",
-            relevance: "A critical safety device that prevents the range from tipping over if weight is applied to the open door, which can cause severe burns or fatal injuries.",
-            severity: "High",
-            cost: "$50 - $150",
-            negotiationPotential: "High",
-            resources: [{ type: "Blog", title: "What is a Range Anti-Tip Bracket?", url: "#" }],
-            contractors: [
-                { name: "Mr. Handyman", phone: "(407) 801-6194", specialty: "Qualified for minor safety installations." }
-            ]
-        },
-        {
-            id: "11.3.1",
-            title: "Rusted Food Waste Disposer",
-            relevance: "Significant external rust indicates the unit is at the end of its life and can lead to leaks, causing water damage inside the sink cabinet.",
-            severity: "Medium",
-            cost: "$200 - $625",
-            negotiationPotential: "Medium",
-            resources: [{ type: "Blog", title: "When to Replace a Garbage Disposal", url: "#" }],
-            contractors: [
-                { name: "Ray's Appliance Repair", phone: "(407) 328-0083", specialty: "Garbage disposal repair and replacement." }
-            ]
-        }
-      ]
-    }
-  ],
-  costSummary: {
-    immediate: {
-      title: "Immediate Costs (Year 0: Safety & Critical Repairs)",
-      total: "$780 - $2,040",
-      projects: [
-        "Repair all electrical safety faults (GFCI, Reverse Polarity)",
-        "Install Range Anti-Tip Bracket",
-        "Repair Garage Door Safety Sensors",
-        "Install Missing Downspout",
-        "Pest Control Initial Treatment"
-      ]
-    },
-    nearTerm: {
-      title: "Near-Term Plan (Years 1-5: End-of-Life & Efficiency)",
-      total: "$3,240 - $8,490 (excluding windows)",
-      projects: [
-        "Replace 50-Gallon Electric Water Heater",
-        "Add Attic Insulation to R-30 standard",
-        "Repair Exterior Stucco Cracks",
-        "Replace Rusted Food Waste Disposer",
-        "Install Bathroom 1 Exhaust Fan",
-        "Repair all corroded/improper drain pipes"
-      ]
-    },
-    longTerm: {
-      title: "Long-Term Outlook (10+ Years: Capital Planning)",
-      total: "Budget for future replacement",
-      projects: [
-        "HVAC System Replacement (in 10-15 years)",
-        "Window Replacement ($7,500 - $20,000+)",
-        "Potential Electrical Panel Upgrade (if adding EV charger, etc.)"
-      ]
-    }
-  },
-  negotiationStrategy: {
-    position: "The buyer's position is strong due to extensive, documented deferred maintenance and safety hazards. The strategy is to acknowledge the new roof/HVAC but pivot to the significant investment required to bring the home to a safe, functional standard. The goal is seller-paid safety repairs and substantial credits for end-of-life systems.",
-    points: [
-      {
-        category: "Request for Repair (Non-Negotiable Safety Items)",
-        items: [
-          "Seller to hire a licensed electrician to correct all identified electrical safety hazards.",
-          "Seller to install a manufacturer-approved anti-tip bracket for the range.",
-          "Seller to hire a qualified technician to repair the garage door safety sensors."
+    <div id="app" class="font-sans">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center">
+                    <i data-lucide="map-pin" class="w-8 h-8 text-blue-600"></i>
+                    <div class="ml-3">
+                        <h1 id="header-title" class="text-2xl font-bold text-gray-900 leading-tight">Home Inspection Dashboard</h1>
+                        <p id="header-address" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div id="content-area" class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <!-- App content will be rendered here -->
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white mt-8">
+            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+                <p id="footer-text"></p>
+                <p id="footer-client"></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    // --- Data Object based on the provided markdown ---
+    const inspectionData = {
+      propertyOverview: {
+        address: "220 Melissa Ct, Sanford, FL 32773",
+        client: "Melanie Zayas - Pena",
+        inspectionDate: "June 11, 2024",
+        age: "30 years or older",
+        type: "Single Family Home",
+        foundation: "Slab on Grade, Concrete",
+        wallStructure: "Concrete",
+        siding: "Concrete (Stucco)",
+      },
+      propertySummary: {
+        highlights: [
+          "New roof installed in May 2023.",
+          "Central cooling system (condenser and air handler) is only 4 years old.",
+          "Durable slab-on-grade foundation and concrete wall structure."
+        ],
+        lowlights: [
+          "Significant deferred maintenance with 27 distinct deficiencies.",
+          "Multiple immediate electrical safety hazards (reverse polarity, no GFCI).",
+          "50-gallon water heater is 18 years old and at high risk of failure.",
+          "Severely inadequate attic insulation (1-3 inches).",
+          "Original, inefficient single-pane windows.",
+          "Pattern of issues increasing risk of moisture intrusion."
         ]
       },
-      {
-        category: "Request for Credit (Major Financial Liabilities)",
-        items: [
-          "Request a credit of $1,200 for the 18-year-old water heater at risk of imminent failure.",
-          "Request a credit of $1,800 to address the severely inadequate attic insulation.",
-          "Request a credit of $5,000 towards the eventual replacement of the original, inefficient single-pane windows."
-        ]
+      systems: {
+        roofing: {
+          name: "Roofing",
+          description: "Asphalt and fiberglass shingles on a gable-style roof. The roof is approximately one year old.",
+          condition: "High",
+          negotiability: "High",
+          costImpact: "$100 - $400",
+          specifications: "Primary covering is asphalt/fiberglass shingles. A permit for a full replacement was issued on May 2, 2023. System includes gutters, downspouts, and a separate patio roof.",
+          issues: [
+            { id: "4.3.1", title: "Missing Downspout", relevance: "A missing downspout concentrates water flow directly against the foundation, leading to soil saturation, increased hydrostatic pressure, and a high risk of major moisture intrusion into the house and foundation, potentially causing structural settlement.", severity: "High", cost: "$100 - $400", negotiationPotential: "High", resources: [{ type: "Blog", title: "The Dangers of Improper Drainage", url: "#" }, { type: "Video", title: "How to Install a Gutter Downspout", url: "#" }], contractors: [{ name: "GutterWorks Services", phone: "(407) 960-9489", specialty: "Seamless gutter installation and repair." }, { name: "Empire Gutters", phone: "N/A", specialty: "Offers free quotes for gutter services." }, { name: "Storm Solutions Seamless Gutters", phone: "(407) 832-5183", specialty: "BBB A+ rated gutter cleaning and installation." }] },
+            { id: "4.7.1", title: "Debris on Patio Roof", relevance: "Accumulated leaf debris impedes drainage, traps moisture against the roofing material, and can accelerate its deterioration, leading to rot and potential leaks.", severity: "Low", cost: "$250 - $600", negotiationPotential: "Low", resources: [{ type: "Blog", title: "Why Roof Cleaning is Crucial", url: "#" }, { type: "Video", title: "DIY Roof Maintenance Tips", url: "#" }], contractors: [{ name: "Eustis Roofing", phone: "(352) 343-4240", specialty: "Roof cleaning services." }, { name: "The Grounds Guys of Sanford, FL", phone: "(407) 993-2672", specialty: "General grounds care and clean-up." }] }
+          ]
+        },
+        exterior: {
+          name: "Exterior",
+          description: "Concrete stucco siding with a screened-in porch, concrete driveways, and a fenced yard. Windows are original single-pane.",
+          condition: "High",
+          negotiability: "High",
+          costImpact: "$7,500 - $20,000+",
+          specifications: "Stucco siding, screened porch, concrete driveways/walkways, fenced yard, original single-pane windows.",
+          issues: [
+            { id: "5.1.1", title: "Minor Stucco Cracks", relevance: "Cracks in stucco provide a pathway for water to penetrate the wall system, potentially leading to trapped moisture, deterioration of the underlying structure, and mold growth.", severity: "Medium", cost: "$600 - $1,500", negotiationPotential: "Medium", resources: [{ type: "Blog", title: "Stucco Cracks: When to Worry", url: "#" }, { type: "Video", title: "How to Repair Hairline Cracks in Stucco", url: "#" }], contractors: [{ name: "Landress Painting and Son LLC", phone: "(407) 620-6517", specialty: "Stucco repair services." }, { name: "KDR Stucco Repair", phone: "(386) 320-8458", specialty: "Stucco repair services in the Sanford area." }] },
+            { id: "5.1.2", title: "Active Pests Observed", relevance: "Any active pest infestation can lead to property damage (e.g., termites, rodents) and pose health risks. Immediate professional evaluation is required.", severity: "High", cost: "$170 (initial) + ongoing plans", negotiationPotential: "High", resources: [{ type: "Blog", title: "Signs of a Pest Infestation", url: "#" }], contractors: [{ name: "Sanford Pest Control (All American)", phone: "(407) 391-9431", specialty: "Monthly pest control plans." }, { name: "Sorko Services", phone: "(407) 878-4492", specialty: "Comprehensive pest and wildlife control." }] },
+            { id: "5.2.1", title: "Original/Older Windows", relevance: "Original single-pane windows are significantly less energy-efficient, leading to higher utility costs, and offer minimal protection against storms.", severity: "Medium", cost: "$7,500 - $20,000+", negotiationPotential: "High", resources: [{ type: "Blog", title: "Benefits of Energy-Efficient Windows", url: "#" }], contractors: [{ name: "Florida Window & Door Solutions", phone: "321-203-4336", specialty: "Impact and storm windows." }, { name: "Window World of Orlando", phone: "(407) 389-1400", specialty: "National brand with local presence." }] }
+          ]
+        },
+        electrical: {
+          name: "Electrical",
+          description: "150-amp General Electric main panel with copper Romex wiring. Multiple safety issues identified.",
+          condition: "High",
+          negotiability: "High",
+          costImpact: "$440 - $1,250",
+          specifications: "150-amp GE main panel, underground service entrance, copper Romex branch wiring.",
+          issues: [
+            { id: "6.4.1", title: "No Power to Outlet(s)", relevance: "Indicates a break in the electrical circuit. A loose wire connection, a potential cause, is a fire hazard.", severity: "High", cost: "$130 - $350", negotiationPotential: "High", resources: [{ type: "Blog", title: "Troubleshooting Dead Outlets", url: "#" }], contractors: [{ name: "Del-Air Plumbing, Air Conditioning, Electric", phone: "(407) 327-6000", specialty: "Outlet and switch repairs." }, { name: "Strada Services", phone: "(833) 539-7800", specialty: "Residential electrical troubleshooting." }] },
+            { id: "6.5.1", title: "Reverse Polarity / Non-functional GFCI", relevance: "Reverse polarity is a dangerous wiring error creating a persistent shock hazard. A non-functional GFCI fails to protect against electrocution in wet areas.", severity: "High", cost: "$130 - $300", negotiationPotential: "High", resources: [{ type: "Blog", title: "Dangers of Reverse Polarity", url: "#" }], contractors: [{ name: "Sanford Electric Company", phone: "N/A", specialty: "Family-owned since 1925, full-range electrical repairs." }] },
+            { id: "13.7.1", title: "Bathroom Outlet Not GFCI Protected", relevance: "Absence of GFCI protection in a bathroom is a direct violation of modern safety codes and poses a severe risk of electrocution.", severity: "High", cost: "$130 - $300", negotiationPotential: "High", resources: [{ type: "Blog", title: "Why GFCI is Required in Bathrooms", url: "#" }], contractors: [{ name: "Del-Air Plumbing, Air Conditioning, Electric", phone: "(407) 327-6000", specialty: "GFCI/AFCI installation and repairs." }] }
+          ]
+        },
+        plumbing: {
+          name: "Plumbing",
+          description: "Public water source with primarily copper lines. The 50-gallon water heater is 18 years old.",
+          condition: "High",
+          negotiability: "High",
+          costImpact: "$700 - $1,800",
+          specifications: "Public water, main shut-off at front elevation, visible supply/drain lines are copper. 50-gallon Whirlpool electric water heater (18 years old).",
+          issues: [
+            { id: "8.2.1", title: "Water Heater - End of Life (18 yrs old)", relevance: "The unit is well beyond its 10-12 year lifespan and is at high risk of a catastrophic failure, which could lead to significant water damage.", severity: "High", cost: "$700 - $1,800", negotiationPotential: "High", resources: [{ type: "Blog", title: "5 Risks of an Older Hot Water Heater", url: "#" }], contractors: [{ name: "Modern Plumbing Industries, Inc. (MPI)", phone: "(407) 327-6000", specialty: "Water heater installation and repair." }, { name: "Mr. Rooter Plumbing of Orlando", phone: "(407) 871-3392", specialty: "Water heater services in Sanford." }] },
+            { id: "13.4.1", title: "Corroded Drain Pipe (Bathroom 1)", relevance: "Corrosion weakens pipe walls, eventually leading to leaks that can cause slow water damage to cabinets, subfloors, and ceilings, promoting rot and mold.", severity: "Medium", cost: "$150 - $500", negotiationPotential: "Medium", resources: [{ type: "Blog", title: "Signs of Pipe Corrosion", url: "#" }], contractors: [{ name: "Pope Plumbing Inc.", phone: "(407) 267-6677", specialty: "Local Sanford plumber for residential repairs." }] },
+            { id: "14.4.1", title: "Improper Flexpipe Drain (Bathroom 2)", relevance: "Accordion-style pipes are not approved by code; their ridges trap debris, leading to frequent and persistent clogs. A sign of non-professional work.", severity: "Medium", cost: "$150 - $500", negotiationPotential: "Medium", resources: [{ type: "Blog", title: "Why You Should Never Use Accordion Pipes", url: "#" }], contractors: [{ name: "J Tanner Plumbing Inc", phone: "(407) 328-8202", specialty: "BBB A+ rated plumbing repairs." }] }
+          ]
+        },
+        hvac: {
+          name: "HVAC",
+          description: "A relatively new (4-year-old) central A/C system by Goodman. A missing filter was noted.",
+          condition: "Low",
+          negotiability: "Low",
+          costImpact: "$35 - $70",
+          specifications: "Goodman central air conditioning unit. Condenser and air handler are both 4 years old.",
+          issues: [
+            { id: "9.3.1", title: "Missing Air Filter", relevance: "Operating the system without a filter allows dust and particulates to accumulate on sensitive internal components, reducing efficiency and potentially shortening the system's lifespan.", severity: "Low", cost: "$35 - $70", negotiationPotential: "Low", resources: [{ type: "Blog", title: "The Importance of Changing Your Air Filter", url: "#" }, { type: "Video", title: "How to Change an Air Handler Filter", url: "#" }], contractors: [{ name: "Facemyer Air Conditioning & Heating", phone: "(407) 706-4613", specialty: "NATE-certified HVAC maintenance." }, { name: "Barnes Heating & Air Conditioning", phone: "(407) 323-3517", specialty: "Services all makes and models." }] }
+          ]
+        },
+        appliances: {
+          name: "Appliances & Fit/Finish",
+          description: "Mix of appliance brands. Key issues include a rusted disposer and a critical missing safety bracket on the range.",
+          condition: "High",
+          negotiability: "High",
+          costImpact: "$1,200 - $2,500+",
+          specifications: "Titan food waste disposer, GE dishwasher, Frigidaire range, Whirlpool refrigerator. Tile flooring, drywall interiors. Inadequate attic insulation.",
+          issues: [
+            { id: "16.2.1", title: "Inadequate Attic Insulation", relevance: "Only 1-3 inches of insulation is grossly inadequate, leading to significant heat gain, higher energy bills, and increased wear on the HVAC system.", severity: "High", cost: "$1,200 - $2,500+", negotiationPotential: "High", resources: [{ type: "Blog", title: "Benefits of Proper Attic Insulation", url: "#" }], contractors: [{ name: "Koala Insulation of Orlando Central", phone: "(407) 743-3487", specialty: "Specializes in blown-in insulation." }, { name: "All Florida Insulation, LLC", phone: "(407) 260-2525", specialty: "Spray foam and blown-in insulation." }] },
+            { id: "7.5.1", title: "Garage Door Safety Sensors Not Functioning", relevance: "A mandatory safety feature (UL 325) that prevents the door from crushing a person or object. Non-functional sensors create a significant safety hazard.", severity: "High", cost: "$70 - $190", negotiationPotential: "High", resources: [{ type: "Blog", title: "How Garage Door Sensors Work", url: "#" }], contractors: [{ name: "Precision Garage Door Sanford", phone: "(407) 473-6090", specialty: "Comprehensive garage door repair services." }, { name: "Overhead Door of America", phone: "(407) 854-3723", specialty: "Local experts for garage door service." }] },
+            { id: "11.4.1", title: "Missing Range Anti-Tip Bracket", relevance: "A critical safety device that prevents the range from tipping over if weight is applied to the open door, which can cause severe burns or fatal injuries.", severity: "High", cost: "$50 - $150", negotiationPotential: "High", resources: [{ type: "Blog", title: "What is a Range Anti-Tip Bracket?", url: "#" }], contractors: [{ name: "Mr. Handyman", phone: "(407) 801-6194", specialty: "Qualified for minor safety installations." }] },
+            { id: "11.3.1", title: "Rusted Food Waste Disposer", relevance: "Significant external rust indicates the unit is at the end of its life and can lead to leaks, causing water damage inside the sink cabinet.", severity: "Medium", cost: "$200 - $625", negotiationPotential: "Medium", resources: [{ type: "Blog", title: "When to Replace a Garbage Disposal", url: "#" }], contractors: [{ name: "Ray's Appliance Repair", phone: "(407) 328-0083", specialty: "Garbage disposal repair and replacement." }] }
+          ]
+        }
       },
-      {
-        category: "Bundled Minor Items (General Maintenance Credit)",
-        items: [
-          "Request a general credit of $1,500 to address the collective deferred maintenance, including the missing downspout, corroded pipes, missing bath fan, and stucco cracks."
+      costSummary: {
+        immediate: { title: "Immediate Costs (Year 0: Safety & Critical Repairs)", total: "$780 - $2,040", projects: ["Repair all electrical safety faults (GFCI, Reverse Polarity)", "Install Range Anti-Tip Bracket", "Repair Garage Door Safety Sensors", "Install Missing Downspout", "Pest Control Initial Treatment"] },
+        nearTerm: { title: "Near-Term Plan (Years 1-5: End-of-Life & Efficiency)", total: "$3,240 - $8,490 (excluding windows)", projects: ["Replace 50-Gallon Electric Water Heater", "Add Attic Insulation to R-30 standard", "Repair Exterior Stucco Cracks", "Replace Rusted Food Waste Disposer", "Install Bathroom 1 Exhaust Fan", "Repair all corroded/improper drain pipes"] },
+        longTerm: { title: "Long-Term Outlook (10+ Years: Capital Planning)", total: "Budget for future replacement", projects: ["HVAC System Replacement (in 10-15 years)", "Window Replacement ($7,500 - $20,000+)", "Potential Electrical Panel Upgrade (if adding EV charger, etc.)"] }
+      },
+      negotiationStrategy: {
+        position: "The buyer's position is strong due to extensive, documented deferred maintenance and safety hazards. The strategy is to acknowledge the new roof/HVAC but pivot to the significant investment required to bring the home to a safe, functional standard. The goal is seller-paid safety repairs and substantial credits for end-of-life systems.",
+        points: [
+          { category: "Request for Repair (Non-Negotiable Safety Items)", items: ["Seller to hire a licensed electrician to correct all identified electrical safety hazards.", "Seller to install a manufacturer-approved anti-tip bracket for the range.", "Seller to hire a qualified technician to repair the garage door safety sensors."] },
+          { category: "Request for Credit (Major Financial Liabilities)", items: ["Request a credit of $1,200 for the 18-year-old water heater at risk of imminent failure.", "Request a credit of $1,800 to address the severely inadequate attic insulation.", "Request a credit of $5,000 towards the eventual replacement of the original, inefficient single-pane windows."] },
+          { category: "Bundled Minor Items (General Maintenance Credit)", items: ["Request a general credit of $1,500 to address the collective deferred maintenance, including the missing downspout, corroded pipes, missing bath fan, and stucco cracks."] }
         ]
       }
-    ]
-  }
-};
+    };
 
-// --- Helper Components ---
-const Card = ({ children, className = '' }) => (
-  <div className={`bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}>
-    <div className="p-6">{children}</div>
-  </div>
-);
+    // --- Helper Functions ---
+    const getConditionColor = (condition) => {
+        if (!condition) return 'bg-gray-100 text-gray-800';
+        switch (condition.toLowerCase()) {
+            case 'high': return 'bg-red-100 text-red-800';
+            case 'medium': return 'bg-yellow-100 text-yellow-800';
+            case 'low': return 'bg-green-100 text-green-800';
+            default: return 'bg-gray-100 text-gray-800';
+        }
+    };
 
-const SectionTitle = ({ icon, title }) => (
-  <div className="flex items-center mb-4">
-    {React.cloneElement(icon, { className: "w-7 h-7 text-blue-600" })}
-    <h2 className="text-2xl font-bold text-gray-800 ml-3">{title}</h2>
-  </div>
-);
+    const createIcon = (name, classes = "w-5 h-5") => `<i data-lucide="${name}" class="${classes}"></i>`;
 
-const getConditionColor = (condition) => {
-    switch (condition?.toLowerCase()) {
-        case 'high': return 'bg-red-100 text-red-800';
-        case 'medium': return 'bg-yellow-100 text-yellow-800';
-        case 'low': return 'bg-green-100 text-green-800';
-        default: return 'bg-gray-100 text-gray-800';
-    }
-};
-
-const Tag = ({ text, colorClass }) => (
-  <span className={`inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 ${colorClass}`}>
-    {text}
-  </span>
-);
-
-// --- Main Components ---
-
-const Dashboard = ({ onSelectSystem }) => {
-  const { propertyOverview, propertySummary, systems, costSummary, negotiationStrategy } = inspectionData;
-
-  return (
-    <div className="space-y-8">
-      {/* Property Overview */}
-      <Card>
-        <SectionTitle icon={<Home />} title="Property Overview" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700">
-          <div><strong className="font-semibold text-gray-900">Address:</strong> {propertyOverview.address}</div>
-          <div><strong className="font-semibold text-gray-900">Age of Home:</strong> {propertyOverview.age}</div>
-          <div><strong className="font-semibold text-gray-900">Type:</strong> {propertyOverview.type}</div>
-          <div><strong className="font-semibold text-gray-900">Foundation:</strong> {propertyOverview.foundation}</div>
-          <div><strong className="font-semibold text-gray-900">Structure:</strong> {propertyOverview.wallStructure}</div>
-          <div><strong className="font-semibold text-gray-900">Inspection Date:</strong> {propertyOverview.inspectionDate}</div>
-        </div>
-      </Card>
-
-      {/* Property Summary */}
-      <Card>
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <div className="flex items-center mb-3">
-                    <TrendingUp className="w-6 h-6 text-green-500 mr-2" />
-                    <h3 className="text-xl font-bold text-gray-800">Highlights</h3>
-                </div>
-                <ul className="list-disc list-inside space-y-2 text-green-700">
-                    {propertySummary.highlights.map((item, i) => <li key={i}>{item}</li>)}
-                </ul>
-            </div>
-            <div>
-                <div className="flex items-center mb-3">
-                    <TrendingDown className="w-6 h-6 text-red-500 mr-2" />
-                    <h3 className="text-xl font-bold text-gray-800">Lowlights</h3>
-                </div>
-                <ul className="list-disc list-inside space-y-2 text-red-700">
-                    {propertySummary.lowlights.map((item, i) => <li key={i}>{item}</li>)}
-                </ul>
-            </div>
-        </div>
-      </Card>
-
-      {/* Systems Analysis */}
-      <div>
-        <SectionTitle icon={<Wrench />} title="Systems Analysis" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {systems.map(system => (
-            <Card key={system.id} className="flex flex-col">
-              <h3 className="text-xl font-bold text-gray-900">{system.name}</h3>
-              <p className="text-gray-600 mt-2 flex-grow">{system.description}</p>
-              <div className="mt-4">
-                <Tag text={`Condition: ${system.condition}`} colorClass={getConditionColor(system.condition)} />
-                <Tag text={`Negotiability: ${system.negotiability}`} colorClass={getConditionColor(system.negotiability)} />
-              </div>
-              <div className="flex items-center mt-4 text-gray-700 font-semibold">
-                <DollarSign className="w-5 h-5 mr-2 text-green-600" />
-                <span>Cost Impact: {system.costImpact}</span>
-              </div>
-              <button
-                onClick={() => onSelectSystem(system.id)}
-                className="mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
-              >
-                View Details <ChevronsRight className="w-5 h-5 ml-2" />
-              </button>
-            </Card>
-          ))}
-        </div>
-      </div>
-      
-      {/* Cost Summary */}
-      <div>
-        <SectionTitle icon={<DollarSign />} title="Cost Summary & Planning" />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {[costSummary.immediate, costSummary.nearTerm, costSummary.longTerm].map(summary => (
-                <Card key={summary.title}>
-                    <h3 className="font-bold text-lg text-blue-800">{summary.title}</h3>
-                    <p className="font-extrabold text-2xl text-gray-800 my-2">{summary.total}</p>
-                    <ul className="list-disc list-inside space-y-1 text-gray-600">
-                        {summary.projects.map((proj, i) => <li key={i}>{proj}</li>)}
-                    </ul>
-                </Card>
-            ))}
-        </div>
-      </div>
-
-      {/* Negotiation Strategy */}
-      <Card>
-        <SectionTitle icon={<ShieldCheck />} title="Negotiation Strategy" />
-        <p className="text-gray-700 mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">{negotiationStrategy.position}</p>
-        <div className="space-y-4">
-            {negotiationStrategy.points.map((point, i) => (
-                <div key={i}>
-                    <h4 className="font-bold text-md text-gray-800">{point.category}</h4>
-                    <ul className="list-disc list-inside space-y-1 text-gray-600 ml-4">
-                        {point.items.map((item, j) => <li key={j}>{item}</li>)}
-                    </ul>
-                </div>
-            ))}
-        </div>
-      </Card>
-    </div>
-  );
-};
-
-const SystemDetail = ({ systemId, onBack }) => {
-  const system = inspectionData.systems.find(s => s.id === systemId);
-
-  if (!system) return <div>System not found.</div>;
-
-  return (
-    <div>
-      <button
-        onClick={onBack}
-        className="mb-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        <ArrowLeft className="w-5 h-5 mr-2" />
-        Back to Dashboard
-      </button>
-
-      <Card>
-        <SectionTitle icon={<Wrench />} title={`${system.name} System Details`} />
-        <div className="bg-gray-50 p-4 rounded-lg border mb-6">
-            <h4 className="font-bold text-gray-800 mb-2">High-Level Specifications</h4>
-            <p className="text-gray-700">{system.specifications}</p>
-        </div>
-
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Identified Issues</h3>
-        <div className="space-y-6">
-            {system.issues.map(issue => (
-                <div key={issue.id} className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex justify-between items-start">
-                        <h4 className="text-lg font-bold text-blue-700">{issue.id}: {issue.title}</h4>
-                        <Tag text={`Severity: ${issue.severity}`} colorClass={getConditionColor(issue.severity)} />
+    // --- Render Functions ---
+    function renderDashboard() {
+        const { propertyOverview, propertySummary, systems, costSummary, negotiationStrategy } = inspectionData;
+        const contentArea = document.getElementById('content-area');
+        
+        contentArea.innerHTML = `
+            <div class="space-y-8">
+                <!-- Property Overview -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+                    <div class="flex items-center mb-4">
+                        ${createIcon('home', 'w-7 h-7 text-blue-600')}
+                        <h2 class="text-2xl font-bold text-gray-800 ml-3">Property Overview</h2>
                     </div>
-                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700">
+                        <div><strong class="font-semibold text-gray-900">Address:</strong> ${propertyOverview.address}</div>
+                        <div><strong class="font-semibold text-gray-900">Age of Home:</strong> ${propertyOverview.age}</div>
+                        <div><strong class="font-semibold text-gray-900">Type:</strong> ${propertyOverview.type}</div>
+                        <div><strong class="font-semibold text-gray-900">Foundation:</strong> ${propertyOverview.foundation}</div>
+                        <div><strong class="font-semibold text-gray-900">Structure:</strong> ${propertyOverview.wallStructure}</div>
+                        <div><strong class="font-semibold text-gray-900">Inspection Date:</strong> ${propertyOverview.inspectionDate}</div>
+                    </div>
+                </div>
+
+                <!-- Property Summary -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <strong className="font-semibold text-gray-900">Relevance:</strong>
-                            <p className="text-gray-600">{issue.relevance}</p>
+                            <div class="flex items-center mb-3">
+                                ${createIcon('trending-up', 'w-6 h-6 text-green-500 mr-2')}
+                                <h3 class="text-xl font-bold text-gray-800">Highlights</h3>
+                            </div>
+                            <ul class="list-disc list-inside space-y-2 text-green-700">
+                                ${propertySummary.highlights.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
                         </div>
                         <div>
-                            <strong className="font-semibold text-gray-900">Potential Cost:</strong>
-                            <p className="text-gray-600 font-mono">{issue.cost}</p>
-                        </div>
-                        <div>
-                            <strong className="font-semibold text-gray-900">Negotiation Potential:</strong>
-                            <p className="text-gray-600">{issue.negotiationPotential}</p>
-                        </div>
-                        <div>
-                            <strong className="font-semibold text-gray-900">Online Resources:</strong>
-                            <ul className="space-y-1 mt-1">
-                                {issue.resources.map((res, i) => (
-                                    <li key={i} className="flex items-center">
-                                        {res.type === 'Video' ? <Video className="w-4 h-4 mr-2 text-red-500" /> : <BookOpen className="w-4 h-4 mr-2 text-blue-500" />}
-                                        <a href={res.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{res.title}</a>
-                                    </li>
-                                ))}
+                            <div class="flex items-center mb-3">
+                                ${createIcon('trending-down', 'w-6 h-6 text-red-500 mr-2')}
+                                <h3 class="text-xl font-bold text-gray-800">Lowlights</h3>
+                            </div>
+                            <ul class="list-disc list-inside space-y-2 text-red-700">
+                                ${propertySummary.lowlights.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
                     </div>
-                    <div className="mt-4">
-                        <strong className="font-semibold text-gray-900">Potential Contractors (Sanford, FL Area):</strong>
-                        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {issue.contractors.map((con, i) => (
-                                <div key={i} className="bg-gray-50 p-3 rounded-md border">
-                                    <p className="font-bold text-gray-800 flex items-center"><Building className="w-4 h-4 mr-2" />{con.name}</p>
-                                    <p className="text-sm text-gray-600">{con.specialty}</p>
-                                    <p className="text-sm text-blue-600 font-semibold mt-1 flex items-center"><Phone className="w-4 h-4 mr-2" />{con.phone}</p>
+                </div>
+
+                <!-- Systems Analysis -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        ${createIcon('wrench', 'w-7 h-7 text-blue-600')}
+                        <h2 class="text-2xl font-bold text-gray-800 ml-3">Systems Analysis</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${Object.entries(systems).map(([key, system]) => `
+                            <div class="bg-white rounded-xl shadow-md overflow-hidden p-6 flex flex-col transition-all duration-300 hover:shadow-lg">
+                                <h3 class="text-xl font-bold text-gray-900">${system.name}</h3>
+                                <p class="text-gray-600 mt-2 flex-grow">${system.description}</p>
+                                <div class="mt-4">
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 ${getConditionColor(system.condition)}">Condition: ${system.condition}</span>
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 ${getConditionColor(system.negotiability)}">Negotiability: ${system.negotiability}</span>
                                 </div>
-                            ))}
-                        </div>
+                                <div class="flex items-center mt-4 text-gray-700 font-semibold">
+                                    ${createIcon('dollar-sign', 'w-5 h-5 mr-2 text-green-600')}
+                                    <span>Cost Impact: ${system.costImpact}</span>
+                                </div>
+                                <button onclick="navigateToSystem('${key}')" class="mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                                    View Details ${createIcon('chevrons-right', 'w-5 h-5 ml-2')}
+                                </button>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
-            ))}
-        </div>
-      </Card>
-    </div>
-  );
-};
 
-export default function App() {
-  const [activeSystem, setActiveSystem] = useState(null);
+                <!-- Cost Summary -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        ${createIcon('dollar-sign', 'w-7 h-7 text-blue-600')}
+                        <h2 class="text-2xl font-bold text-gray-800 ml-3">Cost Summary & Planning</h2>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        ${[costSummary.immediate, costSummary.nearTerm, costSummary.longTerm].map(summary => `
+                            <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+                                <h3 class="font-bold text-lg text-blue-800">${summary.title}</h3>
+                                <p class="font-extrabold text-2xl text-gray-800 my-2">${summary.total}</p>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    ${summary.projects.map(proj => `<li>${proj}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
 
-  const handleSelectSystem = (systemId) => {
-    setActiveSystem(systemId);
-    window.scrollTo(0, 0);
-  };
-
-  const handleBackToDashboard = () => {
-    setActiveSystem(null);
-    window.scrollTo(0, 0);
-  };
-
-  return (
-    <div className="bg-gray-50 min-h-screen font-sans">
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center">
-                <MapPin className="w-8 h-8 text-blue-600" />
-                <div className="ml-3">
-                    <h1 className="text-2xl font-bold text-gray-900 leading-tight">Home Inspection Dashboard</h1>
-                    <p className="text-sm text-gray-500">{inspectionData.propertyOverview.address}</p>
+                <!-- Negotiation Strategy -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+                    <div class="flex items-center mb-4">
+                        ${createIcon('shield-check', 'w-7 h-7 text-blue-600')}
+                        <h2 class="text-2xl font-bold text-gray-800 ml-3">Negotiation Strategy</h2>
+                    </div>
+                    <p class="text-gray-700 mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">${negotiationStrategy.position}</p>
+                    <div class="space-y-4">
+                        ${negotiationStrategy.points.map(point => `
+                            <div>
+                                <h4 class="font-bold text-md text-gray-800">${point.category}</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600 ml-4">
+                                    ${point.items.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
             </div>
-        </div>
-      </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {activeSystem ? (
-            <SystemDetail systemId={activeSystem} onBack={handleBackToDashboard} />
-          ) : (
-            <Dashboard onSelectSystem={handleSelectSystem} />
-          )}
-        </div>
-      </main>
-       <footer className="bg-white mt-8">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
-          <p>This dashboard is an interactive summary of the home inspection report dated {inspectionData.propertyOverview.inspectionDate}. All cost estimates are for planning purposes and should be confirmed with professional quotes.</p>
-          <p>&copy; 2024 Property Insights. For Melanie Zayas - Pena.</p>
-        </div>
-      </footer>
-    </div>
-  );
-}
+        `;
+        lucide.createIcons();
+    }
+
+    function renderSystemDetail(systemId) {
+        const system = inspectionData.systems[systemId];
+        if (!system) {
+            document.getElementById('content-area').innerHTML = `<p>System not found.</p>`;
+            return;
+        }
+
+        document.getElementById('content-area').innerHTML = `
+            <div>
+                <button onclick="navigateToDashboard()" class="mb-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    ${createIcon('arrow-left', 'w-5 h-5 mr-2')}
+                    Back to Dashboard
+                </button>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+                    <div class="flex items-center mb-4">
+                        ${createIcon('wrench', 'w-7 h-7 text-blue-600')}
+                        <h2 class="text-2xl font-bold text-gray-800 ml-3">${system.name} System Details</h2>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border mb-6">
+                        <h4 class="font-bold text-gray-800 mb-2">High-Level Specifications</h4>
+                        <p class="text-gray-700">${system.specifications}</p>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Identified Issues</h3>
+                    <div class="space-y-6">
+                        ${system.issues.map(issue => `
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-lg font-bold text-blue-700">${issue.id}: ${issue.title}</h4>
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold ${getConditionColor(issue.severity)}">Severity: ${issue.severity}</span>
+                                </div>
+                                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                                    <div>
+                                        <strong class="font-semibold text-gray-900">Relevance:</strong>
+                                        <p class="text-gray-600">${issue.relevance}</p>
+                                    </div>
+                                    <div>
+                                        <strong class="font-semibold text-gray-900">Potential Cost:</strong>
+                                        <p class="text-gray-600 font-mono">${issue.cost}</p>
+                                    </div>
+                                    <div>
+                                        <strong class="font-semibold text-gray-900">Negotiation Potential:</strong>
+                                        <p class="text-gray-600">${issue.negotiationPotential}</p>
+                                    </div>
+                                    <div>
+                                        <strong class="font-semibold text-gray-900">Online Resources:</strong>
+                                        <ul class="space-y-1 mt-1">
+                                            ${issue.resources.map(res => `
+                                                <li class="flex items-center">
+                                                    ${res.type === 'Video' ? createIcon('video', 'w-4 h-4 mr-2 text-red-500') : createIcon('book-open', 'w-4 h-4 mr-2 text-blue-500')}
+                                                    <a href="${res.url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${res.title}</a>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <strong class="font-semibold text-gray-900">Potential Contractors (Sanford, FL Area):</strong>
+                                    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        ${issue.contractors.map(con => `
+                                            <div class="bg-gray-50 p-3 rounded-md border">
+                                                <p class="font-bold text-gray-800 flex items-center">${createIcon('building', 'w-4 h-4 mr-2')}${con.name}</p>
+                                                <p class="text-sm text-gray-600">${con.specialty}</p>
+                                                <p class="text-sm text-blue-600 font-semibold mt-1 flex items-center">${createIcon('phone', 'w-4 h-4 mr-2')}${con.phone}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        lucide.createIcons();
+    }
+
+    // --- Navigation ---
+    function navigateToSystem(systemId) {
+        window.scrollTo(0, 0);
+        renderSystemDetail(systemId);
+    }
+
+    function navigateToDashboard() {
+        window.scrollTo(0, 0);
+        renderDashboard();
+    }
+
+    // --- Initial Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const { propertyOverview } = inspectionData;
+        document.getElementById('header-address').textContent = propertyOverview.address;
+        document.getElementById('footer-text').textContent = `This dashboard is an interactive summary of the home inspection report dated ${propertyOverview.inspectionDate}. All cost estimates are for planning purposes and should be confirmed with professional quotes.`;
+        document.getElementById('footer-client').textContent = `© 2024 Property Insights. For ${propertyOverview.client}.`;
+        
+        renderDashboard();
+    });
+
+    </script>
+</body>
+</html>
