@@ -3,369 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Inspection Report - 2911 Timberlake Dr</title>
+    <title>Property Dashboard - 2911 Timberlake Dr</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals with Subtle Accents -->
-    <!-- Application Structure Plan: A top-down, dashboard-driven SPA. The user starts with a high-level summary (key findings, total costs) and can then navigate to detailed sections (Roof, Electrical, etc.) via a persistent sidebar. This structure facilitates quick understanding of the overall situation while allowing deep dives into specific areas of concern. It's designed for decision-making, moving from 'What's the bottom line?' to 'Let's see the details.' Key interactions include toggling cost views on the chart (low vs. high estimates) and expanding detailed explanations for each issue. This avoids overwhelming the user with the 300+ page report, presenting a curated, prioritized view first. -->
-    <!-- Visualization & Content Choices: The core visualization is a dynamic bar chart for repair costs. Goal: Compare financial impact. Viz: Horizontal Bar Chart (Chart.js/Canvas). Interaction: Users can toggle between 'Average Cost' and 'High-End Estimate' datasets, instantly seeing the financial risk profile change. This is more impactful than a static table. For organizing information, a card-based layout is used for inspection items. Goal: Organize details logically. Presentation: HTML/CSS cards with clear headers, icons, and expandable sections. Interaction: Clicking a card reveals detailed text (Why it's a problem, negotiation leverage). Justification: This progressive disclosure keeps the initial view clean while making deep-dive information accessible on demand, supporting the designed dashboard-to-details flow. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-        }
-        .priority-critical { border-left-color: #ef4444; }
-        .priority-significant { border-left-color: #f97316; }
-        .priority-minor { border-left-color: #eab308; }
-        .bg-custom--paper { background-color: #fdfbf7; }
-        .bg-custom-primary { background-color: #efeae3; }
-        .text-custom-accent { color: #57534e; }
-        .bg-custom-accent { background-color: #d6d3d1; }
-        .nav-active {
-            background-color: #d6d3d1;
-            color: #1c1917;
-            font-weight: 600;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 500px;
-            }
-        }
-        .smooth-scroll {
             scroll-behavior: smooth;
         }
+        .nav-active {
+            background-color: #e5e7eb; /* gray-200 */
+            font-weight: 600;
+            color: #111827; /* gray-900 */
+        }
+        .severity-critical { border-left-color: #ef4444; /* red-500 */ }
+        .severity-significant { border-left-color: #f97316; /* orange-500 */ }
+        .severity-minor { border-left-color: #eab308; /* yellow-500 */ }
+        
+        .condition-high { background-color: #ef4444; color: white; }
+        .condition-medium { background-color: #f97316; color: white; }
+        .condition-low { background-color: #eab308; color: #1f2937; }
+
+        .negotiability-high { background-color: #22c55e; color: white; }
+        .negotiability-medium { background-color: #84cc16; color: #1f2937; }
+        .negotiability-low { background-color: #facc15; color: #1f2937; }
     </style>
 </head>
-<body class="bg-custom-primary text-stone-800 smooth-scroll">
+<body class="bg-gray-50 text-gray-800">
 
     <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Sidebar Navigation -->
-        <aside class="w-full md:w-64 bg-custom-primary border-b md:border-r border-stone-300 p-4 md:p-6 sticky top-0 md:h-screen z-20">
-            <h1 class="text-2xl font-bold text-stone-900">2911 Timberlake Dr</h1>
-            <p class="text-sm text-custom-accent mb-6">Inspection Report Analysis</p>
-            <nav id="navigation" class="space-y-2">
-                <a href="#dashboard" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors nav-active">Dashboard</a>
-                <a href="#roof" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">Roof System</a>
-                <a href="#electrical" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">Electrical System</a>
-                <a href="#hvac" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">HVAC & Mold</a>
-                <a href="#foundation" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">Water & Foundation</a>
-                <a href="#plumbing" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">Plumbing</a>
-                <a href="#safety" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">Safety & Code</a>
-                <a href="#summary" class="block py-2 px-4 rounded-lg text-stone-700 hover:bg-stone-200 transition-colors">Purchase Strategy</a>
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-full md:w-72 bg-white border-b md:border-r border-gray-200 p-6 sticky top-0 h-full md:h-screen md:overflow-y-auto">
+            <h1 class="text-2xl font-bold">Property Dashboard</h1>
+            <p class="text-gray-500 text-sm mb-6">2911 Timberlake Dr, Orlando, FL</p>
+            <nav id="navigation" class="space-y-1">
+                <a href="#overview" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors">Overview</a>
+                <a href="#summary" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors">Inspection Summary</a>
+                <a href="#systems" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors">Systems Analysis</a>
+                <a href="#cost-planning" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors">Cost & Planning</a>
+                <a href="#negotiation" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors">Negotiation Strategy</a>
+                <div class="pt-4 mt-4 border-t border-gray-200">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">System Details</h3>
+                    <div id="system-nav-links" class="mt-2 space-y-1">
+                        <!-- Detailed system nav links will be injected here -->
+                    </div>
+                </div>
             </nav>
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 bg-custom--paper p-4 sm:p-6 md:p-10">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="mb-12">
-                <h2 class="text-4xl font-bold text-stone-900 mb-2">Property Condition Dashboard</h2>
-                <p class="text-lg text-custom-accent mb-8">This dashboard provides a high-level summary of the inspection findings. Start here to understand the critical issues and the overall financial scope of the necessary repairs. Use the navigation to explore detailed sections for each major system.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="font-semibold text-lg mb-2">Estimated Repair Costs</h3>
-                        <p class="text-4xl font-bold text-red-600" id="total-cost-display">$39,300</p>
-                        <p class="text-custom-accent">Average estimate across all items</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="font-semibold text-lg mb-2">Critical "Dealbreaker" Issues</h3>
-                        <p class="text-4xl font-bold text-stone-800">3</p>
-                        <p class="text-custom-accent">Roof, Electrical Panel, and Mold</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="font-semibold text-lg mb-2">Insurability Status</h3>
-                        <p class="text-4xl font-bold text-red-600">Uninsurable</p>
-                        <p class="text-custom-accent">Requires major repairs to qualify</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                    <div class="flex flex-wrap justify-between items-center mb-4 gap-4">
-                        <h3 class="text-2xl font-bold">Repair Cost Breakdown</h3>
-                        <div id="cost-toggle-buttons" class="flex items-center border border-stone-300 rounded-lg p-1">
-                             <button data-cost-type="avg" class="px-4 py-1 text-sm font-semibold rounded-md bg-stone-700 text-white">Average Cost</button>
-                             <button data-cost-type="high" class="px-4 py-1 text-sm font-semibold rounded-md text-stone-600">High-End Cost</button>
-                        </div>
-                    </div>
-                    <p class="text-custom-accent mb-4">This chart visualizes the estimated costs for major repair categories. Interact with the buttons above to switch between average and high-end estimates to better understand the potential financial exposure. These figures are crucial for forming a realistic negotiation strategy.</p>
-                    <div class="chart-container">
-                        <canvas id="costChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sections for each inspection item will be generated by JS here -->
-            <div id="details-container"></div>
-            
-            <!-- Purchase Strategy Section -->
-            <section id="summary" class="pt-12">
-                 <h2 class="text-4xl font-bold text-stone-900 mb-2">Purchase Strategy & Valuation</h2>
-                <p class="text-lg text-custom-accent mb-8">This final section synthesizes all findings into a coherent purchase strategy. It outlines how to leverage the inspection report during negotiations and provides a data-driven valuation to help you formulate a maximum prudent offer, protecting you from overpaying for this high-risk property.</p>
-
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="text-2xl font-bold mb-3">Negotiation Framework</h3>
-                        <div class="prose max-w-none text-stone-700">
-                            <p>Your primary negotiation tool is the <strong>Inspection Contingency</strong> in your contract, which allows you to cancel or renegotiate. Given the severity of these findings, you are in a strong position.</p>
-                            <ul>
-                                <li><strong>Focus on Credits/Price Reduction:</strong> Do not ask the seller to perform repairs. You need to control the quality and scope of this critical work. Request a credit at closing or a direct reduction of the purchase price.</li>
-                                <li><strong>Use Professional Quotes:</strong> Back up your request with written estimates from licensed contractors for the roof, electrical, and mold remediation. This transforms your request from an opinion into a data-driven fact.</li>
-                                <li><strong>Highlight Insurability:</strong> Emphasize that no lender will finance the property without insurance, and no insurer will cover it with the current roof and electrical panel. The property is effectively unmarketable to any other financed buyer until these issues are fixed.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="text-2xl font-bold mb-3">Valuation: The 70% Rule</h3>
-                         <p class="text-custom-accent mb-4">To avoid over-investing, we apply a standard real estate investment formula. This establishes a financial guardrail based on the property's value *after* repairs are complete.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                            <div>
-                                <p class="text-sm text-custom-accent">After-Repair Value (ARV)</p>
-                                <p class="text-3xl font-bold">$501,000</p>
-                            </div>
-                             <div>
-                                <p class="text-sm text-custom-accent">70% of ARV</p>
-                                <p class="text-3xl font-bold">$350,700</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-custom-accent">Less High-End Repairs</p>
-                                <p class="text-3xl font-bold text-red-600">-$67,560</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-custom-accent">Max Prudent Offer</p>
-                                <p class="text-3xl font-bold text-green-700">$283,140</p>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-xl text-green-800">
-                        <h3 class="text-2xl font-bold mb-3">Final Recommendation</h3>
-                        <p>This property represents an extreme level of risk and financial commitment. The most prudent path is to <strong>walk away</strong> unless an aggressive renegotiation achieves a purchase price at or below the <strong>$283,000 maximum prudent offer</strong>. Proceeding at a higher price means you are inheriting the seller's liabilities and will almost certainly be over-invested in the property from day one.</p>
-                    </div>
-                </div>
-            </section>
-
+        <main class="flex-1 p-4 sm:p-6 md:p-10">
+            <div id="main-content">
+                <!-- All sections will be dynamically injected here -->
+            </div>
         </main>
     </div>
 
 <script>
-    const inspectionData = {
-        totalCosts: {
-            avg: 39300,
-            high: 56300,
-        },
-        costChart: {
-            labels: ["Roof", "Electrical", "HVAC & Mold", "Water/Foundation", "Plumbing", "Safety/Code"],
-            datasets: [
+const propertyData = {
+    overview: {
+        address: "2911 Timberlake Drive, Orlando, FL 32806",
+        yearBuilt: 1959,
+        sqFt: 2004,
+        summary: "A single-family residence that, due to its age and a prolonged period of profound neglect, requires a full-scale remediation project to be made safe, insurable, and habitable. The property's value is severely impacted by multiple systemic failures."
+    },
+    inspectionSummary: {
+        highlights: [
+            { point: "Location", detail: "Situated in the 32806 zip code, a desirable area in Orlando." },
+            { point: "Structure", detail: "The core foundation appears to be without major structural failure at present, though at risk." },
+            { point: "Potential", detail: "Significant 'forced equity' potential for a buyer with the capital and expertise to manage a large-scale renovation." }
+        ],
+        lowlights: [
+            { point: "Uninsurable", detail: "The property is uninsurable in its current state due to the roof and electrical panel, making financing impossible without guaranteed replacement." },
+            { point: "Safety Hazards", detail: "Poses immediate health and safety risks from a fire-hazard electrical panel and systemic mold contamination." },
+            { point: "Massive Cost", detail: "Requires immediate, substantial capital investment (est. $39k-$56k+) just to address critical failures." },
+            { point: "Extreme Neglect", detail: "Every major system of the home suffers from defects, indicating a complete lack of maintenance." }
+        ]
+    },
+    systems: [
+        {
+            id: "roofing",
+            name: "Roofing",
+            condition: "High",
+            negotiability: "High",
+            costImpact: "$9,000 - $15,000+",
+            description: "Asphalt shingle & flat roof sections are well beyond service life, with active moisture intrusion.",
+            specs: "Main: 3-tab asphalt shingles. Rear: Flat roof. Both are original or very old, showing extreme granular loss, blistering, and damage.",
+            issues: [
                 {
-                    label: 'Average Estimated Cost',
-                    data: [12000, 2750, 10500, 6000, 2300, 2950],
-                    backgroundColor: 'rgba(87, 83, 78, 0.7)',
-                    borderColor: 'rgba(87, 83, 78, 1)',
-                    borderWidth: 1
+                    title: "Complete System Failure",
+                    relevance: "The roof is the home's primary defense against water. Failure leads to structural rot, mold, and interior damage. It's the #1 issue for Florida insurers.",
+                    severity: "Critical",
+                    cost: "$9,000 - $15,000+",
+                    negotiation: "Very High. This is a non-negotiable item for any lender or insurer. A full credit for replacement is the standard expectation.",
+                    resources: [
+                        { type: "video", text: "Video: Signs of a Failing Roof", url: "#" },
+                        { type: "article", text: "Article: Florida Roofing Requirements", url: "#" }
+                    ]
                 },
                 {
-                    label: 'High-End Estimated Cost',
-                    data: [15000, 4000, 16000, 9000, 3350, 4650],
-                    backgroundColor: 'rgba(239, 68, 68, 0.7)',
-                    borderColor: 'rgba(239, 68, 68, 1)',
-                    borderWidth: 1
+                    title: "Active Wood Rot in Soffits",
+                    relevance: "Indicates long-term water exposure at the roofline, suggesting probable damage to the underlying roof decking and potentially wall framing.",
+                    severity: "Significant",
+                    cost: "$2,000 - $6,000 (part of soffit/fascia repair)",
+                    negotiation: "High. This is visible proof of the roof's failure and strengthens the case for a full replacement credit.",
+                    resources: [
+                        { type: "article", text: "Article: Repairing Rotted Eaves", url: "#" }
+                    ]
                 }
             ]
         },
-        details: [
-            {
-                id: 'roof',
-                title: 'Roof System Failure',
-                priority: 'Critical',
-                cost: '$9,000 - $15,000+',
-                summary: 'The asphalt shingle and flat roof sections are beyond their service life, showing heavy granular loss, damage, and signs of active moisture intrusion. Full replacement is mandatory for insurance.',
-                relevance: 'A failed roof is the primary vulnerability of a home, leading to water damage, structural rot, and mold. In Florida, an old or damaged roof makes a home uninsurable, which in turn makes it impossible to get a mortgage. This is not an optional or cosmetic repair; it is a prerequisite to purchase.',
-                negotiability: '<strong>Very High.</strong> This is a fundamental system failure, not wear and tear. The cost is significant, predictable, and non-negotiable from an insurance standpoint. You should negotiate for a credit equivalent to a full replacement cost from a reputable contractor. Do not allow the seller to manage this repair.'
-            },
-            {
-                id: 'electrical',
-                title: 'Hazardous Electrical Panel',
-                priority: 'Critical',
-                cost: '$1,500 - $4,000',
-                summary: 'The home has a Federal Pacific "Stab-Lok" panel. These are widely documented as a severe fire hazard due to a high failure rate of their breakers. The panel is obsolete, unsafe, and must be replaced.',
-                relevance: 'This is a life-safety issue. These panels are known to fail to trip during an overcurrent event, leading to overheating wires and potentially causing a fire. Like the roof, most insurers refuse to cover homes with these panels, making this another "dealbreaker" issue that blocks financing.',
-                negotiability: '<strong>Very High.</strong> The danger associated with these panels is well-documented and undisputed. This is a latent safety defect. The cost to replace the panel and bring the service up to modern code is a clear, justifiable point for a full credit or price reduction.'
-            },
-            {
-                id: 'hvac',
-                title: 'HVAC & Systemic Mold',
-                priority: 'Critical',
-                cost: '$5,000 - $25,000+',
-                summary: 'The 28-year-old air handler is filled with "apparent mold" which has been distributed throughout the house via the ductwork. This is a major health hazard requiring professional remediation.',
-                relevance: 'Airborne mold poses a significant health risk, causing allergic reactions, asthma attacks, and other serious issues. The home, in its current state, may not be safely habitable. The contamination is systemic, meaning the HVAC system, ductwork, and likely carpets and drywall require professional remediation.',
-                negotiability: '<strong>Very High.</strong> This issue involves health, safety, and habitability. The seller has a duty to disclose known mold issues. You should demand a credit covering professional mold testing, a high-end estimate for full remediation, and a significant portion of the cost of a new HVAC system, as the current one is the source.'
-            },
-            {
-                id: 'foundation',
-                title: 'Water Intrusion & Foundation Risk',
-                priority: 'Significant',
-                cost: '$3,700 - $10,800+',
-                summary: 'Improper soil grading, hazardous trees, and rotted soffits are channeling water directly against the foundation, creating a risk of long-term structural damage.',
-                relevance: 'Systemic water mismanagement is a primary cause of foundation failure. The combination of negative grading, tree roots, and clogged gutters saturates soil against the foundation, leading to cracks, settlement, and further water intrusion. These external issues must be fixed to protect the home\'s structural integrity.',
-                negotiability: '<strong>High.</strong> These are not cosmetic issues; they directly threaten the structural health of the home. The cost to regrade the property, remove hazardous trees, and replace rotted wood is substantial. These items should be bundled as a "Water Management and Structural Protection" package for negotiation.'
-            },
-            {
-                id: 'plumbing',
-                title: 'Aging & Leaking Plumbing',
-                priority: 'Significant',
-                cost: '$1,500 - $4,000+',
-                summary: 'The system has an aged (17-year-old) water heater, active leaks in a bathroom, and seized shut-off valves, indicating the system is brittle and prone to failure.',
-                relevance: 'Active leaks cause water damage and contribute to mold growth. An aged water heater is a predictable failure that will require replacement soon. The collection of issues suggests the entire system is nearing the end of its reliable life, posing a risk of future, more catastrophic leaks.',
-                negotiability: '<strong>Moderate to High.</strong> Active leaks are a clear defect and a strong negotiation point. The aged water heater is also a powerful tool, as its failure is a matter of "when," not "if." Present professional quotes for these repairs to justify a credit.'
-            },
-            {
-                id: 'safety',
-                title: 'Safety & Code Violations',
-                priority: 'Minor',
-                cost: '$1,500 - $4,500+',
-                summary: 'A long list of safety hazards exists, including ungrounded outlets, missing GFCI protection, unsafe porch railings, and a low-hanging power line.',
-                relevance: 'While individually small, the sheer number of these defects demonstrates a pattern of severe neglect and disregard for basic safety standards. Many of these items would be flagged by an insurance inspector and could prevent coverage even after the major issues are resolved.',
-                negotiability: '<strong>Moderate.</strong> The best strategy is to group all these items into a single "Safety and Code Compliance" package. Obtain a handyman or contractor quote to fix all of them and request a single credit for that amount. This is more effective than itemizing a long list of small issues.'
-            }
-        ]
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const detailsContainer = document.getElementById('details-container');
-        const costChartCtx = document.getElementById('costChart').getContext('2d');
-        const costToggleButtons = document.getElementById('cost-toggle-buttons');
-        const totalCostDisplay = document.getElementById('total-cost-display');
-        const navigationLinks = document.querySelectorAll('#navigation a');
-
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+        {
+            id: "electrical",
+            name: "Electrical",
+            condition: "High",
+            negotiability: "High",
+            costImpact: "$1,500 - $4,000+",
+            description: "Main panel is a Federal Pacific 'Stab-Lok', a documented fire hazard. Numerous other code and safety issues.",
+            specs: "100-Amp Service with a Federal Pacific Main Panel. Numerous ungrounded outlets and missing GFCI protection.",
+            issues: [
+                {
+                    title: "Federal Pacific 'Fire Hazard' Panel",
+                    relevance: "These panels are notorious for failing to trip during over-current events, leading to an estimated 2,800 house fires annually. It's a major life-safety issue.",
+                    severity: "Critical",
+                    cost: "$1,500 - $4,000",
+                    negotiation: "Very High. This is a known, latent defect. Replacement is mandatory for safety and insurability.",
+                    resources: [
+                        { type: "video", text: "Video: The Danger of FPE Panels", url: "#" },
+                        { type: "article", text: "Article: Why Insurers Hate FPE Panels", url: "#" }
+                    ]
+                },
+                {
+                    title: "Missing GFCI Protection",
+                    relevance: "Ground Fault Circuit Interrupters are required in 'wet' locations (kitchens, baths) to prevent electrocution. Their absence is a modern code violation and safety risk.",
+                    severity: "Minor",
+                    cost: "$300 - $750",
+                    negotiation: "Moderate. Best bundled with other electrical issues. It shows a lack of basic safety updates.",
+                    resources: [
+                        { type: "article", text: "Article: Understanding GFCI Outlets", url: "#" }
+                    ]
+                },
+                 {
+                    title: "Ungrounded Outlets",
+                    relevance: "Lack of a ground wire presents a shock hazard and can damage sensitive electronics. Indicates an outdated wiring system.",
+                    severity: "Minor",
+                    cost: "$500 - $1,500",
+                    negotiation: "Moderate. The cost to fix can be significant if wiring needs to be pulled. It's a valid safety concern.",
+                    resources: []
+                }
+            ]
+        },
+        {
+            id: "hvac",
+            name: "HVAC",
+            condition: "High",
+            negotiability: "High",
+            costImpact: "$8,000 - $25,000+",
+            description: "A 28-year-old air handler is contaminated with mold, distributing it systemically.",
+            specs: "1992 Trane Air Handler (interior), 2005 Exterior unit. System is well beyond its design life and is the source of a major environmental health hazard.",
+            issues: [
+                {
+                    title: "Systemic Mold Contamination",
+                    relevance: "The HVAC system is actively spreading mold spores throughout the house, creating a serious health risk (allergies, asthma, infection). Renders the home potentially uninhabitable.",
+                    severity: "Critical",
+                    cost: "$8,000 - $25,000+ (includes remediation and replacement)",
+                    negotiation: "Very High. This is a health, safety, and habitability issue. Full credit for professional testing, remediation, and system replacement is warranted.",
+                    resources: [
+                        { type: "video", text: "Video: Mold in Your HVAC System", url: "#" },
+                        { type: "article", text: "Article: EPA Guide to Mold in Homes", url: "#" }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "plumbing",
+            name: "Plumbing",
+            condition: "Medium",
+            negotiability: "Medium",
+            costImpact: "$1,500 - $4,000+",
+            description: "System shows signs of advanced age with an old water heater and active leaks.",
+            specs: "2003 Ruud Electric Water Heater (17 years old). Copper supply lines with various aged drain materials.",
+            issues: [
+                {
+                    title: "Aged Water Heater (17 Years Old)",
+                    relevance: "The unit is operating on borrowed time, well past its 10-15 year life expectancy. Failure is imminent and could cause significant water damage.",
+                    severity: "Significant",
+                    cost: "$1,200 - $2,500 (for replacement)",
+                    negotiation: "High. This is a predictable, near-term failure of a major appliance. A credit for replacement is a reasonable request.",
+                    resources: [
+                         { type: "article", text: "Article: How Long Do Water Heaters Last?", url: "#" }
+                    ]
+                },
+                {
+                    title: "Active Leaks",
+                    relevance: "An active drain leak in a bathroom wall and a leaking toilet contribute to water waste, damage, and mold growth.",
+                    severity: "Significant",
+                    cost: "$250 - $850+",
+                    negotiation: "High. Active leaks are not 'wear and tear'; they are a clear defect requiring immediate repair.",
+                    resources: []
+                }
+            ]
+        },
+        {
+            id: 'fit-finish',
+            name: "Fit & Finish",
+            condition: "Medium",
+            negotiability: "Low",
+            costImpact: "$5,000 - $10,000+",
+            description: "Interior shows signs of water damage, needs all new flooring, and has numerous safety issues.",
+            specs: "Water stains on ceilings/walls, aged/molded carpeting, non-compliant porch railings.",
+            issues: [
+                 {
+                    title: "Interior Water Damage",
+                    relevance: "Stains on walls and ceilings are symptoms of the failing roof and plumbing. The underlying drywall is likely damaged and may contain mold.",
+                    severity: "Significant",
+                    cost: "$600 - $1,500 (for drywall repair)",
+                    negotiation: "Moderate. Directly tied to the primary leaks, this cost should be part of the overall water damage negotiation.",
+                    resources: []
+                },
+                {
+                    title: "Carpet Replacement Required",
+                    relevance: "Inspector notes that carpeting is likely holding mold spores from the HVAC system and must be removed and replaced.",
+                    severity: "Significant",
+                    cost: "$400 - $1,000 (for removal) + replacement cost",
+                    negotiation: "Moderate. Part of the overall mold remediation argument.",
+                    resources: []
+                },
+                {
+                    title: "Porch Handrail Safety Hazards",
+                    relevance: "Missing handrails and improper spindle spacing create a fall hazard, especially for children. This is a liability and code issue.",
+                    severity: "Minor",
+                    cost: "$500 - $2,000",
+                    negotiation: "Low to Moderate. A clear safety defect that can be easily quoted for repair.",
+                    resources: []
+                }
+            ]
         }
+    ],
+    costPlanning: {
+        immediate: [
+            { item: "Full Roof Replacement", cost: "$9,000 - $15,000+" },
+            { item: "Electrical Panel Replacement", cost: "$1,500 - $4,000" },
+            { item: "Mold Remediation & HVAC Replacement", cost: "$8,000 - $25,000+" },
+            { item: "Hazardous Tree Removal", cost: "$700 - $1,800" },
+        ],
+        nearTerm: [
+            { item: "Yard Regrading & Water Management", cost: "$1,000 - $3,000" },
+            { item: "Soffit/Fascia Replacement (Rot)", cost: "$2,000 - $6,000" },
+            { item: "Water Heater Replacement", cost: "$1,200 - $2,500" },
+            { item: "Flooring Replacement (Post-Remediation)", cost: "Variable" },
+            { item: "Repair Interior Wall Damage", cost: "$600 - $1,500" },
+        ],
+        longTerm: [
+            { item: "Window Replacements", cost: "Variable" },
+            { item: "Kitchen & Bath Remodels", cost: "Variable" },
+            { item: "Exterior Painting", cost: "Variable" },
+        ]
+    },
+    negotiation: {
+        position: "Extremely Strong. The property is uninsurable and therefore un-financeable for a typical buyer. The negotiation is not about minor repairs, but about a fundamental repricing of a distressed asset based on the mandatory costs to make it habitable.",
+        points: [
+            "**The Insurability Dealbreaker:** Present denial letters or guidelines from insurers stating they won't cover a home with this roof age and an FPE panel. This makes the point objective, not subjective.",
+            "**Health & Safety Mandate:** Frame the mold issue as a non-negotiable health hazard. The seller has a duty to disclose, and you have a right to a habitable home.",
+            "**Credit, Not Repairs:** Insist on a price reduction or credit. You must control the quality of these critical repairs. Do not let the seller choose the cheapest contractor.",
+            "**Data-Driven Request:** Present a consolidated budget based on professional quotes for the critical items. This grounds your request in market-rate facts.",
+            "**The 'As-Is' Reality Check:** An 'As-Is' contract does not waive your right to walk away. Remind the seller that any other financed buyer will face the exact same inspection and insurance hurdles."
+        ]
+    }
+};
 
-        function createDetailCard(item) {
-            return `
-                <section id="${item.id}" class="pt-12">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-8 ${'priority-' + item.priority.toLowerCase()}">
-                        <div class="flex flex-wrap justify-between items-baseline mb-4">
-                            <h2 class="text-3xl font-bold text-stone-900">${item.title}</h2>
-                            <span class="font-semibold text-lg">${item.cost}</span>
+document.addEventListener('DOMContentLoaded', () => {
+    const mainContent = document.getElementById('main-content');
+    const systemNavLinks = document.getElementById('system-nav-links');
+    const navigation = document.getElementById('navigation');
+
+    const createSection = (id, title, content) => `
+        <section id="${id}" class="mb-12 pt-4">
+            <h2 class="text-3xl font-bold border-b border-gray-200 pb-2 mb-6">${title}</h2>
+            ${content}
+        </section>
+    `;
+
+    const createOverview = () => createSection('overview', 'Property Overview', `
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <dl class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Address</dt>
+                    <dd class="mt-1 text-lg font-semibold">${propertyData.overview.address}</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Year Built</dt>
+                    <dd class="mt-1 text-lg font-semibold">${propertyData.overview.yearBuilt} (${new Date().getFullYear() - propertyData.overview.yearBuilt} years old)</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Square Footage</dt>
+                    <dd class="mt-1 text-lg font-semibold">${propertyData.overview.sqFt.toLocaleString()} sq. ft.</dd>
+                </div>
+                <div class="md:col-span-3">
+                    <dt class="text-sm font-medium text-gray-500">Summary</dt>
+                    <dd class="mt-1 text-base text-gray-700">${propertyData.overview.summary}</dd>
+                </div>
+            </dl>
+        </div>
+    `);
+
+    const createSummary = () => createSection('summary', 'Inspection Summary', `
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-green-700">Highlights</h3>
+                <ul class="space-y-3">
+                    ${propertyData.inspectionSummary.highlights.map(h => `
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✔</span>
+                            <div><strong>${h.point}:</strong> ${h.detail}</div>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-red-700">Lowlights</h3>
+                <ul class="space-y-3">
+                     ${propertyData.inspectionSummary.lowlights.map(l => `
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-3 mt-1">✖</span>
+                            <div><strong>${l.point}:</strong> ${l.detail}</div>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        </div>
+    `);
+
+    const createSystemsAnalysis = () => createSection('systems', 'Systems Analysis', `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${propertyData.systems.map(sys => `
+                <a href="#detail-${sys.id}" class="block bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-400 transition-all">
+                    <h3 class="font-bold text-xl mb-3">${sys.name}</h3>
+                    <p class="text-sm text-gray-600 mb-4">${sys.description}</p>
+                    <div class="text-sm space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium text-gray-500">Condition Risk</span>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full condition-${sys.condition.toLowerCase()}">${sys.condition}</span>
                         </div>
-                        <p class="text-lg text-custom-accent mb-6">${item.summary}</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <h4 class="font-semibold text-xl mb-2 text-stone-800">Why It's Relevant</h4>
-                                <p class="text-stone-700">${item.relevance}</p>
-                            </div>
-                             <div>
-                                <h4 class="font-semibold text-xl mb-2 text-stone-800">Negotiation Leverage</h4>
-                                <p class="text-stone-700">${item.negotiability}</p>
-                            </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium text-gray-500">Negotiability</span>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full negotiability-${sys.negotiability.toLowerCase()}">${sys.negotiability}</span>
+                        </div>
+                         <div class="flex justify-between items-center">
+                            <span class="font-medium text-gray-500">Cost Impact</span>
+                            <span class="font-semibold text-gray-700">${sys.costImpact}</span>
                         </div>
                     </div>
-                </section>
-            `;
-        }
+                </a>
+            `).join('')}
+        </div>
+    `);
 
-        detailsContainer.innerHTML = inspectionData.details.map(createDetailCard).join('<hr class="my-12 border-stone-200">');
+    const createCostPlanning = () => createSection('cost-planning', 'Cost Summary & Planning', `
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            ${['immediate', 'nearTerm', 'longTerm'].map(term => `
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-4">${term === 'immediate' ? 'Immediate (0-6 Months)' : term === 'nearTerm' ? 'Near Term (1-5 Years)' : 'Long Term (5+ Years)'}</h3>
+                    <ul class="space-y-2">
+                        ${propertyData.costPlanning[term].map(item => `
+                            <li class="flex justify-between items-center text-sm border-b border-gray-100 py-1">
+                                <span class="text-gray-700">${item.item}</span>
+                                <span class="font-semibold text-gray-800">${item.cost}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `).join('')}
+        </div>
+    `);
 
-        const costChart = new Chart(costChartCtx, {
-            type: 'bar',
-            data: {
-                labels: inspectionData.costChart.labels,
-                datasets: [inspectionData.costChart.datasets[0]]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return ` ${context.dataset.label}: ${formatCurrency(context.raw)}`;
-                            }
-                        }
+    const createNegotiation = () => createSection('negotiation', 'Negotiation Strategy', `
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 class="text-xl font-semibold mb-2">Overall Position</h3>
+            <p class="text-gray-700 mb-6">${propertyData.negotiation.position}</p>
+            <h3 class="text-xl font-semibold mb-4">Key Negotiation Points</h3>
+            <ul class="space-y-4">
+                ${propertyData.negotiation.points.map(p => `
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-4 mt-1 text-xl">→</span>
+                        <p class="text-gray-700">${p}</p>
+                    </li>
+                `).join('')}
+            </ul>
+        </div>
+    `);
+
+    const createSystemDetails = () => propertyData.systems.map(sys => `
+        <section id="detail-${sys.id}" class="mb-12 pt-4">
+            <h2 class="text-3xl font-bold border-b border-gray-200 pb-2 mb-4">${sys.name} Details</h2>
+            <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                <h4 class="font-semibold text-lg mb-2">System Specifications</h4>
+                <p class="text-sm text-gray-700">${sys.specs}</p>
+            </div>
+            <h3 class="text-2xl font-semibold mb-4">Identified Issues</h3>
+            <div class="space-y-4">
+                ${sys.issues.map(issue => `
+                    <div class="bg-white rounded-lg shadow-sm border-l-4 severity-${issue.severity.toLowerCase()}">
+                        <div class="p-4">
+                            <h4 class="text-xl font-bold mb-2">${issue.title}</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
+                                <div>
+                                    <div class="font-medium text-gray-500">Severity</div>
+                                    <div class="font-semibold text-gray-800">${issue.severity}</div>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-500">Potential Cost</div>
+                                    <div class="font-semibold text-gray-800">${issue.cost}</div>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-500">Negotiability</div>
+                                    <div class="font-semibold text-gray-800">${issue.negotiation}</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 text-base mb-4"><strong>Why it's relevant:</strong> ${issue.relevance}</p>
+                            ${issue.resources.length > 0 ? `
+                            <div class="border-t border-gray-200 pt-3">
+                                <h5 class="font-semibold text-sm mb-2">Helpful Resources:</h5>
+                                <div class="flex flex-wrap gap-2">
+                                    ${issue.resources.map(res => `
+                                        <a href="${res.url}" target="_blank" class="text-xs text-blue-600 bg-blue-100 hover:bg-blue-200 rounded-full px-3 py-1 transition-colors">
+                                            ${res.type === 'video' ? '▶' : '📄'} ${res.text}
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+    `).join('');
+
+    // Build Page
+    mainContent.innerHTML = `
+        ${createOverview()}
+        ${createSummary()}
+        ${createSystemsAnalysis()}
+        ${createCostPlanning()}
+        ${createNegotiation()}
+        <div class="mt-12 border-t border-gray-300 pt-6">
+            ${createSystemDetails()}
+        </div>
+    `;
+
+    // Populate system nav links
+    systemNavLinks.innerHTML = propertyData.systems.map(sys => `
+        <a href="#detail-${sys.id}" class="block py-2 px-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors text-sm">${sys.name}</a>
+    `).join('');
+
+    // Active nav highlighting on scroll
+    const sections = document.querySelectorAll('main section');
+    const navLinks = document.querySelectorAll('#navigation a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id || link.getAttribute('href').substring(1) === entry.target.id.replace('detail-','')) {
+                         link.classList.add('nav-active');
                     }
-                },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return formatCurrency(value);
-                            }
-                        }
-                    }
-                }
+                });
+                // Special handling for detailed system sections
+                 if (entry.target.id.startsWith('detail-')) {
+                     navLinks.forEach(link => link.classList.remove('nav-active'));
+                     document.querySelector('a[href="#systems"]').classList.add('nav-active');
+                     document.querySelector(`a[href="#${entry.target.id}"]`).classList.add('nav-active');
+                 }
             }
         });
-        
-        costToggleButtons.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                const costType = e.target.dataset.costType;
-                const buttons = costToggleButtons.querySelectorAll('button');
-                
-                buttons.forEach(btn => {
-                    btn.classList.remove('bg-stone-700', 'text-white');
-                    btn.classList.add('text-stone-600');
-                });
-                
-                e.target.classList.add('bg-stone-700', 'text-white');
-                e.target.classList.remove('text-stone-600');
+    }, { rootMargin: "-20% 0px -79% 0px" });
 
-                if (costType === 'avg') {
-                    costChart.data.datasets[0] = inspectionData.costChart.datasets[0];
-                    totalCostDisplay.textContent = formatCurrency(inspectionData.totalCosts.avg);
-                } else {
-                    costChart.data.datasets[0] = inspectionData.costChart.datasets[1];
-                    totalCostDisplay.textContent = formatCurrency(inspectionData.totalCosts.high);
-                }
-                costChart.update();
-            }
-        });
-        
-        const sections = document.querySelectorAll('section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navigationLinks.forEach(link => {
-                        link.classList.remove('nav-active');
-                        if (link.getAttribute('href').substring(1) === entry.target.id) {
-                            link.classList.add('nav-active');
-                        }
-                    });
-                }
-            });
-        }, { rootMargin: "-30% 0px -70% 0px", threshold: 0 });
-
-        sections.forEach(section => observer.observe(section));
-
-        navigationLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    });
-
+    sections.forEach(section => observer.observe(section));
+});
 </script>
 
 </body>
