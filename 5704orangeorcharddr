@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Inspection Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .section-title h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-left: 0.75rem;
+        }
+        .condition-badge {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            border-width: 1px;
+        }
+        .condition-critical { background-color: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+        .condition-high { background-color: #ffedd5; color: #9a3412; border-color: #fdba74; }
+        .condition-medium { background-color: #fef9c3; color: #854d0e; border-color: #fde047; }
+        .condition-incomplete { background-color: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-3xl font-extrabold text-gray-800 text-center sm:text-left">
+                Property Inspection Dashboard
+            </h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div id="dashboard-view"></div>
+        <div id="system-detail-view" style="display: none;"></div>
+    </main>
+
+    <footer class="text-center py-6 text-gray-500 text-sm">
+        <p>This dashboard is an interpretation of the inspection report for strategic planning. All costs are estimates.</p>
+        <p>Always consult with qualified, licensed professionals before making decisions.</p>
+    </footer>
+
+    <script>
+        // --- DATA STRUCTURE ---
+        const inspectionData = {
+            propertyInfo: {
+                address: "5704 Orange Orchard Dr, Oakland, FL 34787",
+                age: "New Construction (0 Years Old)",
+                type: "Single Family Residence",
+                inspectionDate: "March 24, 2021",
+                inspector: "Aron Smith, HI10839",
+            },
+            propertySummary: {
+                highlights: [
+                    "New construction with modern systems and components.",
+                    "Located in a developing area.",
+                    "Comes with builder and statutory warranties under Florida law."
+                ],
+                lowlights: [
+                    "Multiple critical system failures (Sewer, HVAC, Plumbing).",
+                    "Significant water intrusion risks (Roof, Exterior Gaps).",
+                    "Evidence of poor quality control and incomplete work.",
+                    "Major latent defect identified in Stucco application."
+                ]
+            },
+            systems: [
+                {
+                    id: "plumbing",
+                    name: "Plumbing",
+                    condition: "Critical",
+                    negotiability: "High",
+                    costImpact: "$7,500 - $16,550+",
+                    description: "Core water supply and waste disposal systems. Includes water heater, pipes, fixtures, and main sewer line.",
+                    specifications: [
+                        { name: "Water Heater", value: "A.O. Smith 50-Gallon Electric" },
+                        { name: "Water Pressure (Initial)", value: "< 40-80 PSI (Low)" },
+                        { name: "Sewer Line", value: "PVC (Requires video scope)" }
+                    ],
+                    issues: [
+                        { id: "sewer", title: "Sewer Line Damage & Standing Water", relevance: "This is the most severe defect. A damaged sewer line with a 'belly' (sag) guarantees future sewage backups, creating a major health and safety hazard. It's a sign of improper installation.", severity: "Critical", cost: "$6,000 - $12,000+", costDetails: "For trenchless repair (CIPP or Pipe Bursting). A simple patch is inadequate.", negotiation: "Non-negotiable. Demand a permanent, licensed repair (e.g., CIPP lining) and a post-repair video scope showing a clear, properly graded line before closing.", resources: [{ type: 'video', url: 'https://www.youtube.com/watch?v=G7UkG423cFQ', text: 'Video: What is a sewer line belly?' }, { type: 'article', url: 'https://www.realtor.com/advice/home-improvement/sewer-line-repair-cost/', text: 'Article: Understanding Sewer Repair Costs' }] },
+                        { id: "waterheater", title: "Water Heater Not Operating", relevance: "A lack of hot water renders a home functionally uninhabitable for basic sanitation. For a new unit, this indicates a wiring issue or a defective unit.", severity: "Critical", cost: "$1,200 - $4,500", costDetails: "Potential cost if the entire unit needs replacement.", negotiation: "Non-negotiable. Builder's licensed plumber/electrician must repair or replace. Verify hot water at multiple faucets during final walk-through.", resources: [{ type: 'article', url: 'https://www.forbes.com/home-improvement/plumbing/water-heater-installation-cost/', text: 'Article: Water Heater Installation Costs' }] },
+                        { id: "waterpressure", title: "System-Wide Low Water Pressure", relevance: "Impacts daily life and appliance function. The issue is likely near the start of the system (e.g., main valve, PRV) or could indicate a leak in the main service line, potentially related to the sewer issue.", severity: "Critical", cost: "$300 - $1,650+", costDetails: "Ranges from a valve adjustment to a main water line leak repair.", negotiation: "Non-negotiable. Builder's plumber must diagnose and fix the root cause, restoring pressure to 40-80 PSI. Explicitly request a check for an underground water line leak.", resources: [{ type: 'video', url: 'https://www.youtube.com/watch?v=dxno0_vG_0U', text: 'Video: Diagnosing Low Water Pressure' }] }
+                    ]
+                },
+                {
+                    id: "hvac",
+                    name: "HVAC",
+                    condition: "Critical",
+                    negotiability: "High",
+                    costImpact: "$250 - $3,000+",
+                    description: "Heating, Ventilation, and Air Conditioning. Critical for comfort and mold prevention in Florida.",
+                    specifications: [{ name: "Units", value: "2 Trane Systems (Upstairs & Downstairs)" }, { name: "Downstairs Unit", value: "Marginal Functionality (Poor Temp. Split)" }, { name: "Upstairs Unit", value: "Not Functioning as Desired" }],
+                    issues: [{ id: "hvac-function", title: "HVAC Systems Not Functioning Correctly", relevance: "In Florida, a fully functional HVAC is essential for habitability. Failure of two new Trane units points to systemic installation errors (wiring, refrigerant leaks, ductwork).", severity: "Critical", cost: "$250 - $3,000+", costDetails: "Ranges from a simple fix to a compressor replacement. A refrigerant 'top-off' is not a permanent solution.", negotiation: "Non-negotiable. Demand a licensed HVAC tech perform a full diagnostic and repair. Obtain a copy of the written report. Verify both units operate to manufacturer specs before closing.", resources: [{ type: 'video', url: 'https://www.youtube.com/watch?v=_auCmXEpku0', text: 'Video: HVAC Troubleshooting Fundamentals' }, { type: 'article', url: 'https://www.forbes.com/home-improvement/hvac/hvac-repair-cost/', text: 'Article: HVAC Repair Cost Guide' }] }]
+                },
+                {
+                    id: "roofing",
+                    name: "Roofing",
+                    condition: "High",
+                    negotiability: "High",
+                    costImpact: "$500 - $1,000",
+                    description: "The primary water-shedding surface of the home. Includes shingles, underlayment, flashing, and vents.",
+                    specifications: [{ name: "Type", value: "Asphalt Shingle (Assumed)" }, { name: "Vents", value: "Upper roof vents" }, { name: "Warranty", value: "Covered under Florida's 3-Year Statutory Warranty" }],
+                    issues: [{ id: "roof-vents", title: "Improperly Secured Roof Vents", relevance: "A major risk for water intrusion. In Florida's climate, wind-driven rain can easily enter unsealed vents, leading to attic water damage, rot, and mold.", severity: "High", cost: "$500 - $1,000", costDetails: "Cost for a licensed roofer to properly secure and seal vents. Far cheaper than mold remediation.", negotiation: "Non-negotiable. Builder must have a licensed roofer repair per code and manufacturer specs. Request photos of the completed repair.", resources: [{ type: 'article', url: 'https://www.angi.com/articles/how-much-should-it-cost-replace-roof-vent-boots.htm', text: 'Article: Roof Vent Repair Costs' }] }]
+                },
+                {
+                    id: "exterior",
+                    name: "Exterior & Structural",
+                    condition: "High",
+                    negotiability: "High",
+                    costImpact: "$500 - $2,700+ (Stucco cost varies)",
+                    description: "The home's protective shell, including walls, framing, windows, and doors.",
+                    specifications: [{ name: "Cladding", value: "Stucco" }, { name: "Garage Door", value: "Overhead, with framing" }, { name: "Pavers", value: "Driveway and other surfaces" }],
+                    issues: [
+                        { id: "garage-door", title: "Unsecured Overhead Door Framing", relevance: "A serious safety hazard. The garage door is the heaviest moving object in the home. Loose framing can fail, causing the door to jam or fall.", severity: "High", cost: "< $200", costDetails: "Primarily a labor cost to tighten bolts, but the risk of inaction is extremely high.", negotiation: "Non-negotiable safety risk. Must be corrected immediately by a carpenter or garage door installer. Visually verify during walk-through.", resources: [] },
+                        { id: "stucco", title: "Stucco Non-Compliance with ASTM C926", relevance: "This is a significant latent defect. Stucco applied over a non-flat surface will crack and delaminate, allowing water intrusion, rot, and mold.", severity: "High", cost: "$8 - $50 / sq ft", costDetails: "Repair is expensive. Total cost depends on the size of the non-compliant area.", negotiation: "High. Demand the builder identify and remedy all non-compliant areas to meet the ASTM standard. This may require removing and reapplying stucco.", resources: [{ type: 'article', url: 'https://www.thumbtack.com/p/stucco-repair-cost', text: 'Article: Stucco Repair Costs' }] },
+                        { id: "exterior-gaps", title: "Unsealed Exterior Gaps & Penetrations", relevance: "Any unsealed gap is a pathway for water intrusion and pests. Proper sealing is fundamental to weatherproofing.", severity: "High", cost: "$200 - $500", costDetails: "Professional labor to caulk the entire home perimeter.", negotiation: "High. Use blue tape to mark every gap around windows, doors, and utility lines during the walk-through. Builder must seal all of them.", resources: [] },
+                    ]
+                },
+                {
+                    id: "fit-finish",
+                    name: "Fit & Finish",
+                    condition: "Medium",
+                    negotiability: "Medium",
+                    costImpact: "$625 - $1,675",
+                    description: "Interior and exterior cosmetic and minor functional items. Reflects overall quality control.",
+                    specifications: [],
+                    issues: [
+                        { id: "driveway-paver", title: "Damaged Driveway Paver", relevance: "Primarily a cosmetic defect, but can be a trip hazard and indicates poor final quality check.", severity: "Medium", cost: "$50 - $150", costDetails: "Minimal cost for a few replacement pavers and labor.", negotiation: "Medium. Simple punch list item. Builder must replace the damaged paver(s) to match.", resources: [] },
+                        { id: "flooring-window", title: "Damaged Flooring & Non-Functional Window", relevance: "Clear examples of poor quality control. A misaligned window is a security and weather-sealing issue.", severity: "Medium", cost: "$200 - $500", costDetails: "Cost to repair flooring sections and properly align/reinstall the window.", negotiation: "High. Builder must have trades correct these issues. Test window function during re-inspection.", resources: [] },
+                        { id: "paver-sand", title: "Missing Paver Stabilization Sand", relevance: "The sand locks pavers together, preventing shifting and weed growth. Its absence is an incomplete installation that affects long-term durability.", severity: "Medium", cost: "$300 - $700", costDetails: "Cost for material (polymeric sand) and labor to properly sand the driveway/patio.", negotiation: "High. This is an incomplete job. Builder must have the paver contractor complete this step.", resources: [{ type: 'video', url: 'https://www.youtube.com/watch?v=U3fXzWk_B9E', text: 'Video: How to Apply Polymeric Sand' }] },
+                    ]
+                },
+                {
+                    id: "appliances",
+                    name: "Appliances",
+                    condition: "Incomplete",
+                    negotiability: "High",
+                    costImpact: "$200 - $625 (for disposal)",
+                    description: "Kitchen and utility appliances. Should be new and fully functional.",
+                    specifications: [{ name: "Garbage Disposal", value: "Excessively Loud" }, { name: "Other Appliances", value: "Missing or not fully installed at time of inspection." }],
+                    issues: [
+                        { id: "garbage-disposal", title: "Excessively Loud Garbage Disposal", relevance: "Can indicate a foreign object from construction, a loose mounting, or a defective motor. A sign of impending failure.", severity: "Medium", cost: "$200 - $625", costDetails: "Cost to replace the unit if found to be faulty.", negotiation: "Medium. Plumber to inspect. If faulty, it must be replaced under warranty. If debris, it must be cleared.", resources: [] },
+                        { id: "missing-appliances", title: "Missing or Incompletely Installed Appliances", relevance: "An issue of project incompleteness. The builder is contractually obligated to provide and install all specified appliances.", severity: "Low", cost: "$0", costDetails: "No direct cost to you; this is about completing the contracted work.", negotiation: "High. This is an 'incomplete work' item. All appliances must be installed and tested before closing. Perform a basic function test on each during walk-through.", resources: [] }
+                    ]
+                }
+            ],
+            costSummary: {
+                immediate: { title: "Immediate Costs (Builder's Responsibility Pre-Closing)", total: "$9,375 - $24,450+", description: "These are costs for Critical and High priority items that the builder is obligated to fix before closing. This is not a cost to you, but an estimate of the financial liability the builder must assume to deliver a complete home.", projects: [{ name: "Sewer Line Repair", cost: "$6,000 - $12,000+" }, { name: "HVAC System Repairs", cost: "$250 - $3,000+" }, { name: "Water Heater Repair/Replacement", cost: "$1,200 - $4,500" }, { name: "Water Pressure Correction", cost: "$300 - $1,650+" }, { name: "Roof Vent Sealing", cost: "$500 - $1,000" }, { name: "Exterior Sealing & Stucco", cost: "$500 - $2,700+" }, { name: "Fit & Finish / Appliance Repairs", cost: "$625 - $1,675" }] },
+                nearTerm: { title: "Near Term (1-5 Years) Watchlist", description: "Items to monitor closely after moving in. Costs are potential future expenses if initial repairs fail or related issues arise.", projects: [{ name: "Sewer Line Health", cost: "$300+ (for annual video scope)" }, { name: "Stucco & Paint Integrity", cost: "$1,500+ (for potential repainting/resealing)" }, { name: "HVAC Performance", cost: "$200+ (for annual servicing)" }] },
+                longTerm: { title: "Long Term (10+ Years) Planning", description: "Standard replacement cycles for major components. Not an immediate concern, but useful for long-term financial planning.", projects: [{ name: "HVAC System Replacement", cost: "$9,000 - $15,000 per unit" }, { name: "Roof Replacement", cost: "$15,000 - $30,000+" }, { name: "Water Heater Replacement", cost: "$1,500 - $4,500" }] }
+            },
+            negotiationStrategy: {
+                overallPosition: "The number and severity of defects, particularly in core systems, go far beyond a standard 'punch list'. The position is not to negotiate price, but to enforce the contract. The builder must deliver a complete, safe, and fully functional home. Closing should be contingent on the satisfactory, professionally-verified repair of all Critical and High priority items.",
+                negotiationPoints: [{ title: "Sewer Line is Non-Negotiable", text: "Demand permanent trenchless repair and a post-repair video scope. This is a condition of habitability." }, { title: "All Systems Must Be 100% Functional", text: "Both HVAC units, the water heater, and water pressure must be repaired to manufacturer specifications by licensed technicians." }, { title: "Water Intrusion Risks Must Be Eliminated", text: "All roof vents and exterior gaps must be professionally sealed. The stucco issue must be addressed per ASTM standards." }, { title: "Demand a Re-Inspection", text: "Insist on having the original inspector return to verify all major repairs before the final walk-through. The cost for this is a reasonable ask of the builder." }, { title: "Document Everything", text: "Maintain a clear email trail of all communications, repair agreements, and reports. This is your leverage if disputes arise." }]
+            }
+        };
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderIcon(name, classes = 'w-8 h-8 text-indigo-600') {
+            // FIX: More robustly handle icon rendering to prevent errors.
+            if (typeof lucide === 'undefined' || !lucide.icons[name]) {
+                return ''; // Return empty string if lucide or icon is not found
+            }
+
+            const icon = lucide.icons[name];
+            const [tag, attrs, children] = icon;
+
+            // Build the HTML for the child elements of the SVG
+            let childrenHtml = '';
+            if (children && Array.isArray(children)) {
+                childrenHtml = children.map(childNode => {
+                    // Ensure the childNode is a valid array with a tag name
+                    if (!Array.isArray(childNode) || !childNode[0]) {
+                        return '';
+                    }
+                    const childTag = childNode[0];
+                    const childAttrs = childNode[1] || {}; // Default to an empty object if attributes are missing
+
+                    // Convert the attributes object to an HTML string
+                    const attrsString = Object.entries(childAttrs)
+                        .map(([key, val]) => `${key}="${val}"`)
+                        .join(' ');
+
+                    return `<${childTag} ${attrsString} />`;
+                }).join('');
+            }
+
+            // Return the complete SVG HTML string
+            return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${classes}">${childrenHtml}</svg>`;
+        }
+
+
+        function renderDashboard() {
+            const data = inspectionData;
+            return `
+                <div class="space-y-8">
+                    <!-- Property Overview & Summary -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="card lg:col-span-2">
+                            <div class="section-title">${renderIcon('Home')}<h2>Property Overview</h2></div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+                                <div><strong>Address:</strong> ${data.propertyInfo.address}</div>
+                                <div><strong>Age:</strong> ${data.propertyInfo.age}</div>
+                                <div><strong>Type:</strong> ${data.propertyInfo.type}</div>
+                                <div><strong>Inspection Date:</strong> ${data.propertyInfo.inspectionDate}</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="section-title">${renderIcon('BarChart2')}<h2>Summary</h2></div>
+                            <div>
+                                <h3 class="font-bold text-green-600">Highlights</h3>
+                                <ul class="list-disc list-inside text-sm text-gray-600">${data.propertySummary.highlights.map(item => `<li>${item}</li>`).join('')}</ul>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="font-bold text-red-600">Lowlights</h3>
+                                <ul class="list-disc list-inside text-sm text-gray-600">${data.propertySummary.lowlights.map(item => `<li>${item}</li>`).join('')}</ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Systems Analysis -->
+                    <div class="card">
+                        <div class="section-title">${renderIcon('Wrench')}<h2>Systems Analysis</h2></div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead><tr class="border-b"><th class="p-2">System</th><th class="p-2">Condition</th><th class="p-2">Cost Impact</th><th class="p-2 hidden md:table-cell">Description</th><th class="p-2"></th></tr></thead>
+                                <tbody>
+                                    ${data.systems.map(system => `
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td class="p-2 font-bold">${system.name}</td>
+                                            <td class="p-2"><span class="condition-badge condition-${system.condition.toLowerCase()}">${system.condition}</span></td>
+                                            <td class="p-2 font-semibold text-gray-700">${system.costImpact}</td>
+                                            <td class="p-2 text-sm text-gray-600 hidden md:table-cell">${system.description}</td>
+                                            <td class="p-2 text-right">
+                                                <button onclick="navigateToSystem('${system.id}')" class="text-indigo-600 font-bold hover:underline flex items-center">Details ${renderIcon('ChevronsRight', 'w-4 h-4 ml-1')}</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Cost Summary -->
+                    <div class="card">
+                        <div class="section-title">${renderIcon('DollarSign')}<h2>Cost Summary & Planning</h2></div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            ${[data.costSummary.immediate, data.costSummary.nearTerm, data.costSummary.longTerm].map(summary => `
+                                <div class="bg-gray-50 p-4 rounded-lg border">
+                                    <div class="flex items-center font-bold text-gray-800 mb-2">
+                                        ${summary.title.includes('Immediate') ? renderIcon('AlertTriangle', 'w-5 h-5 mr-2 text-red-500') : ''}
+                                        ${summary.title.includes('Near') ? renderIcon('Clock', 'w-5 h-5 mr-2 text-blue-500') : ''}
+                                        ${summary.title.includes('Long') ? renderIcon('TrendingUp', 'w-5 h-5 mr-2 text-green-500') : ''}
+                                        ${summary.title}
+                                    </div>
+                                    ${summary.total ? `<p class="text-2xl font-extrabold text-red-600 mb-2">${summary.total}</p>` : ''}
+                                    <p class="text-xs text-gray-600 mb-3">${summary.description}</p>
+                                    <ul class="space-y-1 text-sm">${summary.projects.map(proj => `<li class="flex justify-between"><span>${proj.name}</span><span class="font-semibold">${proj.cost}</span></li>`).join('')}</ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Negotiation Strategy -->
+                    <div class="card">
+                        <div class="section-title">${renderIcon('ShieldCheck')}<h2>Negotiation Strategy</h2></div>
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6">
+                            <h3 class="font-bold text-amber-800">Overall Position</h3>
+                            <p class="text-amber-700">${data.negotiationStrategy.overallPosition}</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${data.negotiationStrategy.negotiationPoints.map(point => `
+                                <div class="flex items-start">
+                                    ${renderIcon('Target', 'w-6 h-6 text-indigo-500 mr-3 mt-1 flex-shrink-0')}
+                                    <div><h4 class="font-bold text-gray-800">${point.title}</h4><p class="text-sm text-gray-600">${point.text}</p></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSystemDetail(systemId) {
+            const system = inspectionData.systems.find(s => s.id === systemId);
+            if (!system) return '<p>System not found.</p>';
+
+            return `
+                <div class="space-y-8">
+                    <button onclick="navigateToDashboard()" class="flex items-center font-bold text-indigo-600 hover:underline mb-4">
+                        ${renderIcon('ArrowLeft', 'w-5 h-5 mr-2')}
+                        Back to Dashboard
+                    </button>
+
+                    <div class="card">
+                        <div class="section-title">${renderIcon('Wrench')}<h2>${system.name} System Details</h2></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            ${system.specifications.map(spec => `
+                                <div class="bg-gray-50 p-3 rounded-lg border">
+                                    <p class="text-sm font-semibold text-gray-500">${spec.name}</p>
+                                    <p class="text-lg font-bold text-gray-800">${spec.value}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Identified Issues</h3>
+                        <div class="space-y-6">
+                            ${system.issues.map(issue => `
+                                <div class="card border-l-4 border-red-500">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">${issue.title}</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div>
+                                            <h5 class="font-semibold text-gray-700 mb-1">Why it's Relevant</h5>
+                                            <p class="text-sm text-gray-600">${issue.relevance}</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-700 mb-1">Negotiation Potential</h5>
+                                            <div class="flex items-start bg-amber-50 p-3 rounded-lg">
+                                                ${renderIcon('Handshake', 'w-5 h-5 mr-2 text-amber-600 flex-shrink-0 mt-1')}
+                                                <p class="text-sm text-amber-800">${issue.negotiation}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-700 mb-1">Potential Cost</h5>
+                                            <div class="flex items-center">
+                                                <p class="text-xl font-bold text-red-600">${issue.cost}</p>
+                                                <p class="text-xs text-gray-500 ml-2">${issue.costDetails}</p>
+                                            </div>
+                                        </div>
+                                        ${issue.resources.length > 0 ? `
+                                            <div>
+                                                <h5 class="font-semibold text-gray-700 mb-1">Resources</h5>
+                                                <ul class="space-y-1">
+                                                    ${issue.resources.map(res => `
+                                                        <li>
+                                                            <a href="${res.url}" target="_blank" rel="noopener noreferrer" class="flex items-center text-sm text-indigo-600 hover:underline">
+                                                                ${res.type === 'video' ? renderIcon('Youtube', 'w-4 h-4 mr-2 text-red-500') : renderIcon('FileText', 'w-4 h-4 mr-2 text-blue-500')}
+                                                                ${res.text}
+                                                            </a>
+                                                        </li>
+                                                    `).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- NAVIGATION ---
+        const dashboardView = document.getElementById('dashboard-view');
+        const systemDetailView = document.getElementById('system-detail-view');
+
+        function navigateToDashboard() {
+            dashboardView.innerHTML = renderDashboard();
+            dashboardView.style.display = 'block';
+            systemDetailView.style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function navigateToSystem(systemId) {
+            systemDetailView.innerHTML = renderSystemDetail(systemId);
+            dashboardView.style.display = 'none';
+            systemDetailView.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // --- INITIAL RENDER ---
+        document.addEventListener('DOMContentLoaded', () => {
+            navigateToDashboard();
+        });
+    </script>
+</body>
+</html>
