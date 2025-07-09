@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Inspection Dashboard - 398 Roycroft Blvd</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        .view {
+            display: none;
+        }
+        .view.active {
+            display: block;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-link.active {
+            background-color: #4f46e5; /* indigo-600 */
+            color: white;
+            font-weight: 600;
+        }
+        .severity-high { background-color: #fee2e2; color: #b91c1c; } /* red-100, red-700 */
+        .severity-medium { background-color: #ffedd5; color: #c2410c; } /* orange-100, orange-700 */
+        .severity-low { background-color: #dcfce7; color: #166534; } /* green-100, green-700 */
+        .negotiability-high { border-color: #22c55e; } /* green-500 */
+        .negotiability-medium { border-color: #f97316; } /* orange-500 */
+        .negotiability-low { border-color: #ef4444; } /* red-500 */
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <nav class="bg-gray-800 text-white w-full lg:w-64 p-4 lg:p-6 shrink-0">
+            <div class="flex items-center mb-8">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-indigo-400 mr-3"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <h1 class="text-xl font-bold">Property Intel</h1>
+            </div>
+            <ul class="space-y-2">
+                <li><a href="#dashboard" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 mr-3"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+                    Dashboard
+                </a></li>
+                <li><a href="#hvac" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 mr-3"><path d="M12 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path d="M18 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path d="M6 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path d="M12 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path d="M18 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path d="M6 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path d="M2 12h20"></path><path d="M2 12h-2"></path><path d="m22 12 2 0"></path><path d="M12 2v20"></path><path d="M12 2V0"></path><path d="M12 22v2"></path></svg>
+                    HVAC
+                </a></li>
+                <li><a href="#electrical" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 mr-3"><path d="M12 22v-5"></path><path d="M9 17h6"></path><path d="M15 17h-6"></path><path d="M12 17v-2"></path><path d="M12 15v-2"></path><path d="M12 13V7"></path><path d="M12 7h3.5A2.5 2.5 0 0 1 18 9.5 2.5 2.5 0 0 1 15.5 12H12"></path><path d="M12 7H8.5A2.5 2.5 0 0 0 6 9.5 2.5 2.5 0 0 0 8.5 12H12"></path></svg>
+                    Electrical
+                </a></li>
+                 <li><a href="#interior" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 mr-3"><path d="M12 22v-5"></path><path d="M9 17h6"></path><path d="M15 17h-6"></path><path d="M12 17v-2"></path><path d="M12 15v-2"></path><path d="M12 13V7"></path><path d="M12 7h3.5A2.5 2.5 0 0 1 18 9.5 2.5 2.5 0 0 1 15.5 12H12"></path><path d="M12 7H8.5A2.5 2.5 0 0 0 6 9.5 2.5 2.5 0 0 0 8.5 12H12"></path></svg>
+                    Interior / Fit & Finish
+                </a></li>
+                <!-- Add other system links here -->
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+
+            <!-- Dashboard View -->
+            <div id="dashboard" class="view active">
+                <header class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">Inspection Dashboard</h2>
+                    <p class="text-gray-600 mt-1">398 Roycroft Blvd., Amherst, NY 14226</p>
+                </header>
+
+                <!-- Property Overview -->
+                <section class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Property Overview</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow"><p class="text-sm text-gray-500">Year Built</p><p class="text-2xl font-bold">1950 (75 yrs)</p></div>
+                        <div class="bg-white p-4 rounded-lg shadow"><p class="text-sm text-gray-500">Living Area</p><p class="text-2xl font-bold">2,062 sqft</p></div>
+                        <div class="bg-white p-4 rounded-lg shadow"><p class="text-sm text-gray-500">Beds / Baths</p><p class="text-2xl font-bold">4 / 3</p></div>
+                        <div class="bg-white p-4 rounded-lg shadow"><p class="text-sm text-gray-500">Inspection</p><p class="text-2xl font-bold">July 3, 2025</p></div>
+                    </div>
+                </section>
+                
+                <!-- Property Summary -->
+                <section class="mb-8">
+                     <h3 class="text-xl font-semibold mb-4 text-gray-800">Property Summary</h3>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="font-bold text-lg text-green-700 mb-2">Highlights</h4>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Prime location in desirable Snyder, Amherst.</li>
+                                <li>Excellent, highly-rated school district.</li>
+                                <li>Strong, competitive real estate market.</li>
+                                <li>Modern cosmetic upgrades, including custom kitchen.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="font-bold text-lg text-red-700 mb-2">Lowlights</h4>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li><span class="font-bold">Critical Failure:</span> Non-operational primary heating system (boiler).</li>
+                                <li><span class="font-bold">Major Safety Hazards:</span> Dangerous electrical wiring, suspected asbestos.</li>
+                                <li><span class="font-bold">Code Violation:</span> 3rd floor lacks required second means of egress.</li>
+                                <li>Significant deferred maintenance on exterior and foundation.</li>
+                            </ul>
+                        </div>
+                     </div>
+                </section>
+
+                <!-- Systems Analysis -->
+                <section class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Systems Analysis</h3>
+                    <div class="bg-white rounded-lg shadow overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="p-4 font-semibold">System</th>
+                                    <th class="p-4 font-semibold">Condition</th>
+                                    <th class="p-4 font-semibold">Negotiability</th>
+                                    <th class="p-4 font-semibold">Cost Impact</th>
+                                    <th class="p-4 font-semibold">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-200">
+                                    <td class="p-4 font-medium">HVAC</td>
+                                    <td class="p-4"><span class="severity-high px-2 py-1 rounded-full text-xs font-medium">High Risk</span></td>
+                                    <td class="p-4"><span class="negotiability-high border-2 px-2 py-1 rounded-full text-xs font-semibold">High</span></td>
+                                    <td class="p-4 font-medium">$10k - $25k+</td>
+                                    <td class="p-4 text-sm text-gray-600">Main boiler non-functional & aged. Suspected asbestos.</td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="p-4 font-medium">Electrical</td>
+                                    <td class="p-4"><span class="severity-high px-2 py-1 rounded-full text-xs font-medium">High Risk</span></td>
+                                    <td class="p-4"><span class="negotiability-high border-2 px-2 py-1 rounded-full text-xs font-semibold">High</span></td>
+                                    <td class="p-4 font-medium">$4k - $15k+</td>
+                                    <td class="p-4 text-sm text-gray-600">Hazardous sub-panel, ungrounded outlets, missing GFCIs.</td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="p-4 font-medium">Interior / Fit & Finish</td>
+                                    <td class="p-4"><span class="severity-high px-2 py-1 rounded-full text-xs font-medium">High Risk</span></td>
+                                    <td class="p-4"><span class="negotiability-high border-2 px-2 py-1 rounded-full text-xs font-semibold">High</span></td>
+                                    <td class="p-4 font-medium">$3k - $6k+</td>
+                                    <td class="p-4 text-sm text-gray-600">CRITICAL: No egress on 3rd floor. Improper venting.</td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="p-4 font-medium">Exterior & Structure</td>
+                                    <td class="p-4"><span class="severity-high px-2 py-1 rounded-full text-xs font-medium">High Risk</span></td>
+                                    <td class="p-4"><span class="negotiability-high border-2 px-2 py-1 rounded-full text-xs font-semibold">High</span></td>
+                                    <td class="p-4 font-medium">$4k - $10k+</td>
+                                    <td class="p-4 text-sm text-gray-600">Severely deteriorated chimney and exterior brick/mortar.</td>
+                                </tr>
+                                 <tr class="border-b border-gray-200">
+                                    <td class="p-4 font-medium">Plumbing</td>
+                                    <td class="p-4"><span class="severity-low px-2 py-1 rounded-full text-xs font-medium">Low-Medium</span></td>
+                                    <td class="p-4"><span class="negotiability-medium border-2 px-2 py-1 rounded-full text-xs font-semibold">Medium</span></td>
+                                    <td class="p-4 font-medium">$500 - $2k+</td>
+                                    <td class="p-4 text-sm text-gray-600">CSST gas line needs bonding check. Aged pipes present.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-medium">Roofing</td>
+                                    <td class="p-4"><span class="severity-medium px-2 py-1 rounded-full text-xs font-medium">Medium</span></td>
+                                    <td class="p-4"><span class="negotiability-high border-2 px-2 py-1 rounded-full text-xs font-semibold">High</span></td>
+                                    <td class="p-4 font-medium">$500 - $1.5k (Eval)</td>
+                                    <td class="p-4 text-sm text-gray-600">Moisture stains & damage in attic require evaluation.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Cost Summary -->
+                <section class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Cost Summary & Planning</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="font-bold text-lg text-red-700 mb-2">Immediate Costs</h4>
+                            <p class="text-3xl font-bold mb-2">$14k - $36k</p>
+                            <p class="text-sm text-gray-600 mb-4">For safety, habitability, and code compliance.</p>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Boiler & Asbestos Abatement</li>
+                                <li>Electrical Safety Remediation</li>
+                                <li>Attic Egress Window</li>
+                                <li>Cap Gas Line</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="font-bold text-lg text-orange-600 mb-2">Near Term (1-5 Years)</h4>
+                            <p class="text-3xl font-bold mb-2">$3.5k - $10.5k+</p>
+                             <p class="text-sm text-gray-600 mb-4">To preserve structural integrity and value.</p>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Chimney & Masonry Repair</li>
+                                <li>Soil Regrading</li>
+                                <li>Roof Evaluation & Repair</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="font-bold text-lg text-blue-700 mb-2">Long Term (5-10+ Years)</h4>
+                             <p class="text-3xl font-bold mb-2">$800 - $2.8k+</p>
+                             <p class="text-sm text-gray-600 mb-4">Future maintenance and repairs.</p>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Driveway/Walkway Concrete Repair</li>
+                                <li>Window Replacements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Negotiation Strategy -->
+                <section>
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Negotiation Strategy</h3>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h4 class="font-bold text-lg mb-2">Overall Position</h4>
+                        <p class="text-gray-700 mb-4">The property's premium location is offset by severe, documented defects in safety and habitability. The seller's position is weakened by material facts that must be disclosed to any potential buyer. The negotiation should focus on a price adjustment reflecting the significant, immediate costs required to make the home safe and compliant.</p>
+                        <h4 class="font-bold text-lg mb-2">High-Impact Negotiation Points</h4>
+                        <ul class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li><span class="font-semibold">Uninhabitable Heating System & Asbestos Hazard:</span> Boiler is non-functional, requiring abatement and replacement. (Ask: ~$15,000 credit or pre-closing repair)</li>
+                            <li><span class="font-semibold">Systemic Electrical Hazards:</span> Dangerous sub-panel, no grounding, missing GFCIs. (Ask: ~$6,000 credit or pre-closing repair)</li>
+                            <li><span class="font-semibold">Illegal & Unsafe Attic Living Space:</span> No egress window on 3rd floor is a life-safety violation. (Ask: ~$4,000 credit or pre-closing repair)</li>
+                            <li><span class="font-semibold">Compromised Building Envelope:</span> Deteriorated chimney and masonry allowing water intrusion. (Ask: ~$4,500 credit or pre-closing repair)</li>
+                        </ul>
+                         <div class="mt-6 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                            <p class="font-bold text-indigo-800">Recommended Strategy: Seller-Funded Repairs</p>
+                            <p class="text-sm text-indigo-700">Request seller to complete critical repairs pre-closing using licensed contractors. This transfers financial risk and ensures you take possession of a safe, compliant home. A starting request for a credit of <span class="font-bold">$29,500</span> is a well-supported alternative.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- HVAC View -->
+            <div id="hvac" class="view">
+                <header class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">HVAC System Details</h2>
+                    <p class="text-gray-600 mt-1">Heating, Ventilation, & Air Conditioning</p>
+                </header>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-red-700 mb-2">Critical Defect: Non-Functional Boiler and Asbestos Hazard</h3>
+                        <div class="mb-4">
+                            <p class="font-semibold">Why it's relevant:</p>
+                            <p class="text-gray-700">The boiler is the home's primary heat source. Its failure makes the house uninhabitable in cold weather. The presence of suspected asbestos on pipes is a serious health hazard that requires professional abatement before any repairs can be made, significantly increasing project cost and complexity.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div><p class="text-sm text-gray-500">Severity</p><p class="font-bold text-lg text-red-700">High</p></div>
+                            <div><p class="text-sm text-gray-500">Potential Cost</p><p class="font-bold text-lg">$7,750 - $16,950</p></div>
+                            <div><p class="text-sm text-gray-500">Negotiation</p><p class="font-bold text-lg text-green-600">High</p></div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="font-semibold">Online Resources:</p>
+                            <ul class="list-disc list-inside text-sm text-blue-600">
+                                <li><a href="#" class="hover:underline">Video: How a Boiler Works</a></li>
+                                <li><a href="#" class="hover:underline">Article: Dangers of Asbestos Pipe Insulation</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Recommended Local Contractors:</p>
+                            <ul class="text-sm text-gray-700">
+                                <li><strong>HVAC:</strong> Sullivan Heating & Cooling ((716) 608-8139), O'Donnell Heating & Cooling Inc. ((716) 836-8000)</li>
+                                <li><strong>Asbestos Abatement:</strong> Buffalo Environmental & Construction Group, Dynasty Demolition</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Electrical View -->
+            <div id="electrical" class="view">
+                 <header class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">Electrical System Details</h2>
+                    <p class="text-gray-600 mt-1">Wiring, Panels, Outlets, and Safety</p>
+                </header>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-red-700 mb-2">Critical Defect: Systemic Electrical Safety Hazards</h3>
+                        <div class="mb-4">
+                            <p class="font-semibold">Why it's relevant:</p>
+                            <p class="text-gray-700">Multiple issues create active risks of fire and electrocution. The attic sub-panel is dangerously wired, many outlets are ungrounded (offering no fault protection), and required GFCI outlets (to prevent shock near water) are missing or miswired. These are not minor flaws; they are immediate safety threats.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div><p class="text-sm text-gray-500">Severity</p><p class="font-bold text-lg text-red-700">High</p></div>
+                            <div><p class="text-sm text-gray-500">Potential Cost</p><p class="font-bold text-lg">$2,650 - $7,750+</p></div>
+                            <div><p class="text-sm text-gray-500">Negotiation</p><p class="font-bold text-lg text-green-600">High</p></div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="font-semibold">Online Resources:</p>
+                            <ul class="list-disc list-inside text-sm text-blue-600">
+                                <li><a href="#" class="hover:underline">Video: Common Breaker Panel Mistakes</a></li>
+                                <li><a href="#" class="hover:underline">Article: Why GFCI Outlets Are Important</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Recommended Local Contractors:</p>
+                            <ul class="text-sm text-gray-700">
+                                <li><strong>Electricians:</strong> VSG Power, Inc. ((716) 777-3015), Braunscheidel Electric, Inc. ((716) 688-8066)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Interior / Fit & Finish View -->
+            <div id="interior" class="view">
+                 <header class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">Interior / Fit & Finish Details</h2>
+                    <p class="text-gray-600 mt-1">Living Spaces, Safety, and Code Compliance</p>
+                </header>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-red-700 mb-2">Critical Defect: Lack of Required Attic Egress</h3>
+                        <div class="mb-4">
+                            <p class="font-semibold">Why it's relevant:</p>
+                            <p class="text-gray-700">The finished third-floor living space lacks a second means of escape, such as a properly sized window. This is a life-threatening fire trap and a major violation of building safety codes. It also means the space cannot be legally counted as habitable living area, impacting the property's appraised value.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div><p class="text-sm text-gray-500">Severity</p><p class="font-bold text-lg text-red-700">High</p></div>
+                            <div><p class="text-sm text-gray-500">Potential Cost</p><p class="font-bold text-lg">$2,500 - $5,300</p></div>
+                            <div><p class="text-sm text-gray-500">Negotiation</p><p class="font-bold text-lg text-green-600">High</p></div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="font-semibold">Online Resources:</p>
+                            <ul class="list-disc list-inside text-sm text-blue-600">
+                                <li><a href="#" class="hover:underline">Article: Egress Window Requirements Explained</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Recommended Local Contractors:</p>
+                            <ul class="text-sm text-gray-700">
+                                <li><strong>Egress Specialists:</strong> Nickel City Home Service Inc. ((716) 461-0949)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const views = document.querySelectorAll('.view');
+
+            function showView(hash) {
+                // Default to #dashboard if hash is empty or invalid
+                const targetId = (hash && document.querySelector(hash)) ? hash.substring(1) : 'dashboard';
+                const targetHash = '#' + targetId;
+
+                views.forEach(view => {
+                    if (view.id === targetId) {
+                        view.classList.add('active');
+                    } else {
+                        view.classList.remove('active');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === targetHash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetHash = this.getAttribute('href');
+                    // Update URL hash without jumping
+                    if(history.pushState) {
+                        history.pushState(null, null, targetHash);
+                    } else {
+                        location.hash = targetHash;
+                    }
+                    showView(targetHash);
+                });
+            });
+            
+            // Handle back/forward browser buttons
+            window.addEventListener('popstate', function() {
+                showView(window.location.hash);
+            });
+
+            // Show initial view based on URL hash or default to dashboard
+            showView(window.location.hash);
+        });
+    </script>
+
+</body>
+</html>
