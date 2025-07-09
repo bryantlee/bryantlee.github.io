@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Property Report: 398 Roycroft Blvd</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Slate & Amber -->
+    <!-- Application Structure Plan: A multi-section, dashboard-style SPA. The structure prioritizes user understanding by starting with a high-level summary and key metrics (the "verdict"), followed by an interactive financial breakdown chart, and then a filterable deep-dive into every issue. This top-down approach (summary -> financials -> details) allows a user to quickly assess the overall situation and then explore specifics as needed, which is more intuitive than a linear report. Key interactions include clicking the chart to filter issues and using dedicated buttons to filter by severity or system, creating a dynamic and user-driven exploration path. A final section provides actionable strategic advice. -->
+    <!-- Visualization & Content Choices: Report data is transformed for user goals. Goal: High-level understanding -> Use dashboard cards with icons for key stats (total cost, critical issues). Goal: Analyze financial impact -> Use an interactive Chart.js Doughnut chart to visualize cost distribution by urgency (Immediate, Near-Term, etc.). Clicking a segment filters the issue list, directly linking financials to specific problems. Goal: Organize and detail all findings -> Use filterable/sortable HTML cards for each issue, with color-coded severity badges for quick recognition. This provides structured detail on demand. Goal: Highlight crucial context -> Use a distinct callout box for the "Property Flip" warning. These choices use HTML/CSS and Chart.js (Canvas) to create an interactive narrative. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.2s, border-bottom-color 0.2s;
+        }
+        .nav-link.active {
+            color: #ca8a04; /* yellow-600 */
+            border-bottom-color: #ca8a04;
+        }
+        .severity-critical { background-color: #dc2626; color: white; }
+        .severity-high { background-color: #f97316; color: white; }
+        .severity-medium { background-color: #facc15; color: #422006; }
+        .severity-low { background-color: #4ade80; color: #052e16; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div id="app" x-data="propertyReport()" x-init="init()" x-cloak>
+        <header class="bg-slate-800 text-white shadow-lg sticky top-0 z-50">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-lg md:text-xl font-bold">398 Roycroft Blvd.</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#summary" @click="setActiveNav('summary')" :class="{'active': activeNav === 'summary'}" class="nav-link text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Summary</a>
+                            <a href="#financials" @click="setActiveNav('financials')" :class="{'active': activeNav === 'financials'}" class="nav-link text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Financials</a>
+                            <a href="#issues" @click="setActiveNav('issues')" :class="{'active': activeNav === 'issues'}" class="nav-link text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">All Issues</a>
+                            <a href="#strategy" @click="setActiveNav('strategy')" :class="{'active': activeNav === 'strategy'}" class="nav-link text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Strategy</a>
+                        </div>
+                    </div>
+                    <div class="md:hidden">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                            <span x-show="!mobileMenuOpen">
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                            </span>
+                            <span x-show="mobileMenuOpen">
+                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <div x-show="mobileMenuOpen" class="md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#summary" @click="mobileMenuOpen = false; setActiveNav('summary')" class="block text-slate-300 hover:text-white hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium">Summary</a>
+                    <a href="#financials" @click="mobileMenuOpen = false; setActiveNav('financials')" class="block text-slate-300 hover:text-white hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium">Financials</a>
+                    <a href="#issues" @click="mobileMenuOpen = false; setActiveNav('issues')" class="block text-slate-300 hover:text-white hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium">All Issues</a>
+                    <a href="#strategy" @click="mobileMenuOpen = false; setActiveNav('strategy')" class="block text-slate-300 hover:text-white hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium">Strategy</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+            
+            <section id="summary" class="mb-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">Property Condition Summary</h2>
+                    <p class="mt-2 text-lg text-slate-600">A high-level overview of the inspection findings. This property requires significant attention.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                        <div class="bg-red-100 p-3 rounded-full mb-3"><span class="text-3xl">⚠️</span></div>
+                        <h3 class="text-xl font-semibold text-slate-800">Overall Verdict</h3>
+                        <p class="text-red-600 font-bold text-2xl mt-1">High Risk</p>
+                        <p class="text-sm text-slate-500 mt-2">Numerous critical safety and structural deficiencies identified.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                        <div class="bg-amber-100 p-3 rounded-full mb-3"><span class="text-3xl">💰</span></div>
+                        <h3 class="text-xl font-semibold text-slate-800">Estimated Costs</h3>
+                        <p class="text-amber-600 font-bold text-2xl mt-1" x-text="formatCurrency(totalCostMin) + ' - ' + formatCurrency(totalCostMax) + '+'"></p>
+                        <p class="text-sm text-slate-500 mt-2">Total potential costs for identified issues.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                        <div class="bg-orange-100 p-3 rounded-full mb-3"><span class="text-3xl">🔥</span></div>
+                        <h3 class="text-xl font-semibold text-slate-800">Critical Issues</h3>
+                        <p class="text-orange-600 font-bold text-2xl mt-1" x-text="criticalIssuesCount"></p>
+                        <p class="text-sm text-slate-500 mt-2">Active safety hazards or major system failures requiring immediate action.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                        <div class="bg-yellow-100 p-3 rounded-full mb-3"><span class="text-3xl">🛠️</span></div>
+                        <h3 class="text-xl font-semibold text-slate-800">Major Defects</h3>
+                        <p class="text-yellow-600 font-bold text-2xl mt-1" x-text="highIssuesCount"></p>
+                        <p class="text-sm text-slate-500 mt-2">Significant defects that will lead to further damage if not addressed.</p>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border-l-4 border-amber-400 text-amber-800 p-6 rounded-r-lg shadow">
+                    <h4 class="font-bold text-lg flex items-center"><span class="text-2xl mr-3">❗</span>The "Property Flip" Red Flag</h4>
+                    <p class="mt-2">The property's sales history, cosmetic-only upgrades, and severe underlying issues strongly suggest it's a "flipper" investment. Renovations appear to have ignored or concealed critical, high-cost system failures like the non-functional boiler and hazardous wiring. This significantly increases the risk, as you would be inheriting expensive and dangerous problems hidden behind a new coat of paint.</p>
+                </div>
+
+            </section>
+            
+            <hr class="my-12 border-slate-200">
+
+            <section id="financials" class="mb-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">Financial Impact Analysis</h2>
+                    <p class="mt-2 text-lg text-slate-600">This chart shows the estimated cost of repairs grouped by urgency. Click a section to filter the issue list below.</p>
+                </div>
+                <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-slate-200">
+
+            <section id="issues" class="min-h-screen">
+                 <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">Detailed Inspection Findings</h2>
+                    <p class="mt-2 text-lg text-slate-600">Use the filters to explore all identified issues. Currently showing <span x-text="filteredIssues.length" class="font-bold text-amber-600"></span> of <span x-text="issues.length" class="font-bold"></span> total issues.</p>
+                </div>
+                
+                <div class="sticky top-16 bg-slate-50/95 backdrop-blur-sm z-40 py-4 mb-8 rounded-lg">
+                    <div class="flex flex-wrap items-center justify-center gap-2 md:gap-4">
+                        <div>
+                            <span class="text-sm font-semibold mr-2 text-slate-600">Filter by Severity:</span>
+                            <div class="inline-flex rounded-md shadow-sm" role="group">
+                                <button @click="setFilter('severity', 'All')" :class="filters.severity === 'All' ? 'bg-slate-700 text-white' : 'bg-white hover:bg-slate-100'" type="button" class="px-4 py-2 text-sm font-medium text-slate-900 border border-slate-200 rounded-l-lg focus:z-10 focus:ring-2 focus:ring-amber-500">All</button>
+                                <button @click="setFilter('severity', 'Critical')" :class="filters.severity === 'Critical' ? 'bg-red-600 text-white' : 'bg-white hover:bg-red-50'" type="button" class="px-4 py-2 text-sm font-medium text-slate-900 border-t border-b border-slate-200 focus:z-10 focus:ring-2 focus:ring-amber-500">Critical</button>
+                                <button @click="setFilter('severity', 'High')" :class="filters.severity === 'High' ? 'bg-orange-500 text-white' : 'bg-white hover:bg-orange-50'" type="button" class="px-4 py-2 text-sm font-medium text-slate-900 border-t border-b border-slate-200 focus:z-10 focus:ring-2 focus:ring-amber-500">High</button>
+                                <button @click="setFilter('severity', 'Medium')" :class="filters.severity === 'Medium' ? 'bg-yellow-400 text-slate-800' : 'bg-white hover:bg-yellow-50'" type="button" class="px-4 py-2 text-sm font-medium text-slate-900 border-t border-b border-slate-200 focus:z-10 focus:ring-2 focus:ring-amber-500">Medium</button>
+                                <button @click="setFilter('severity', 'Low')" :class="filters.severity === 'Low' ? 'bg-green-400 text-slate-800' : 'bg-white hover:bg-green-50'" type="button" class="px-4 py-2 text-sm font-medium text-slate-900 border border-slate-200 rounded-r-lg focus:z-10 focus:ring-2 focus:ring-amber-500">Low</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <label for="systemFilter" class="text-sm font-semibold mr-2 text-slate-600">System:</label>
+                            <select id="systemFilter" x-model="filters.system" class="bg-white border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5">
+                                <option value="All">All Systems</option>
+                                <template x-for="system in systems" :key="system">
+                                    <option :value="system" x-text="system"></option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <template x-if="filteredIssues.length === 0">
+                         <div class="md:col-span-2 lg:col-span-3 text-center py-12">
+                             <p class="text-xl text-slate-500">No issues match the current filters.</p>
+                         </div>
+                    </template>
+                    <template x-for="issue in filteredIssues" :key="issue.id">
+                        <div class="bg-white rounded-xl shadow-md border border-slate-200 flex flex-col">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="text-xs uppercase font-semibold text-slate-500" x-text="issue.system"></span>
+                                    <span class="px-3 py-1 text-xs font-bold rounded-full" :class="getSeverityClass(issue.severity)" x-text="issue.severity"></span>
+                                </div>
+                                <h4 class="text-lg font-bold text-slate-900" x-text="issue.title"></h4>
+                                <p class="text-sm text-slate-600 mt-2" x-html="issue.relevance"></p>
+                            </div>
+                            <div class="mt-auto bg-slate-50 p-6 rounded-b-xl border-t border-slate-200 space-y-3">
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="font-semibold text-slate-800">Potential Cost:</span>
+                                    <span class="font-mono font-semibold text-amber-700" x-text="formatCurrency(issue.cost_min) + ' - ' + formatCurrency(issue.cost_max)"></span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="font-semibold text-slate-800">Negotiability:</span>
+                                    <span class="font-semibold" :class="getNegotiabilityClass(issue.negotiability)" x-text="issue.negotiability"></span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="font-semibold text-slate-800">Timeline:</span>
+                                    <span class="font-semibold text-slate-600" x-text="issue.timeline"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-slate-200">
+
+            <section id="strategy" class="mb-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">Strategic Recommendations</h2>
+                    <p class="mt-2 text-lg text-slate-600">Actionable advice for negotiation and securing insurance based on the inspection findings.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4 flex items-center"><span class="text-3xl mr-3">🤝</span>Negotiation Strategy</h3>
+                        <ul class="space-y-4 text-slate-600">
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-xl mr-3 mt-1">1.</span>
+                                <div><strong class="text-slate-700">Prioritize Non-Negotiables:</strong> Focus on CRITICAL life-safety, code, and habitability failures: the boiler, all electrical hazards, the uncapped gas line, and lack of egress. Demand seller-paid repairs by licensed pros before closing, or a full credit for written quotes.</div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-xl mr-3 mt-1">2.</span>
+                                <div><strong class="text-slate-700">Demand Professional Evaluations:</strong> For high-risk unknowns (roof, garage structure, mold, pests), require the seller to pay for specialist evaluations. Their findings will fuel the next negotiation round.</div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-xl mr-3 mt-1">3.</span>
+                                <div><strong class="text-slate-700">Bundle for Price Reduction:</strong> Group all other HIGH severity items into a single, substantial request for a price reduction, justified by the aggregated cost estimates.</div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-xl mr-3 mt-1">4.</span>
+                                <div><strong class="text-slate-700">Leverage the "Flip":</strong> The seller is obligated to disclose these defects to future buyers if this deal fails. Use this fact to strengthen your position and justify your requests.</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4 flex items-center"><span class="text-3xl mr-3">🛡️</span>Insurability Strategy</h3>
+                         <ul class="space-y-4 text-slate-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-xl mr-3 mt-1">!</span>
+                                <div><strong class="text-slate-700">Immediate Barriers:</strong> In its current state, the property is likely uninsurable due to the non-functional heat, hazardous electrical system, and deteriorated roof.</div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-xl mr-3 mt-1">1.</span>
+                                <div><strong class="text-slate-700">Make Repairs a Condition of Sale:</strong> The only path to a standard policy is to make the purchase contingent on the seller fixing the boiler, electrical system, and roof.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-xl mr-3 mt-1">2.</span>
+                                <div><strong class="text-slate-700">Seek Quotes Now:</strong> Contact insurance agents immediately, during the contingency period. Provide the full inspection report to get a realistic assessment of insurability post-repairs.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-xl mr-3 mt-1">3.</span>
+                                <div><strong class="text-slate-700">Demand Documentation:</strong> For every seller-completed repair, obtain all permits, detailed invoices from licensed contractors, and any warranties. This paperwork is essential proof for insurers.</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function propertyReport() {
+            return {
+                issues: [],
+                filters: {
+                    severity: 'All',
+                    system: 'All',
+                    timeline: 'All'
+                },
+                activeNav: 'summary',
+                mobileMenuOpen: false,
+                costChart: null,
+
+                init() {
+                    this.issues = this.getIssuesData();
+                    this.renderChart();
+                    
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                this.activeNav = entry.target.id;
+                            }
+                        });
+                    }, { rootMargin: "-30% 0px -70% 0px" });
+
+                    document.querySelectorAll('main section').forEach(section => {
+                        observer.observe(section);
+                    });
+                },
+
+                get filteredIssues() {
+                    if (this.filters.severity === 'All' && this.filters.system === 'All' && this.filters.timeline === 'All') {
+                        return this.issues;
+                    }
+                    return this.issues.filter(issue => {
+                        const severityMatch = this.filters.severity === 'All' || issue.severity === this.filters.severity;
+                        const systemMatch = this.filters.system === 'All' || issue.system === this.filters.system;
+                        const timelineMatch = this.filters.timeline === 'All' || issue.timeline === this.filters.timeline;
+                        return severityMatch && systemMatch && timelineMatch;
+                    });
+                },
+
+                get systems() {
+                    return [...new Set(this.issues.map(issue => issue.system))].sort();
+                },
+                
+                get criticalIssuesCount() {
+                    return this.issues.filter(i => i.severity === 'Critical').length;
+                },
+
+                get highIssuesCount() {
+                    return this.issues.filter(i => i.severity === 'High').length;
+                },
+
+                get totalCostMin() {
+                    return this.issues.reduce((acc, issue) => acc + issue.cost_min, 0);
+                },
+
+                get totalCostMax() {
+                    return this.issues.reduce((acc, issue) => acc + issue.cost_max, 0);
+                },
+
+                setFilter(key, value) {
+                    this.filters[key] = value;
+                    if(key !== 'timeline') {
+                        this.filters.timeline = 'All'; // Reset timeline filter when severity/system changes
+                    }
+                },
+
+                setActiveNav(sectionId) {
+                    this.activeNav = sectionId;
+                    if(this.mobileMenuOpen) this.mobileMenuOpen = false;
+                },
+
+                getSeverityClass(severity) {
+                    switch (severity) {
+                        case 'Critical': return 'severity-critical';
+                        case 'High': return 'severity-high';
+                        case 'Medium': return 'severity-medium';
+                        case 'Low': return 'severity-low';
+                        default: return 'bg-slate-200 text-slate-800';
+                    }
+                },
+                
+                getNegotiabilityClass(level) {
+                    switch(level) {
+                        case 'Non-Negotiable': return 'text-red-600';
+                        case 'Very High': return 'text-orange-600';
+                        case 'High': return 'text-amber-600';
+                        case 'Medium': return 'text-yellow-600';
+                        default: return 'text-slate-500';
+                    }
+                },
+
+                formatCurrency(amount) {
+                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(amount);
+                },
+
+                renderChart() {
+                    const ctx = document.getElementById('costChart').getContext('2d');
+                    
+                    const timelineData = this.issues.reduce((acc, issue) => {
+                        acc[issue.timeline].min += issue.cost_min;
+                        acc[issue.timeline].max += issue.cost_max;
+                        return acc;
+                    }, { 'Immediate': {min:0, max:0}, 'Near-Term': {min:0, max:0}, 'Long-Term': {min:0, max:0} });
+
+                    const labels = Object.keys(timelineData);
+                    const avgData = labels.map(label => (timelineData[label].min + timelineData[label].max) / 2);
+
+                    if (this.costChart) {
+                        this.costChart.destroy();
+                    }
+
+                    this.costChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Avg. Estimated Cost',
+                                data: avgData,
+                                backgroundColor: ['#ef4444', '#f97316', '#eab308'],
+                                borderColor: '#ffffff',
+                                borderWidth: 4,
+                                hoverOffset: 16
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '60%',
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 20,
+                                        font: {
+                                            size: 14,
+                                            family: "'Inter', sans-serif"
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (context) => {
+                                            const label = context.label || '';
+                                            const timeline = timelineData[label];
+                                            const value = `~${this.formatCurrency(context.raw)}`;
+                                            const range = `(${this.formatCurrency(timeline.min)} - ${this.formatCurrency(timeline.max)})`;
+                                            return `${label}: ${value} ${range}`;
+                                        }
+                                    },
+                                    backgroundColor: '#1e293b',
+                                    titleFont: { size: 16 },
+                                    bodyFont: { size: 14 },
+                                    padding: 12,
+                                    cornerRadius: 8,
+                                    boxPadding: 4,
+                                }
+                            },
+                            onClick: (evt, elements) => {
+                                if (elements.length > 0) {
+                                    const clickedLabel = this.costChart.data.labels[elements[0].index];
+                                    this.setFilter('timeline', clickedLabel);
+                                    this.filters.severity = 'All';
+                                    this.filters.system = 'All';
+                                    document.getElementById('issues').scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }
+                        }
+                    });
+                },
+                
+                getIssuesData() {
+                    return [
+                        { id: 1, title: 'Non-Operational Primary Boiler', system: 'HVAC', severity: 'Critical', relevance: 'The home\'s primary heat source is inoperative, rendering it uninhabitable in cold weather. This is a major barrier to obtaining a mortgage and insurance.', cost_min: 3500, cost_max: 7500, negotiability: 'Non-Negotiable', timeline: 'Immediate' },
+                        { id: 2, title: 'Ungrounded & Miswired Outlets', system: 'Electrical', severity: 'Critical', relevance: 'Multiple outlets lack a proper ground or are miswired, creating a severe risk of electrocution and fire. This is a life-safety hazard and an insurance obstacle.', cost_min: 650, cost_max: 1500, negotiability: 'Non-Negotiable', timeline: 'Immediate' },
+                        { id: 3, title: 'Hazardous Attic Sub-Panel Wiring', system: 'Electrical', severity: 'Critical', relevance: 'Dangerous, amateur wiring in the sub-panel (improper bonding, double-tapped breakers) creates a critical fire and shock hazard.', cost_min: 400, cost_max: 800, negotiability: 'Very High', timeline: 'Immediate' },
+                        { id: 4, title: 'Lack of Legal Egress in 3rd Floor', system: 'Interior', severity: 'Critical', relevance: 'The 3rd floor "bedroom" is a fire trap without a second means of escape. This is a life-safety code violation and means the property is legally a 3-BR, not a 4-BR.', cost_min: 2500, cost_max: 5300, negotiability: 'Very High', timeline: 'Immediate' },
+                        { id: 5, title: 'Uncapped Gas Line in Laundry Room', system: 'Plumbing', severity: 'Critical', relevance: 'An active, uncapped gas line is an immediate and extreme fire and explosion risk. Must be corrected by a licensed plumber immediately.', cost_min: 200, cost_max: 500, negotiability: 'Non-Negotiable', timeline: 'Immediate' },
+                        { id: 6, title: 'Active Moisture Intrusion in Basement', system: 'Foundation', severity: 'High', relevance: 'Water is actively entering the basement, likely due to poor exterior grading. This leads to structural decay, wood rot, and creates conditions for hazardous mold growth.', cost_min: 500, cost_max: 4000, negotiability: 'Very High', timeline: 'Immediate' },
+                        { id: 7, title: 'Suspected Asbestos on Heating Pipes', system: 'HVAC', severity: 'High', relevance: 'Material resembling asbestos insulation is present. If confirmed, this is a health hazard that requires professional abatement, especially before replacing the boiler.', cost_min: 1200, cost_max: 3200, negotiability: 'Very High', timeline: 'Immediate' },
+                        { id: 8, title: 'Main Roof Requires Evaluation', system: 'Roofing', severity: 'High', relevance: 'Inspector noted moss and raised shingles, and attic stains suggest leaks. A full evaluation by a roofer is required to determine if a full replacement is needed.', cost_min: 5900, cost_max: 13150, negotiability: 'Very High', timeline: 'Near-Term' },
+                        { id: 9, title: 'Deteriorated Chimney & Exterior Masonry', system: 'Exterior', severity: 'High', relevance: 'Cracked bricks, mortar, and a damaged chimney crown are allowing water into the walls and attic, causing active wood damage. This is a direct source of structural decay.', cost_min: 2100, cost_max: 6600, negotiability: 'Very High', timeline: 'Near-Term' },
+                        { id: 10, title: 'Garage Structural & Foundation Defects', system: 'Garage', severity: 'High', relevance: 'A twisting support beam, damaged lintel, and cracked floor point to potential structural instability. The garage may be unsafe and requires an engineer\'s evaluation.', cost_min: 3500, cost_max: 14400, negotiability: 'Very High', timeline: 'Near-Term' },
+                        { id: 11, title: 'Improper & Hazardous Venting', system: 'HVAC', severity: 'High', relevance: 'A heater vent fire hazard and bathroom/kitchen vents dumping moisture into the attic are causing wood rot, pest issues, and potential mold.', cost_min: 700, cost_max: 1800, negotiability: 'High', timeline: 'Near-Term' },
+                        { id: 12, title: 'Negative Grading & Poor Water Management', system: 'Grounds', severity: 'High', relevance: 'The landscape slopes *towards* the house, funneling water against the foundation. This is the root cause of the basement moisture intrusion and must be corrected.', cost_min: 500, cost_max: 2000, negotiability: 'High', timeline: 'Near-Term' },
+                        { id: 13, title: 'CSST Gas Line Bonding Hazard', system: 'Plumbing', severity: 'High', relevance: 'Flexible gas line (CSST) may not be properly bonded, creating a fire/explosion risk during a lightning strike. An electrician must verify and correct.', cost_min: 150, cost_max: 350, negotiability: 'High', timeline: 'Immediate' },
+                        { id: 14, title: 'Attic Pest Activity & Water Damage', system: 'Interior', severity: 'High', relevance: 'Evidence of pests and water-damaged wood near the chimney are direct results of the faulty roof and improper venting. Requires remediation.', cost_min: 1300, cost_max: 6500, negotiability: 'High', timeline: 'Near-Term' },
+                        { id: 15, title: 'Corroded Cast Iron Drain Pipes', system: 'Plumbing', severity: 'Medium', relevance: 'Rusted attic drain pipes are near failure and could leak, causing significant water damage to ceilings below. Other drains have improper slope causing clogs.', cost_min: 475, cost_max: 2400, negotiability: 'Medium', timeline: 'Near-Term' },
+                        { id: 16, title: 'Widespread Window Deficiencies', system: 'Interior', severity: 'Medium', relevance: 'Damaged caulk, loose panes, and broken locks on multiple windows contribute to energy loss and create security vulnerabilities.', cost_min: 185, cost_max: 535, negotiability: 'Medium', timeline: 'Long-Term' },
+                        { id: 17, title: 'Driveway & Walkway Trip Hazards', system: 'Grounds', severity: 'Medium', relevance: 'Settled concrete creates significant trip-and-fall liability hazards on the property.', cost_min: 1100, cost_max: 1300, negotiability: 'Low', timeline: 'Long-Term' },
+                        { id: 18, title: 'Improper Interior Stair Construction', system: 'Interior', severity: 'High', relevance: 'Main stairway has an inconsistent rise and run, a documented cause of trips and falls. A significant liability, but costly to fix.', cost_min: 2000, cost_max: 5000, negotiability: 'Low', timeline: 'Long-Term' },
+                        { id: 19, title: 'Improper Dishwasher Drain', system: 'Kitchen', severity: 'Low', relevance: 'The drain hose lacks a "high loop," which can allow dirty sink water to backflow into the dishwasher. A minor but necessary plumbing correction.', cost_min: 10, cost_max: 30, negotiability: 'Low', timeline: 'Long-Term' },
+                    ].sort((a, b) => {
+                        const severityOrder = { 'Critical': 4, 'High': 3, 'Medium': 2, 'Low': 1 };
+                        return severityOrder[b.severity] - severityOrder[a.severity];
+                    });
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>
